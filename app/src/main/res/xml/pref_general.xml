@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+    android:title="Do the work"
+    />
+
+    <PreferenceCategory
+        android:title="Main pref">
+
+        <CheckBoxPreference
+        android:title="Work"
+
+        />
+
+        <EditTextPreference
+            android:title="Edit text"
+            android:defaultValue="400"
+            android:hint=""
+            android:key="400"
+            android:summary="500"
+            android:inputType="number"
+            />
+    </PreferenceCategory>
+
+</PreferenceScreen>
