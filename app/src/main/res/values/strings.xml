@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RK2</string>
+    <string name="app_name">ImView</string>
     <string name="main_activity_string">Главная</string>
     <string name="account_activity_string">Личный кабинет</string>
     <string name="settings_activity_string">Настройки</string>

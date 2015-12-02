@@ -1,85 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:fitsSystemWindows="true"
-        tools:context="jat.rk2.ImageActivity"
-        android:orientation="vertical">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        tools:context="jat.imview.ui.ImageActivity">
 
-        <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
-            android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-            <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
-                android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
         </android.support.design.widget.AppBarLayout>
 
-
         <TextView
             android:layout_width="match_parent"
-            android:text="TITLE"
+            android:layout_height="wrap_content"
             android:padding="16dp"
-            android:textSize="24sp"
-            android:layout_height="wrap_content" />
+            android:text="TITLE"
+            android:textSize="24sp" />
 
         <TextView
             android:layout_width="match_parent"
-            android:textSize="18sp"
+            android:layout_height="wrap_content"
             android:padding="16dp"
             android:text="Description"
-            android:layout_height="wrap_content" />
-
+            android:textSize="18sp" />
 
         <ScrollView
-            android:scrollbars="none"
             android:layout_width="match_parent"
+            android:layout_height="350dp"
             android:padding="16dp"
             android:paddingTop="24dp"
-            android:layout_height="350dp">
+            android:scrollbars="none">
+
             <ImageView
-                android:adjustViewBounds="true"
+                android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView2"
-                android:src="@drawable/mount"
-                android:contentDescription="@string/image_description" />
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/image_description"
+                android:src="@drawable/mount" />
         </ScrollView>
-
-
     </LinearLayout>
+
     <GridLayout
-    android:layout_width="match_parent"
-    android:layout_gravity="bottom"
-    android:padding="8dp"
-    android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:padding="8dp">
+
         <ImageButton
             android:id="@+id/like_button"
-            android:padding="8dp"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="start|top"
-            android:src="@drawable/ic_favorite_red_600_48dp"
-            />
+            android:background="@null"
+            android:padding="8dp"
+            android:src="@drawable/ic_favorite_red_600_48dp" />
+
         <ImageButton
             android:id="@+id/comment_button"
-            android:padding="8dp"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="top|end"
-            android:src="@drawable/ic_insert_comment_grey_600_48dp"
-            />
+            android:background="@null"
+            android:padding="8dp"
+            android:src="@drawable/ic_insert_comment_grey_600_48dp" />
+
         <ImageButton
             android:id="@+id/share_button"
-            android:padding="8dp"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:src="@drawable/ic_share_grey_600_48dp"
-            />
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="8dp"
+            android:src="@drawable/ic_share_grey_600_48dp" />
     </GridLayout>
 </FrameLayout>
