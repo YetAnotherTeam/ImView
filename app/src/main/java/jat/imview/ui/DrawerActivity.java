@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import jat.imview.R;
 
+
 public abstract class DrawerActivity extends BaseActivity {
     private static final int NAVDRAWER_LAUNCH_DELAY = 258;
 
@@ -122,9 +123,9 @@ public abstract class DrawerActivity extends BaseActivity {
                         new ProfileDrawerItem()
                                 .withName("Андрей Бондарь")
                                 .withEmail("temp@gmail.com")
-                                .withIcon(jat.imview.R.drawable.avatar)
+                                .withIcon(R.drawable.avatar)
                 )
-                .withHeaderBackground(jat.imview.R.drawable.back_mount)
+                .withHeaderBackground(R.drawable.back_mount)
                 .withAlternativeProfileHeaderSwitching(false)
                 .withSelectionListEnabled(false)
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
