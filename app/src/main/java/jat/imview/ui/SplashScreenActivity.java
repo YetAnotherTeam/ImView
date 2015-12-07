@@ -21,7 +21,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     public void startMainActivity() {
-        Intent i = new Intent(this, ImageActivity.class);
+        Intent i = new Intent(this, FeaturedActivity.class);
         startActivity(i);
         finish();
     }
