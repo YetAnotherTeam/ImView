@@ -26,12 +26,14 @@
             android:text="TITLE"
             android:padding="16dp"
             android:textSize="24sp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:textSize="18sp"
             android:padding="16dp"
+            android:paddingBottom="8dp"
             android:text="Description"
             android:layout_height="wrap_content" />
 
@@ -65,6 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_gravity="start|top"
             android:src="@drawable/ic_favorite_red_600_48dp"
+            android:background="?android:colorBackground"
             />
         <ImageButton
             android:id="@+id/comment_button"
@@ -73,6 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_gravity="top|end"
             android:src="@drawable/ic_insert_comment_grey_600_48dp"
+            android:background="@drawable/ripple_circle"
             />
         <ImageButton
             android:id="@+id/share_button"
@@ -80,6 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:src="@drawable/ic_share_grey_600_48dp"
+            android:background="@drawable/ripple_circle"
             />
     </GridLayout>
 </FrameLayout>
