@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="jat.imview.ui.FeaturedActivity">
+    <!-- Advertising block aligned to bottom -->
+    <RelativeLayout
+        android:id="@+id/advertising_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FC0"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Advertising block"
+            android:textColor="#000"
+            android:textSize="20sp" />
+    </RelativeLayout>
+    <!-- Control block aligned to advertising block -->
+    <RelativeLayout
+        android:id="@+id/control_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/advertising_block"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/vote_up_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@null"
+            android:src="@drawable/ic_thumb_up_black_48dp" />
+
+        <ImageButton
+            android:id="@+id/comments_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:src="@drawable/ic_insert_comment_black_48dp" />
+
+        <ImageButton
+            android:id="@+id/share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/comments_button"
+            android:background="@null"
+            android:src="@drawable/ic_share_black_48dp" />
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/control_block"
+        android:layout_alignParentTop="true" />
+</RelativeLayout>

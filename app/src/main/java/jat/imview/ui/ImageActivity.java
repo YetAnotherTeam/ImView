@@ -1,11 +1,9 @@
-package jat.rk2;
+package jat.imview.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+
+import jat.imview.ui.DrawerActivity;
 
 public class ImageActivity extends DrawerActivity {
 
@@ -17,8 +15,8 @@ public class ImageActivity extends DrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setContentView(jat.imview.R.layout.activity_image);
+        Toolbar toolbar = (Toolbar) findViewById(jat.imview.R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 

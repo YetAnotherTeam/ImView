@@ -1,4 +1,4 @@
-package jat.rk2;
+package jat.imview;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

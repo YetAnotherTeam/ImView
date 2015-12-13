@@ -1,9 +1,9 @@
-package jat.rk2;
+package jat.imview.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +21,9 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.util.ArrayList;
 
+import jat.imview.R;
+
+
 public abstract class DrawerActivity extends BaseActivity {
     private static final int NAVDRAWER_LAUNCH_DELAY = 258;
 
@@ -28,8 +31,8 @@ public abstract class DrawerActivity extends BaseActivity {
     private Handler mHandler;
 
     public enum NavigationDrawerItem {
-        MAIN(R.drawable.ic_crop_original_black_18dp, R.string.main_activity_string, ImageActivity.class),
-        SETTINGS(R.drawable.ic_settings_black_18dp, R.string.settings_activity_string, PreferenceActivity.class);
+        MAIN(R.drawable.ic_crop_original_black_18dp, jat.imview.R.string.main_activity_string, ImageActivity.class),
+        SETTINGS(R.drawable.ic_settings_black_18dp, jat.imview.R.string.settings_activity_string, PreferenceActivity.class);
 
         private int name;
         private int icon;
@@ -136,7 +139,7 @@ public abstract class DrawerActivity extends BaseActivity {
                 .build();
 
         ArrayList<IDrawerItem> items = new ArrayList<>();
-        for(NavigationDrawerItem item : NavigationDrawerItem.values()) {
+        for (NavigationDrawerItem item : NavigationDrawerItem.values()) {
             if (item.isDivider()) {
                 items.add(new DividerDrawerItem());
             } else {
@@ -167,7 +170,6 @@ public abstract class DrawerActivity extends BaseActivity {
                 .withOnDrawerListener(new Drawer.OnDrawerListener() {
                     @Override
                     public void onDrawerOpened(View drawerView) {
-
                     }
 
                     @Override
@@ -177,7 +179,6 @@ public abstract class DrawerActivity extends BaseActivity {
 
                     @Override
                     public void onDrawerSlide(View drawerView, float slideOffset) {
-
                     }
                 })
                 .withHeaderDivider(false)
@@ -186,6 +187,7 @@ public abstract class DrawerActivity extends BaseActivity {
 
     /**
      * Set badge to navigation drawer item
+     *
      * @param item navigation drawer item
      * @param text badge text
      */
@@ -202,6 +204,7 @@ public abstract class DrawerActivity extends BaseActivity {
 
     /**
      * Called when user taps on navigation drawer item
+     *
      * @param item current navigation drawer item
      */
     private void onNavDrawerItemClicked(final NavigationDrawerItem item) {
@@ -222,6 +225,7 @@ public abstract class DrawerActivity extends BaseActivity {
 
     /**
      * Opens appropriate activity
+     *
      * @param item navigation drawer item
      */
     private void navigateTo(NavigationDrawerItem item) {
@@ -247,7 +251,7 @@ public abstract class DrawerActivity extends BaseActivity {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         View currentFocus = getCurrentFocus();
 
-        if(currentFocus != null) {
+        if (currentFocus != null) {
             inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
         }
     }

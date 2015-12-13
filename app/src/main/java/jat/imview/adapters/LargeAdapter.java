@@ -1,4 +1,4 @@
-package jat.rk2;
+package jat.imview.adapters;
 
 
 import android.content.Context;

@@ -1,4 +1,4 @@
-package jat.rk2;
+package jat.imview.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

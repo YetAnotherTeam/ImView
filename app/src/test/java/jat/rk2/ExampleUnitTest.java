@@ -1,4 +1,4 @@
-package jat.rk2;
+package jat.imview;
 
 import org.junit.Test;
 

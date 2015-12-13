@@ -1,4 +1,4 @@
-package jat.rk2;
+package jat.imview.ui;
 
 
 import android.os.Bundle;
@@ -7,7 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class PreferenceActivity extends  DrawerActivity {
+import jat.imview.ui.DrawerActivity;
+
+public class PreferenceActivity extends DrawerActivity {
     @Override
     public NavigationDrawerItem getCurrentNavDrawerItem() {
         return NavigationDrawerItem.SETTINGS;
@@ -16,9 +18,9 @@ public class PreferenceActivity extends  DrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preferance);
+        setContentView(jat.imview.R.layout.activity_preferance);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.pref_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(jat.imview.R.id.pref_toolbar);
         toolbar.setTitleTextColor(0xFFFFFFFF);
 
         setSupportActionBar(toolbar);
@@ -28,7 +30,7 @@ public class PreferenceActivity extends  DrawerActivity {
 //        }
 
         getFragmentManager().beginTransaction()
-                .replace(R.id.pref_fragment_container, new PrefFragment()).commit();
+                .replace(jat.imview.R.id.pref_fragment_container, new PrefFragment()).commit();
     }
 
     public static class PrefFragment extends PreferenceFragment {
@@ -38,13 +40,13 @@ public class PreferenceActivity extends  DrawerActivity {
             super.onCreate(savedInstanceState);
 
             // Load the preferences from an XML resource
-            addPreferencesFromResource(R.xml.pref_general);
+            addPreferencesFromResource(jat.imview.R.xml.pref_general);
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.preference_menu, menu);
+        getMenuInflater().inflate(jat.imview.R.menu.preference_menu, menu);
         return true;
     }
 
