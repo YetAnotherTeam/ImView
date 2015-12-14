@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
-        tools:context="jat.imview.ui.ImageActivity">
+        tools:context=".ui.activities.ImageActivity">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"

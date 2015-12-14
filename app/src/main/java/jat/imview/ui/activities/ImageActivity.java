@@ -1,9 +1,7 @@
-package jat.imview.ui;
+package jat.imview.ui.activities;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-
-import jat.imview.ui.DrawerActivity;
 
 public class ImageActivity extends DrawerActivity {
 

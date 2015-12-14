@@ -1,4 +1,4 @@
-package jat.imview.ui;
+package jat.imview.ui.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -248,7 +248,7 @@ public abstract class DrawerActivity extends BaseActivity {
      * Used to close keyboard, when drawer opens
      */
     private void closeKeyboard() {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         View currentFocus = getCurrentFocus();
 
         if (currentFocus != null) {

@@ -1,4 +1,4 @@
-package jat.imview.ui;
+package jat.imview.ui.activities;
 
 
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import jat.imview.ui.DrawerActivity;
+import jat.imview.ui.activities.DrawerActivity;
 
 public class PreferenceActivity extends DrawerActivity {
     @Override

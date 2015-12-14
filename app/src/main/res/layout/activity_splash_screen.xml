@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/logo_background"
-    tools:context="jat.imview.ui.SplashScreenActivity">
+    tools:context=".ui.activities.SplashScreenActivity">
 
     <ImageView
         android:id="@+id/logo"

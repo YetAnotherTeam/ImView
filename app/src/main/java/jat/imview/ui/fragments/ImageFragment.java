@@ -1,4 +1,4 @@
-package jat.imview.ui;
+package jat.imview.ui.fragments;
 
 
 import android.os.Bundle;
