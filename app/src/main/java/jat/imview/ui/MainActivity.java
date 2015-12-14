@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(jat.imview.R.layout.activity_main);
 
+        //Zabro был здесь
 //        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 //        recyclerView.setAdapter(LargeAdapter.newInstance(this));
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
