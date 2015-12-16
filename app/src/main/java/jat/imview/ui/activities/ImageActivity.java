@@ -7,7 +7,7 @@ public class ImageActivity extends DrawerActivity {
 
     @Override
     public NavigationDrawerItem getCurrentNavDrawerItem() {
-        return NavigationDrawerItem.MAIN;
+        return NavigationDrawerItem.ABYSS;
     }
 
     @Override

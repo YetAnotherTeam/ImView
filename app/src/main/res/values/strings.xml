@@ -67,4 +67,6 @@
     <string name="back_from_preference">Назад</string>
     <string name="title">TITLE</string>
     <string name="description">Description</string>
+    <string name="featured_activity_string">Featured</string>
+    <string name="abyss_activity_string">Abyss</string>
 </resources>

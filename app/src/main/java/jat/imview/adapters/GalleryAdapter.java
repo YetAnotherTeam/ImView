@@ -12,10 +12,10 @@ import jat.imview.ui.fragments.ImageFragment;
 /**
  * Created by bulat on 07.12.15.
  */
-public class ImageSwipeAdapter extends FragmentStatePagerAdapter {
+public class GalleryAdapter extends FragmentStatePagerAdapter {
     private final List<String> imageList;
 
-    public ImageSwipeAdapter(FragmentManager fm) {
+    public GalleryAdapter(FragmentManager fm) {
         super(fm);
         imageList = new ArrayList<>();
     }

@@ -31,8 +31,10 @@ public abstract class DrawerActivity extends BaseActivity {
     private Handler mHandler;
 
     public enum NavigationDrawerItem {
-        MAIN(R.drawable.ic_crop_original_black_18dp, jat.imview.R.string.main_activity_string, ImageActivity.class),
-        SETTINGS(R.drawable.ic_settings_black_18dp, jat.imview.R.string.settings_activity_string, PreferenceActivity.class);
+        FEATURED(R.drawable.ic_crop_original_black_18dp, R.string.featured_activity_string, FeaturedActivity.class),
+        ABYSS(R.drawable.ic_crop_original_black_18dp, R.string.abyss_activity_string, ImageActivity.class),
+        SETTINGS(R.drawable.ic_settings_black_18dp, R.string.settings_activity_string, PreferenceActivity.class);
+
 
         private int name;
         private int icon;

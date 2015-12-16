@@ -8,16 +8,22 @@ import jat.imview.R;
 import jat.imview.asyncTasks.PreloadTask;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    private PreloadTask preloadTask;
+    private PreloadTask mPreloadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        if (preloadTask == null) {
-            preloadTask = new PreloadTask(this);
-            preloadTask.execute();
+        if (mPreloadTask == null) {
+            mPreloadTask = new PreloadTask(this);
+            mPreloadTask.execute();
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mPreloadTask.cancel(true);
     }
 
     public void startMainActivity() {

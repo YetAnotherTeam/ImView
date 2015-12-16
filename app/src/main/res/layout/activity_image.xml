@@ -79,7 +79,7 @@
             android:layout_gravity="top|end"
             android:background="@null"
             android:padding="8dp"
-            android:src="@drawable/ic_insert_comment_grey_600_48dp" />
+            android:src="@drawable/ic_insert_comment_white_48dp" />
 
         <ImageButton
             android:id="@+id/share_button"
