@@ -9,11 +9,7 @@ import android.view.MenuItem;
 
 import jat.imview.ui.activities.DrawerActivity;
 
-public class PreferenceActivity extends DrawerActivity {
-    @Override
-    public NavigationDrawerItem getCurrentNavDrawerItem() {
-        return NavigationDrawerItem.SETTINGS;
-    }
+public class PreferenceActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +21,9 @@ public class PreferenceActivity extends DrawerActivity {
 
         setSupportActionBar(toolbar);
 
-//        if (getSupportActionBar() != null) {
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        }
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         getFragmentManager().beginTransaction()
                 .replace(jat.imview.R.id.pref_fragment_container, new PrefFragment()).commit();
@@ -54,9 +50,9 @@ public class PreferenceActivity extends DrawerActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-//        if (id == android.R.id.home) {
-//            finish();
-//        }
+        if (id == android.R.id.home) {
+            finish();
+        }
 
         return super.onOptionsItemSelected(item);
     }

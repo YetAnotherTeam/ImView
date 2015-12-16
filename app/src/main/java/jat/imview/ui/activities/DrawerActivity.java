@@ -31,20 +31,22 @@ public abstract class DrawerActivity extends BaseActivity {
     private Handler mHandler;
 
     public enum NavigationDrawerItem {
-        FEATURED(R.drawable.ic_crop_original_black_18dp, R.string.featured_activity_string, FeaturedActivity.class),
-        ABYSS(R.drawable.ic_crop_original_black_18dp, R.string.abyss_activity_string, ImageActivity.class),
-        SETTINGS(R.drawable.ic_settings_black_18dp, R.string.settings_activity_string, PreferenceActivity.class);
+        FEATURED(R.drawable.ic_crop_original_black_18dp, R.string.featured_activity_string, FeaturedActivity.class, true),
+        ABYSS(R.drawable.ic_crop_original_black_18dp, R.string.abyss_activity_string, ImageActivity.class, true),
+        SETTINGS(R.drawable.ic_settings_black_18dp, R.string.settings_activity_string, PreferenceActivity.class, false);
 
 
         private int name;
         private int icon;
         private Class<? extends Activity> activity;
         private boolean isDivider = false;
+        private boolean isDrawerActivity = true;
 
-        NavigationDrawerItem(int icon, int name, Class<? extends Activity> activity) {
+        NavigationDrawerItem(int icon, int name, Class<? extends Activity> activity, boolean isDrawerActivity) {
             this.icon = icon;
             this.name = name;
             this.activity = activity;
+            this.isDrawerActivity = isDrawerActivity;
         }
 
         NavigationDrawerItem(boolean isDivider) {
@@ -91,11 +93,11 @@ public abstract class DrawerActivity extends BaseActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-//        this.toolbar = (Toolbar) findViewById(R.id.toolbar);
-//
-//        if (toolbar != null) {
-//            setSupportActionBar(this.toolbar);
-//        }
+        this.toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (toolbar != null) {
+            setSupportActionBar(this.toolbar);
+        }
 
         // If current navigation drawer presents,
         // init navigation drawer
@@ -242,7 +244,9 @@ public abstract class DrawerActivity extends BaseActivity {
 
         // Disable activity animation
         overridePendingTransition(0, 0);
-        finish();
+        if (item.isDrawerActivity) {
+            finish();
+        }
     }
 
     /**

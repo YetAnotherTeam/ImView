@@ -1,4 +1,4 @@
-package jat.imview.contentProviders;
+package jat.imview.сontentProviders;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;

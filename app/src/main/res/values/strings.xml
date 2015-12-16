@@ -69,4 +69,5 @@
     <string name="description">Description</string>
     <string name="featured_activity_string">Featured</string>
     <string name="abyss_activity_string">Abyss</string>
+    <string name="action_new_image">Add new image</string>
 </resources>

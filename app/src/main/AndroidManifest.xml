@@ -26,9 +26,10 @@
         <activity
             android:name=".ui.activities.PreferenceActivity"
             android:label="Settings"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/PreferenceTheme" />
         <activity
             android:name=".ui.activities.FeaturedActivity"
+            android:label="Featured"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
