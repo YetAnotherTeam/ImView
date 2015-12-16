@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 
-import jat.imview.ui.SplashScreenActivity;
+import jat.imview.ui.activities.SplashScreenActivity;
 
 /**
  * Created by bulat on 06.12.15.
