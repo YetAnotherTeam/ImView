@@ -1,5 +1,6 @@
 package jat.imview.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -46,6 +47,8 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
             case R.id.vote_up_button:
                 break;
             case R.id.comments_button:
+                Intent intent = new Intent(this, CommentsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.share_button:
                 break;
@@ -59,8 +62,7 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         return true;
     }
 }

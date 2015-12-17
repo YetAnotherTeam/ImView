@@ -30,8 +30,8 @@
         <activity
             android:name=".ui.activities.FeaturedActivity"
             android:label="Featured"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.activities.CommentsActivity"></activity>
     </application>
 
 </manifest>
