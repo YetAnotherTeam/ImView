@@ -14,8 +14,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:scaleType="centerCrop"
         android:src="@drawable/bender" />
 
@@ -37,7 +37,8 @@
             android:layout_alignParentTop="true"
             android:text="SuperNickName"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#5198C8" />
+            android:textColor="#5198C8"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/publish_date"
@@ -46,8 +47,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@id/username"
-            android:text="14c назад"
             android:layout_marginBottom="3dp"
+            android:text="14c назад"
             android:textColor="#6C6C73" />
 
         <ImageButton
@@ -75,8 +76,8 @@
                 android:id="@+id/author_image"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:adjustViewBounds="true"
                 android:padding="9dp"
                 android:scaleType="fitCenter"
@@ -86,9 +87,14 @@
                 android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/author_image"
-                android:layout_toEndOf="@id/author_image"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:layout_toLeftOf="@id/author_image"
+                android:layout_toStartOf="@id/author_image"
+                android:layout_alignParentBottom="true"
+                android:paddingBottom="9dp"
+                android:text="124"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
         </RelativeLayout>
     </RelativeLayout>
 
