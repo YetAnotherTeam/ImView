@@ -1,6 +1,7 @@
 package jat.imview.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     }
 
     public interface OnItemClickListener {
-        void onItemClick(CommentViewHolder item, int position);
+        void onItemClick(int position, int itemViewId);
     }
 
     public void add(Comment comment) {
@@ -93,12 +94,18 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             mRating = (TextView) itemView.findViewById(R.id.rating);
             mVoteUpButton = (RelativeLayout) itemView.findViewById(R.id.vote_up_button);
             mVoteDownButton = (ImageButton) itemView.findViewById(R.id.vote_down_button);
+
+            itemView.setOnClickListener(this);
+            mUsername.setOnClickListener(this);
+            mUserAvatar.setOnClickListener(this);
+            mVoteUpButton.setOnClickListener(this);
+            mVoteDownButton.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             final OnItemClickListener listener = getOnItemClickListener();
-
+            listener.onItemClick(getAdapterPosition(), v.getId());
         }
     }
 }

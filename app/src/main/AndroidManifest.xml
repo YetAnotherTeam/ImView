@@ -30,8 +30,10 @@
         <activity
             android:name=".ui.activities.FeaturedActivity"
             android:label="Featured"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ui.activities.CommentsActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activities.CommentsActivity" />
+        <activity android:name=".ui.activities.LoginActivity" />
+        <activity android:name=".ui.activities.SignupActivity"></activity>
     </application>
 
 </manifest>

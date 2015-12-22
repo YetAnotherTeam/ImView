@@ -3,39 +3,79 @@ package jat.imview.ui.views;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+
+import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 
 /**
  * Created by bulat on 16.12.15.
  */
 public class GalleryViewPager extends ViewPager {
+    private static final String TAG = "ImageViewTouchViewPager";
+    public static final String VIEW_PAGER_OBJECT_TAG = "image#";
+
+    private int previousPosition;
+
+    private OnPageSelectedListener onPageSelectedListener;
+
     public GalleryViewPager(Context context) {
         super(context);
+        init();
     }
 
     public GalleryViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+    }
+
+    public void setOnPageSelectedListener(OnPageSelectedListener listener) {
+        onPageSelectedListener = listener;
     }
 
     @Override
     protected boolean canScroll(View v, boolean checkV, int dx, int x, int y) {
-        if (v.getVisibility() != VISIBLE) {
-            return false;
+        if (v instanceof ImageViewTouch) {
+            return ((ImageViewTouch) v).canScroll(dx);
+        } else {
+            return super.canScroll(v, checkV, dx, x, y);
         }
-        if (v instanceof ViewGroup) {
-            ViewGroup viewGroup = (ViewGroup) v;
-            int scrollX = v.getScrollX();
-            int scrollY = v.getScrollY();
-            for (int childCount = viewGroup.getChildCount() - 1; childCount >= 0; --childCount) {
-                View childAt = viewGroup.getChildAt(childCount);
-                if (x + scrollX >= childAt.getLeft() && x + scrollX < childAt.getRight() && y + scrollY >= childAt.getTop() && y + scrollY < childAt.getBottom()) {
-                    if (canScroll(childAt, true, dx, (x + scrollX) - childAt.getLeft(), (y + scrollY) - childAt.getTop())) {
-                        return true;
+    }
+
+    public interface OnPageSelectedListener {
+
+        void onPageSelected(int position);
+
+    }
+
+    private void init() {
+        previousPosition = getCurrentItem();
+
+        addOnPageChangeListener(new SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                if (onPageSelectedListener != null) {
+                    onPageSelectedListener.onPageSelected(position);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (state == SCROLL_STATE_SETTLING && previousPosition != getCurrentItem()) {
+                    try {
+                        ImageViewTouch imageViewTouch = (ImageViewTouch)
+                                findViewWithTag(VIEW_PAGER_OBJECT_TAG + getCurrentItem());
+                        if (imageViewTouch != null) {
+                            imageViewTouch.zoomTo(1f, 300);
+                        }
+
+                        previousPosition = getCurrentItem();
+                    } catch (ClassCastException ex) {
+                        Log.e(TAG, "This view pager should have only ImageViewTouch as a children.", ex);
                     }
                 }
             }
-        }
-        return super.canScroll(v, checkV, dx, x, y);
+        });
     }
 }

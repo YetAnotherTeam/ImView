@@ -28,6 +28,52 @@
         android:layout_toEndOf="@id/user_avatar"
         android:layout_toRightOf="@id/user_avatar">
 
+        <ImageButton
+            android:id="@+id/vote_down_button"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:padding="9dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_thumb_down_white_48dp" />
+
+        <RelativeLayout
+            android:id="@+id/vote_up_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/vote_down_button"
+            android:layout_toStartOf="@id/vote_down_button">
+
+            <ImageView
+                android:id="@+id/author_image"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:adjustViewBounds="true"
+                android:padding="9dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_thumb_up_white_48dp" />
+
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@id/author_image"
+                android:layout_toStartOf="@id/author_image"
+                android:paddingBottom="9dp"
+                android:text="124"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/username"
             android:layout_width="wrap_content"
@@ -50,52 +96,6 @@
             android:layout_marginBottom="3dp"
             android:text="14c назад"
             android:textColor="#6C6C73" />
-
-        <ImageButton
-            android:id="@+id/vote_down_button"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_alignBottom="@id/publish_date"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:padding="9dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_thumb_down_white_48dp" />
-
-        <RelativeLayout
-            android:id="@+id/vote_up_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/publish_date"
-            android:layout_toLeftOf="@id/vote_down_button"
-            android:layout_toStartOf="@id/vote_down_button">
-
-            <ImageView
-                android:id="@+id/author_image"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:adjustViewBounds="true"
-                android:padding="9dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_thumb_up_white_48dp" />
-
-            <TextView
-                android:id="@+id/rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/author_image"
-                android:layout_toStartOf="@id/author_image"
-                android:layout_alignParentBottom="true"
-                android:paddingBottom="9dp"
-                android:text="124"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp" />
-        </RelativeLayout>
     </RelativeLayout>
 
     <TextView

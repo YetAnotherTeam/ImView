@@ -13,8 +13,10 @@ import android.widget.LinearLayout;
 
 import jat.imview.R;
 import jat.imview.adapters.GalleryAdapter;
+import jat.imview.network.ServiceHelper;
+import jat.imview.network.ServiceHelperObserver.Observer;
 
-public class FeaturedActivity extends DrawerActivity implements View.OnClickListener {
+public class FeaturedActivity extends DrawerActivity implements View.OnClickListener, Observer {
     GalleryAdapter mImageSwipeAdapter;
     ViewPager mViewPager;
     LinearLayout mVoteUpButton;
@@ -64,5 +66,22 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        ServiceHelper.getInstance().registerObserver(this);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ServiceHelper.getInstance().removeObserver(this);
+    }
+
+    @Override
+    public void handleResponse(String response) {
+
     }
 }

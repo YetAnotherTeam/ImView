@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import jat.imview.R;
 import jat.imview.adapters.CommentsAdapter;
+import jat.imview.network.ServiceHelper;
 
 public class CommentsActivity extends AppCompatActivity implements CommentsAdapter.OnItemClickListener, OnClickListener {
     private RecyclerView mCommentsRecyclerView;
@@ -35,12 +36,32 @@ public class CommentsActivity extends AppCompatActivity implements CommentsAdapt
     }
 
     @Override
-    public void onItemClick(CommentsAdapter.CommentViewHolder item, int position) {
-
+    public void onItemClick(int position, int itemViewId) {
+        switch (itemViewId) {
+            case R.id.vote_up_button:
+                break;
+            case R.id.vote_down_button:
+                break;
+            // на случай дальнейших улучшений
+            case R.id.user_avatar:
+            case R.id.username:
+            default:
+                break;
+        }
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.send_button:
+                String commentText = mMessageTextInput.getText().toString();
+                if (commentText.length() > 0) {
+
+                }
+                break;
+            case R.id.profile:
+                break;
+        }
 
     }
 }
