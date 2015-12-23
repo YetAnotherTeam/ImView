@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import jat.imview.rest.HTTPMethod;
+
 /**
  * Created by bulat on 07.12.15.
  */
@@ -77,7 +79,7 @@ public class SendServiceHelper {
         }
     }
 
-    public int startLogin(String username, String password) {
+    public int requestLogin(String username, String password) {
         RequestType requestType = RequestType.LOGIN;
         if (isRequestPending(requestType)) {
             return pendingRequests.get(requestType);
@@ -93,7 +95,7 @@ public class SendServiceHelper {
         return requestId;
     }
 
-    public int startSignup(String username, String password) {
+    public int requestSignup(String username, String password) {
         RequestType requestType = RequestType.SIGNUP;
         if (isRequestPending(requestType)) {
             return pendingRequests.get(requestType);
@@ -109,7 +111,7 @@ public class SendServiceHelper {
         return requestId;
     }
 
-    public int startImageNew(String filepath) {
+    public int requestImageNew(String filepath) {
         RequestType requestType = RequestType.IMAGE_NEW;
         if (isRequestPending(requestType)) {
             return pendingRequests.get(requestType);
@@ -124,7 +126,7 @@ public class SendServiceHelper {
         return requestId;
     }
 
-    public int startImageGet(int imageId) {
+    public int requestImageGet(int imageId) {
         RequestType requestType = RequestType.IMAGE_GET;
         if (isRequestPending(requestType)) {
             return pendingRequests.get(requestType);
@@ -139,7 +141,7 @@ public class SendServiceHelper {
         return requestId;
     }
 
-    public int startImageList(boolean isFeatured) {
+    public int requestImageList(boolean isFeatured) {
         RequestType requestType = RequestType.IMAGE_LIST;
         if (isRequestPending(requestType)) {
             return pendingRequests.get(requestType);
@@ -154,7 +156,7 @@ public class SendServiceHelper {
         return requestId;
     }
 
-    public int startCommentNew(int imageId, String text) {
+    public int requestCommentNew(int imageId, String text) {
         RequestType requestType = RequestType.COMMENT_NEW;
         if (isRequestPending(requestType)) {
             return pendingRequests.get(requestType);
@@ -170,7 +172,7 @@ public class SendServiceHelper {
         return requestId;
     }
 
-    public int startCommentList(int imageId) {
+    public int requestCommentList(int imageId) {
         RequestType requestType = RequestType.COMMENT_LIST;
         if (isRequestPending(requestType)) {
             return pendingRequests.get(requestType);

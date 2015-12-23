@@ -13,9 +13,8 @@ import android.widget.LinearLayout;
 import jat.imview.R;
 import jat.imview.adapters.GalleryAdapter;
 import jat.imview.service.SendServiceHelper;
-import jat.imview.network.ServiceHelperObserver.Observer;
 
-public class FeaturedActivity extends DrawerActivity implements View.OnClickListener, Observer {
+public class FeaturedActivity extends DrawerActivity implements View.OnClickListener {
     GalleryAdapter mImageSwipeAdapter;
     ViewPager mViewPager;
     LinearLayout mVoteUpButton;
@@ -32,6 +31,7 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
         mCommentsButton.setOnClickListener(this);
         mShareButton = (ImageButton) findViewById(R.id.share_button);
         mShareButton.setOnClickListener(this);
+        SendServiceHelper.getInstance(this).requestImageList(true);
         //mViewPager = (ViewPager) findViewById(R.id.view_pager);
         //mImageSwipeAdapter = new ImageSwipeAdapter(getSupportFragmentManager());
         //mViewPager.setAdapter(mImageSwipeAdapter);
@@ -69,18 +69,11 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
 
     @Override
     protected void onResume() {
-        SendServiceHelper.getInstance(this).registerObserver(this);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        SendServiceHelper.getInstance(this).removeObserver(this);
-    }
-
-    @Override
-    public void handleResponse(String response) {
-
     }
 }

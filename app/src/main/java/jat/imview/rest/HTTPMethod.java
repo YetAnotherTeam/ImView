@@ -1,4 +1,4 @@
-package jat.imview.service;
+package jat.imview.rest;
 
 /**
  * Created by bulat on 23.12.15.

@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 
+import jat.imview.processor.ImageListProcessor;
+import jat.imview.rest.HTTPMethod;
+
 /**
  * Created by bulat on 07.12.15.
  */
@@ -74,7 +77,8 @@ public class SendService extends IntentService {
                 break;
             case IMAGE_LIST:
                 if (httpMethod.equals(HTTPMethod.GET)) {
-
+                    ImageListProcessor imageListProcessor = new ImageListProcessor(getApplicationContext());
+                    //imageListProcessor.getImageList();
                 } else {
                     sendInvalidRequestCode();
                 }
