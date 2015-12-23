@@ -11,7 +11,6 @@ import android.widget.EditText;
 
 import jat.imview.R;
 import jat.imview.adapters.CommentsAdapter;
-import jat.imview.network.ServiceHelper;
 
 public class CommentsActivity extends AppCompatActivity implements CommentsAdapter.OnItemClickListener, OnClickListener {
     private RecyclerView mCommentsRecyclerView;

@@ -1,4 +1,4 @@
-package jat.imview.network;
+package jat.imview.rest;
 
 /**
  * Created by bulat on 20.12.15.

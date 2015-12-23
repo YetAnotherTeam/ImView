@@ -3,7 +3,6 @@ package jat.imview.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,7 +12,7 @@ import android.widget.LinearLayout;
 
 import jat.imview.R;
 import jat.imview.adapters.GalleryAdapter;
-import jat.imview.network.ServiceHelper;
+import jat.imview.service.SendServiceHelper;
 import jat.imview.network.ServiceHelperObserver.Observer;
 
 public class FeaturedActivity extends DrawerActivity implements View.OnClickListener, Observer {
@@ -70,14 +69,14 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
 
     @Override
     protected void onResume() {
-        ServiceHelper.getInstance().registerObserver(this);
+        SendServiceHelper.getInstance(this).registerObserver(this);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        ServiceHelper.getInstance().removeObserver(this);
+        SendServiceHelper.getInstance(this).removeObserver(this);
     }
 
     @Override
