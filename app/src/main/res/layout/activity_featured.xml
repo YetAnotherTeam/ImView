@@ -57,9 +57,9 @@
     <RelativeLayout
         android:id="@+id/control_block"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:layout_above="@+id/advertising_block"
-        android:background="@drawable/control_block_background"
+        android:background="#64cacaca"
         android:gravity="center">
 
         <LinearLayout

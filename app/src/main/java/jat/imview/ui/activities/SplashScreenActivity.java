@@ -1,14 +1,18 @@
 package jat.imview.ui.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import jat.imview.R;
 import jat.imview.asyncTasks.PreloadTask;
+import jat.imview.network.NetworkAdapter;
+import rx.schedulers.Schedulers;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private PreloadTask mPreloadTask;
+    private final boolean FEATURED = true;
+    private final boolean NOT_FEATURED = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +27,22 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        mPreloadTask.cancel(true);
     }
 
     public void startMainActivity() {
         Intent i = new Intent(this, FeaturedActivity.class);
         startActivity(i);
         finish();
+    }
+
+    private void preloadImageInfo() {
+        NetworkAdapter service = NetworkAdapter.getInstance();
+        service.getImageList(true)
+                .observeOn(Schedulers.io());
+//                .subscribe(      }
+//                );
+
+
+
     }
 }
