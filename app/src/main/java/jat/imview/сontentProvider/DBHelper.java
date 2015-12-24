@@ -1,31 +1,40 @@
 package jat.imview.сontentProvider;
-import static android.provider.BaseColumns._ID;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
- * Created by bulat on 23.12.15.
+ * Created by FRAGnat on 23.12.15.
  */
 public class DBHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "imview.db";
-    private static final int DATABASE_VERSION = 1;
+
+    final String LOG_TAG = "myLogs";
 
     public DBHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        // конструктор суперкласса
+        super(context, "myDB", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // IMAGE TABLE
-        StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("CREATE TABLE").append(ImageConstants.TABLE_NAME).append(" (");
-        sqlBuilder.append(_ID).append(" INTEGER, ");
-        sqlBuilder.append(ImageConstants.FILEPATH).append(" TEXT, ");
-        sqlBuilder.append(");");
-        String sqlQuery = sqlBuilder.toString();
-        db.execSQL(sqlQuery);
+        Log.d(LOG_TAG, "--- onCreate database ---");
+        // создаем таблицу с полями
+        db.execSQL("create table mytable ("
+                + "id integer primary key autoincrement,"
+                + "isLike text" + ");");
+        db.execSQL("create table comment ("
+                + "id integer primary key autoincrement,"
+                + "name text,"
+                + "usertext text" + ");");
+//        String isLike = "true";
+//        SQLiteDatabase dbNew = this.getWritableDatabase();
+//        ContentValues cv = new ContentValues();
+//        cv.put("name", isLike);
+//        cv.put("usertext", "zabrComment");
+//        long rowID = dbNew.insert("comment", null, cv);
     }
 
     @Override
@@ -33,3 +42,4 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 }
+

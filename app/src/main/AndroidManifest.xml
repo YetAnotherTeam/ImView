@@ -26,7 +26,10 @@
             android:name=".ui.activities.ImageActivity"
             android:label="@string/title_activity_image"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activities.MainActivity" />
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:label="ZabroCode"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.PreferenceActivity"
             android:label="Settings"

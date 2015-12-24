@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:background="#000000"
     tools:context=".ui.activities.FeaturedActivity">
 
@@ -38,7 +39,18 @@
             android:textColor="#000"
             android:textSize="20sp" />
     </RelativeLayout>
-    <!--
+    <!--<com.daimajia.slider.library.SliderLayout-->
+        <!--android:id="@+id/slider"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_above="@+id/advertising_block"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--android:paddingTop="?attr/actionBarSize"-->
+        <!--custom:pager_animation="Accordion"-->
+        <!--custom:auto_cycle="true"-->
+        <!--custom:indicator_visibility="visible"-->
+        <!--custom:pager_animation_span="1100" />-->
     <jat.imview.ui.views.TouchImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,13 +58,13 @@
         android:layout_alignParentTop="true"
         android:scaleType="fitCenter"
         android:paddingTop="?attr/actionBarSize"
-        android:src="@drawable/bender" /> -->
-    <jat.imview.ui.views.GalleryViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/control_block"
-            android:layout_alignParentTop="true" />
+        android:src="@drawable/bender" />
+    <!--<jat.imview.ui.views.GalleryViewPager-->
+            <!--android:id="@+id/view_pager"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_above="@+id/control_block"-->
+            <!--android:layout_alignParentTop="true" />-->
     <!-- Control block aligned to advertising block -->
     <RelativeLayout
         android:id="@+id/control_block"

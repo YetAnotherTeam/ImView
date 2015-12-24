@@ -1,21 +1,27 @@
 package jat.imview.ui.activities;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
 import jat.imview.R;
 import jat.imview.adapters.CommentsAdapter;
+import jat.imview.сontentProvider.DBHelper;
 
 public class CommentsActivity extends AppCompatActivity implements CommentsAdapter.OnItemClickListener, OnClickListener {
     private RecyclerView mCommentsRecyclerView;
     private CommentsAdapter mCommentsAdapter;
     private EditText mMessageTextInput;
+    final String LOG_TAG = "myLogs";
+    DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,7 @@ public class CommentsActivity extends AppCompatActivity implements CommentsAdapt
 
         mMessageTextInput = (EditText) findViewById(R.id.message_text_input);
         findViewById(R.id.send_button).setOnClickListener(this);
+        dbHelper = new DBHelper(this);
 
     }
 
@@ -51,11 +58,15 @@ public class CommentsActivity extends AppCompatActivity implements CommentsAdapt
 
     @Override
     public void onClick(View v) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
         switch (v.getId()) {
             case R.id.send_button:
                 String commentText = mMessageTextInput.getText().toString();
                 if (commentText.length() > 0) {
-
+                    cv.put("name", "Zabrodin");
+                    cv.put("usertext", commentText);
+                    db.insert("comment", null, cv);
                 }
                 break;
             case R.id.profile:

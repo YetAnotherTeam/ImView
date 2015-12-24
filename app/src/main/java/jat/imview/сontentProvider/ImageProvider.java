@@ -21,7 +21,7 @@ import static jat.imview.сontentProvider.ImageConstants.TABLE_NAME;
  */
 public class ImageProvider extends ContentProvider {
     private UriMatcher uriMatcher;
-    private DBHelper dbHelper;
+    private DBHelper_bulat dbHelperBulat;
     private static final String CONTENT_TYPE = "jat.imview.cursor.dir/profile";
     private static final String CONTENT_ITEM_TYPE = "jat.imview.cursor.item/profile";
     private static final int IMAGES = 1;
@@ -32,7 +32,7 @@ public class ImageProvider extends ContentProvider {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(AUTHORITY, "images", IMAGES);
         uriMatcher.addURI(AUTHORITY, "images/#", IMAGE_ID);
-        dbHelper = new DBHelper(this.getContext());
+        dbHelperBulat = new DBHelper_bulat(this.getContext());
         return true;
     }
 
@@ -43,7 +43,7 @@ public class ImageProvider extends ContentProvider {
             int id = Integer.parseInt(uri.getPathSegments().get(1));
             selection = appendRowId(selection, id);
         }
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelperBulat.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
@@ -71,7 +71,7 @@ public class ImageProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelperBulat.getWritableDatabase();
         if (uriMatcher.match(uri) != IMAGES) {
             throw new IllegalArgumentException("Unknown URI " + uri);
         }
