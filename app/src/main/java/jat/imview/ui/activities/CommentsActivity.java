@@ -1,6 +1,5 @@
 package jat.imview.ui.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,10 +11,15 @@ import android.widget.EditText;
 import jat.imview.R;
 import jat.imview.adapters.CommentsAdapter;
 
-public class CommentsActivity extends AppCompatActivity implements CommentsAdapter.OnItemClickListener, OnClickListener {
+public class CommentsActivity extends DrawerActivity implements CommentsAdapter.OnItemClickListener, OnClickListener {
     private RecyclerView mCommentsRecyclerView;
     private CommentsAdapter mCommentsAdapter;
     private EditText mMessageTextInput;
+
+    @Override
+    public NavigationDrawerItem getCurrentNavDrawerItem() {
+        return NavigationDrawerItem.FEATURED;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

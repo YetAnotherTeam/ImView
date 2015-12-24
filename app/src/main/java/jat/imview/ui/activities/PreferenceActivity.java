@@ -14,7 +14,7 @@ public class PreferenceActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(jat.imview.R.layout.activity_preferance);
+        setContentView(jat.imview.R.layout.activity_preference);
 
         Toolbar toolbar = (Toolbar) findViewById(jat.imview.R.id.pref_toolbar);
         toolbar.setTitleTextColor(0xFFFFFFFF);

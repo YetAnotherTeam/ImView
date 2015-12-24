@@ -13,7 +13,6 @@ public class Request {
 
     public Request(HTTPMethod method, URI requestUri, Map<String, List<String>> headers,
                    byte[] body) {
-        super();
         this.method = method;
         this.requestUri = requestUri;
         this.headers = headers;

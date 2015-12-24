@@ -2,22 +2,24 @@ package jat.imview.rest;
 
 import android.content.Context;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.net.URI;
 
 import jat.imview.model.Image;
+import jat.imview.model.ImageList;
 import jat.imview.rest.ResponseMessages.ImageListResponse;
 
 import static jat.imview.rest.ConnectionParams.HOST;
 import static jat.imview.rest.ConnectionParams.SCHEMA;
 
-public class GetImageRestMethod extends AbstractRestMethod<Image[]> {
+public class GetImageListRestMethod extends AbstractRestMethod<ImageList> {
     private WeakReference<Context> weekContext;
-    private static final URI IMAGE_URI = URI.create(SCHEMA + HOST + "image/list");
+    private static final URI IMAGE_URI = URI.create(SCHEMA + HOST + "/image/list?is_featured=1");
 
-    public GetImageRestMethod(Context context) {
+    public GetImageListRestMethod(Context context) {
         weekContext = new WeakReference<>(context.getApplicationContext());
     }
 
@@ -27,9 +29,8 @@ public class GetImageRestMethod extends AbstractRestMethod<Image[]> {
     }
 
     @Override
-    protected Image[] parseResponseBody(String responseBody) throws Exception {
-        JSONObject json = new JSONObject(responseBody);
-        return new ImageListResponse(json).getImageArray();
+    protected ImageList parseResponseBody(String responseBody) throws Exception {
+        return new ImageListResponse(responseBody).getImageList();
     }
 
     @Override

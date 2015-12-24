@@ -38,21 +38,20 @@
             android:textColor="#000"
             android:textSize="20sp" />
     </RelativeLayout>
-    <!--
     <jat.imview.ui.views.TouchImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/advertising_block"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
         android:scaleType="fitCenter"
-        android:paddingTop="?attr/actionBarSize"
-        android:src="@drawable/bender" /> -->
+        android:src="@drawable/bender" />
+    <!--
     <jat.imview.ui.views.GalleryViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/control_block"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true" /> -->
     <!-- Control block aligned to advertising block -->
     <RelativeLayout
         android:id="@+id/control_block"

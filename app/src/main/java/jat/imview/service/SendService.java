@@ -4,14 +4,18 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
+import android.util.Log;
 
 import jat.imview.processor.ImageListProcessor;
+import jat.imview.processor.ProcessorCallback;
 import jat.imview.rest.HTTPMethod;
 
 /**
  * Created by bulat on 07.12.15.
  */
 public class SendService extends IntentService {
+    private static final String LOG_TAG = "MyService";
+
     public static final String METHOD_EXTRA = "jat.imview.service.METHOD_EXTRA";
     public static final String REQUEST_TYPE_EXTRA = "jat.imview.service.REQUEST_TYPE_EXTRA";
     public static final String SERVICE_CALLBACK_EXTRA = "jat.imview.service.SERVICE_CALLBACK_EXTRA";
@@ -46,6 +50,7 @@ public class SendService extends IntentService {
         HTTPMethod httpMethod = (HTTPMethod) mOriginalRequestIntent.getSerializableExtra(METHOD_EXTRA);
         RequestType requestType = (RequestType) mOriginalRequestIntent.getSerializableExtra(REQUEST_TYPE_EXTRA);
         mServiceCallback = mOriginalRequestIntent.getParcelableExtra(SERVICE_CALLBACK_EXTRA);
+        Log.d(LOG_TAG, "Handle intent");
         switch (requestType) {
             case LOGIN:
                 if (httpMethod.equals(HTTPMethod.POST)) {
@@ -77,8 +82,9 @@ public class SendService extends IntentService {
                 break;
             case IMAGE_LIST:
                 if (httpMethod.equals(HTTPMethod.GET)) {
+                    Log.d(LOG_TAG, "Image List");
                     ImageListProcessor imageListProcessor = new ImageListProcessor(getApplicationContext());
-                    //imageListProcessor.getImageList();
+                    imageListProcessor.getImageList(makeProcessorCallback());
                 } else {
                     sendInvalidRequestCode();
                 }
@@ -101,6 +107,17 @@ public class SendService extends IntentService {
                 sendInvalidRequestCode();
                 break;
         }
+    }
+
+    private ProcessorCallback makeProcessorCallback() {
+        return new ProcessorCallback() {
+            @Override
+            public void send(int resultCode) {
+                if (mServiceCallback != null) {
+                    mServiceCallback.send(resultCode, getOriginalIntentBundle());
+                }
+            }
+        };
     }
 
     private void sendInvalidRequestCode() {

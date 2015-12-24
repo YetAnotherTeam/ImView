@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import jat.imview.rest.HTTPMethod;
  * Created by bulat on 07.12.15.
  */
 public class SendServiceHelper {
+    private static final String LOG_TAG = "MyServiceHelper";
     public static String ACTION_REQUEST_RESULT = "REQUEST_RESULT";
     public static String EXTRA_REQUEST_ID = "EXTRA_REQUEST_ID";
     public static String EXTRA_RESULT_CODE = "EXTRA_RESULT_CODE";
@@ -52,10 +54,11 @@ public class SendServiceHelper {
     }
 
     private Intent prepareIntent(Context context, int requestId, RequestType requestType, HTTPMethod httpMethod) {
+        Log.d(LOG_TAG, "prepare intent");
         ResultReceiver serviceCallback = new ResultReceiver(null) {
             @Override
             protected void onReceiveResult(int resultCode, Bundle resultData) {
-                handleRequest(resultCode, resultData);
+                handleResponse(resultCode, resultData);
             }
         };
         Intent intent = new Intent(context, SendService.class);
@@ -66,7 +69,7 @@ public class SendServiceHelper {
         return intent;
     }
 
-    private void handleRequest(int resultCode, Bundle resultData) {
+    private void handleResponse(int resultCode, Bundle resultData) {
         Intent originalIntent = resultData.getParcelable(SendService.ORIGINAL_INTENT_EXTRA);
         if (originalIntent != null) {
             int requestId = originalIntent.getIntExtra(REQUEST_ID, -1);

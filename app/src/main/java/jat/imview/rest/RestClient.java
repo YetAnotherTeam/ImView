@@ -10,65 +10,56 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RestClient {
+    private static final int CHUNK_SIZE = 10;
 
-	public Response execute(Request request) {
-		HttpURLConnection conn = null;
+    public Response execute(Request request) {
+		HttpURLConnection connection = null;
 		Response response = null;
-		int status = -1;
+		int statusCode = -1;
 		try {
-
 			URL url = request.getRequestUri().toURL();
-			conn = (HttpURLConnection) url.openConnection();
-			if (request.getHeaders() != null) {
-				for (String header : request.getHeaders().keySet()) {
-					for (String value : request.getHeaders().get(header)) {
-						conn.addRequestProperty(header, value);
-					}
-				}
-			}
-
+			connection = (HttpURLConnection) url.openConnection();
 			switch (request.getMethod()) {
 			case GET:
-				conn.setDoOutput(false);
+				connection.setDoOutput(false);
 				break;
 			case POST:
 				byte[] payload = request.getBody();
-				conn.setDoOutput(true);
-				conn.setFixedLengthStreamingMode(payload.length);
-				conn.getOutputStream().write(payload);
-				status = conn.getResponseCode();
+				connection.setDoOutput(true);
+				connection.setFixedLengthStreamingMode(payload.length);
+				connection.getOutputStream().write(payload);
 			default:
 				break;
 			}
 
-			status = conn.getResponseCode();
-
-			if (conn.getContentLength() > 0) {
-				BufferedInputStream in = new BufferedInputStream(conn.getInputStream());
-				byte[] body = readStream(in);
-				response = new Response(conn.getResponseCode(), conn.getHeaderFields(), body);
+			statusCode = connection.getResponseCode();
+            byte[] body;
+			if (connection.getContentLength() > 0) {
+				BufferedInputStream in = new BufferedInputStream(connection.getInputStream());
+				body = readStream(in);
 			} else {
-				response = new Response(status, conn.getHeaderFields(), new byte[] {});
+				body = new byte[] {};
 			}
+            response = new Response(statusCode, body);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if (conn != null)
-				conn.disconnect();
+			if (connection != null)
+				connection.disconnect();
 		}
 		
 		if (response == null) {
-			response = new Response(status, new HashMap<String, List<String>>(), new byte[] {});
+			response = new Response(statusCode, new byte[] {});
 		}
 		
 		return response;
 	}
 
 	private static byte[] readStream(InputStream in) throws IOException {
-		byte[] buf = new byte[1024];
+		byte[] buf = new byte[CHUNK_SIZE];
 		int count;
-		ByteArrayOutputStream out = new ByteArrayOutputStream(1024);
+		ByteArrayOutputStream out = new ByteArrayOutputStream(CHUNK_SIZE);
 		while ((count = in.read(buf)) != -1)
 			out.write(buf, 0, count);
 		return out.toByteArray();

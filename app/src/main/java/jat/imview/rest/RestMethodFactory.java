@@ -38,7 +38,7 @@ public class RestMethodFactory {
         switch (uriMatcher.match(resourceUri)) {
             case IMAGE:
                 if (method == HTTPMethod.GET) {
-                    return new GetImageRestMethod(mContext);
+                    return new GetImageListRestMethod(mContext);
                 }
                 break;
         }

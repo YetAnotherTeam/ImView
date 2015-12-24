@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractRestMethod<T> implements RestMethod<T> {
-    private static final String DEFAULT_ENCODING = "UTF-8";
-
     public RestMethodResult<T> execute() {
         Request request = buildRequest();
         Response response = doRequest(request);
@@ -21,7 +19,7 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
         String statusMessage = "";
         T resource = null;
         try {
-            String responseBody = new String(response.body, getCharacterEncoding(response.headers));
+            String responseBody = new String(response.body);
             resource = parseResponseBody(responseBody);
         } catch (Exception ex) {
             status = 500;
@@ -37,9 +35,5 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
     private Response doRequest(Request request) {
         RestClient client = new RestClient();
         return client.execute(request);
-    }
-
-    private String getCharacterEncoding(Map<String, List<String>> headers) {
-        return DEFAULT_ENCODING;
     }
 }
