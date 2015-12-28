@@ -1,5 +1,7 @@
 package jat.imview.model;
 
+import java.util.Date;
+
 /**
  * Created by bulat on 23.12.15.
  */
@@ -7,15 +9,15 @@ public class Image {
     private int id;
     private int rating;
     private String path;
-    private boolean isFeatured;
+    private Date publishDate;
 
     public Image() {
     }
 
-    public Image(int id, String path, boolean isFeatured, int rating) {
+    public Image(int id, String path, Date publishDate, int rating) {
         this.id = id;
         this.path = path;
-        this.isFeatured = isFeatured;
+        this.publishDate = publishDate;
         this.rating = rating;
     }
 
@@ -34,21 +36,19 @@ public class Image {
     public void setPath(String path) {
         this.path = path;
     }
-
-    public boolean isFeatured() {
-        return isFeatured;
-    }
-
-    public void setIsFeatured(boolean isFeatured) {
-        this.isFeatured = isFeatured;
-    }
-
-
     public int getRating() {
         return rating;
     }
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public Date getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(Date publishDate) {
+        this.publishDate = publishDate;
     }
 }

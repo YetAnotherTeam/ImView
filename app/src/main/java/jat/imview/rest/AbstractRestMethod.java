@@ -1,18 +1,14 @@
 package jat.imview.rest;
 
-import android.content.Context;
-
-import java.util.List;
-import java.util.Map;
+import android.util.Log;
 
 public abstract class AbstractRestMethod<T> implements RestMethod<T> {
+    private static final String LOG_TAG = "MyResponse";
     public RestMethodResult<T> execute() {
         Request request = buildRequest();
         Response response = doRequest(request);
         return buildResult(response);
     }
-
-    protected abstract Context getContext();
 
     protected RestMethodResult<T> buildResult(Response response) {
         int status = response.status;
@@ -20,6 +16,7 @@ public abstract class AbstractRestMethod<T> implements RestMethod<T> {
         T resource = null;
         try {
             String responseBody = new String(response.body);
+            Log.d(LOG_TAG, responseBody);
             resource = parseResponseBody(responseBody);
         } catch (Exception ex) {
             status = 500;

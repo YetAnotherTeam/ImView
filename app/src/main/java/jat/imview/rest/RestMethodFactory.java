@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.UriMatcher;
 import android.net.Uri;
 
-import java.util.List;
-import java.util.Map;
-
-import jat.imview.сontentProvider.ImageConstants;
+import jat.imview.сontentProvider.ImageTable;
 
 public class RestMethodFactory {
     private UriMatcher uriMatcher;
@@ -31,10 +28,10 @@ public class RestMethodFactory {
     private RestMethodFactory(Context context) {
         mContext = context.getApplicationContext();
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(ImageConstants.AUTHORITY, ImageConstants.TABLE_NAME, IMAGE);
+        uriMatcher.addURI(ImageTable.AUTHORITY, ImageTable.TABLE_NAME, IMAGE);
     }
 
-    public RestMethod getRestMethod(Uri resourceUri, HTTPMethod method, Map<String, List<String>> headers, byte[] body) {
+    public RestMethod getRestMethod(Uri resourceUri, HTTPMethod method) {
         switch (uriMatcher.match(resourceUri)) {
             case IMAGE:
                 if (method == HTTPMethod.GET) {

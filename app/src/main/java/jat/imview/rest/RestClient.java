@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RestClient {
-    private static final int CHUNK_SIZE = 10;
+    private static final int CHUNK_SIZE = 1024;
 
     public Response execute(Request request) {
 		HttpURLConnection connection = null;
@@ -56,12 +56,12 @@ public class RestClient {
 		return response;
 	}
 
-	private static byte[] readStream(InputStream in) throws IOException {
-		byte[] buf = new byte[CHUNK_SIZE];
+	private static byte[] readStream(InputStream inputStream) throws IOException {
+		byte[] buffer = new byte[CHUNK_SIZE];
 		int count;
-		ByteArrayOutputStream out = new ByteArrayOutputStream(CHUNK_SIZE);
-		while ((count = in.read(buf)) != -1)
-			out.write(buf, 0, count);
-		return out.toByteArray();
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(CHUNK_SIZE);
+		while ((count = inputStream.read(buffer)) != -1)
+			byteArrayOutputStream.write(buffer, 0, count);
+		return byteArrayOutputStream.toByteArray();
 	}
 }

@@ -2,7 +2,6 @@ package jat.imview.rest;
 
 
 public class RestMethodResult<T> {
-	
 	private int statusCode = 0;
 	private String statusMessage;
 	private T resource;

@@ -1,5 +1,4 @@
 package jat.imview.сontentProvider;
-import static android.provider.BaseColumns._ID;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,9 +19,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // IMAGE TABLE
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("CREATE TABLE").append(ImageConstants.TABLE_NAME).append(" (");
-        sqlBuilder.append(_ID).append(" INTEGER, ");
-        sqlBuilder.append(ImageConstants.FILEPATH).append(" TEXT, ");
+        sqlBuilder.append("CREATE TABLE").append(ImageTable.TABLE_NAME).append(" (");
+        sqlBuilder.append(ImageTable.ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT, ");
+        sqlBuilder.append(ImageTable.NETPATH).append(" TEXT NOT NULL, ");
+        sqlBuilder.append(ImageTable.RATING).append(" INTEGER, ");
+        sqlBuilder.append(ImageTable.PUBLISH_DATE).append(" DATETIME NOT NULL, ");
+        sqlBuilder.append(ImageTable.FILEPATH).append(" TEXT, ");
+        sqlBuilder.append(ImageTable.STATUS).append(" TEXT, ");
+        sqlBuilder.append(ImageTable.RESULT).append(" INTEGER, ");
         sqlBuilder.append(");");
         String sqlQuery = sqlBuilder.toString();
         db.execSQL(sqlQuery);

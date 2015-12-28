@@ -83,7 +83,8 @@ public class SendService extends IntentService {
             case IMAGE_LIST:
                 if (httpMethod.equals(HTTPMethod.GET)) {
                     Log.d(LOG_TAG, "Image List");
-                    ImageListProcessor imageListProcessor = new ImageListProcessor(getApplicationContext());
+                    boolean isFeatured = mOriginalRequestIntent.getBooleanExtra(IMAGE_LIST_IS_FEATURED_EXTRA, false);
+                    ImageListProcessor imageListProcessor = new ImageListProcessor(getApplicationContext(), isFeatured);
                     imageListProcessor.getImageList(makeProcessorCallback());
                 } else {
                     sendInvalidRequestCode();
