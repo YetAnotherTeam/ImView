@@ -8,15 +8,16 @@ import java.util.Date;
 public class Image {
     private int id;
     private int rating;
-    private String path;
+    private String filepath;
+    private String netpath;
     private Date publishDate;
 
     public Image() {
     }
 
-    public Image(int id, String path, Date publishDate, int rating) {
+    public Image(int id, String netpath, Date publishDate, int rating) {
         this.id = id;
-        this.path = path;
+        this.netpath = netpath;
         this.publishDate = publishDate;
         this.rating = rating;
     }
@@ -29,19 +30,28 @@ public class Image {
         this.id = id;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
     public int getRating() {
         return rating;
     }
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
+
+    public String getNetpath() {
+        return netpath;
+    }
+
+    public void setNetpath(String netpath) {
+        this.netpath = netpath;
     }
 
     public Date getPublishDate() {

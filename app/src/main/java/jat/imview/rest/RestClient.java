@@ -1,5 +1,7 @@
 package jat.imview.rest;
 
+import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -11,13 +13,15 @@ import java.util.List;
 
 public class RestClient {
     private static final int CHUNK_SIZE = 1024;
+	private static final String LOG_TAG = "MyRequest";
 
-    public Response execute(Request request) {
+	public Response execute(Request request) {
 		HttpURLConnection connection = null;
 		Response response = null;
 		int statusCode = -1;
 		try {
 			URL url = request.getRequestUri().toURL();
+			Log.d(LOG_TAG, url.toString());
 			connection = (HttpURLConnection) url.openConnection();
 			switch (request.getMethod()) {
 			case GET:

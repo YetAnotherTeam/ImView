@@ -42,8 +42,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.activities.LoginActivity" />
         <activity android:name=".ui.activities.SignupActivity" />
-        <service android:name=".service.SendService" />
-    </application>
 
+        <service android:name=".service.SendService" />
+        <provider
+            android:name=".contentProvider.ImageProvider"
+            android:authorities="jat.imview.imageProvider" />
+    </application>
 
 </manifest>

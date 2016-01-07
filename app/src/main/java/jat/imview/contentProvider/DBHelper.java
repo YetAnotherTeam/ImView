@@ -1,8 +1,10 @@
-package jat.imview.сontentProvider;
+package jat.imview.contentProvider;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import jat.imview.rest.RequestState;
 
 /**
  * Created by bulat on 23.12.15.
@@ -19,14 +21,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // IMAGE TABLE
         StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("CREATE TABLE").append(ImageTable.TABLE_NAME).append(" (");
+        sqlBuilder.append("CREATE TABLE ").append(ImageTable.TABLE_NAME).append(" (");
         sqlBuilder.append(ImageTable.ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT, ");
         sqlBuilder.append(ImageTable.NETPATH).append(" TEXT NOT NULL, ");
-        sqlBuilder.append(ImageTable.RATING).append(" INTEGER, ");
+        sqlBuilder.append(ImageTable.RATING).append(" INTEGER NOT NULL DEFAULT 0, ");
         sqlBuilder.append(ImageTable.PUBLISH_DATE).append(" DATETIME NOT NULL, ");
         sqlBuilder.append(ImageTable.FILEPATH).append(" TEXT, ");
-        sqlBuilder.append(ImageTable.STATUS).append(" TEXT, ");
-        sqlBuilder.append(ImageTable.RESULT).append(" INTEGER, ");
+        sqlBuilder.append(ImageTable.STATE).append(" INTEGER NOT NULL DEFAULT ")
+                .append(RequestState.WAITING.ordinal());
         sqlBuilder.append(");");
         String sqlQuery = sqlBuilder.toString();
         db.execSQL(sqlQuery);

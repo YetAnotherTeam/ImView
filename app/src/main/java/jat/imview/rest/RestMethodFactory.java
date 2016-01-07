@@ -4,7 +4,8 @@ import android.content.Context;
 import android.content.UriMatcher;
 import android.net.Uri;
 
-import jat.imview.сontentProvider.ImageTable;
+import jat.imview.rest.restMethods.ImageListRestMethod;
+import jat.imview.contentProvider.ImageTable;
 
 public class RestMethodFactory {
     private UriMatcher uriMatcher;
@@ -35,7 +36,7 @@ public class RestMethodFactory {
         switch (uriMatcher.match(resourceUri)) {
             case IMAGE:
                 if (method == HTTPMethod.GET) {
-                    return new GetImageListRestMethod(mContext);
+                    return new ImageListRestMethod(mContext);
                 }
                 break;
         }

@@ -1,4 +1,4 @@
-package jat.imview.сontentProvider;
+package jat.imview.contentProvider;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -55,7 +55,7 @@ public class ImageProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         db = dbHelper.getWritableDatabase();
-        if (uriMatcher.match(uri) != URI_IMAGES) {
+        if (uriMatcher.match(uri) != URI_IMAGES_ID) {
             throw new IllegalArgumentException("Unknown URI " + uri);
         }
         long id = db.insertOrThrow(ImageTable.TABLE_NAME, null, values);

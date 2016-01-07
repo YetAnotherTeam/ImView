@@ -1,9 +1,9 @@
-package jat.imview.rest;
+package jat.imview.rest.restMethods;
 
 /**
  * Created by bulat on 20.12.15.
  */
 public interface ConnectionParams {
     String SCHEME = "http://";
-    String HOST = "52.25.145.110";
+    String HOST = "95.213.199.248";
 }

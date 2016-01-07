@@ -1,4 +1,4 @@
-package jat.imview.сontentProvider;
+package jat.imview.contentProvider;
 
 import android.net.Uri;
 
