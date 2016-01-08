@@ -6,4 +6,6 @@ package jat.imview.rest;
 public enum HTTPMethod {
     GET,
     POST,
+    PUT,
+    DELETE
 }

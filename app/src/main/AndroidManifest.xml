@@ -12,9 +12,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
-            android:name=".ui.activities.SplashScreenActivity"
+            android:name=".ui.activity.SplashScreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppTheme.Fullscreen">
             <intent-filter>
@@ -24,29 +23,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.ImageActivity"
+            android:name=".ui.activity.CommentsActivity"
+            android:label="Comments"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activity.ImageNewActivity"></activity>
+        <activity
+            android:name=".ui.activity.ImageActivity"
             android:label="@string/title_activity_image"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activities.MainActivity" />
         <activity
-            android:name=".ui.activities.PreferenceActivity"
+            android:name=".ui.activity.PreferenceActivity"
             android:label="Settings"
             android:theme="@style/PreferenceTheme" />
         <activity
-            android:name=".ui.activities.FeaturedActivity"
+            android:name=".ui.activity.FeaturedActivity"
             android:label="Featured"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.activities.CommentsActivity"
-            android:label="Comments"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activities.LoginActivity" />
-        <activity android:name=".ui.activities.SignupActivity" />
+
+        <activity android:name=".ui.activity.LoginActivity" />
+        <activity android:name=".ui.activity.SignupActivity" />
 
         <service android:name=".service.SendService" />
+
         <provider
             android:name=".contentProvider.ImageProvider"
             android:authorities="jat.imview.imageProvider" />
+
     </application>
 
 </manifest>

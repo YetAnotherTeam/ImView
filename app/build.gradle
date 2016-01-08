@@ -24,11 +24,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     // Circular Image View
     compile 'com.pkmmte.view:circularimageview:1.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     // Material Navigation Drawer
     compile('com.mikepenz:materialdrawer:4.4.4@aar') {
         transitive = true
     }
-    compile 'it.sephiroth.android.library.imagezoom:imagezoom:1.0.5'
     // Support libraries
     compile 'com.mikepenz:google-material-typeface:1.2.0.1@aar'
     compile 'com.android.support:appcompat-v7:23.1.1'
@@ -36,9 +36,4 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.android.support:support-v4:23.1.1'
-
-    //photo slider https://github.com/daimajia/AndroidImageSlider
-    compile 'com.squareup.picasso:picasso:2.3.2'
-    compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.daimajia.slider:library:1.1.5@aar'
 }

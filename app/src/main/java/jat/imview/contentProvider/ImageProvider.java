@@ -7,23 +7,34 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+
+import jat.imview.contentProvider.DB.DBHelper;
+import jat.imview.contentProvider.DB.Table.AbyssTable;
+import jat.imview.contentProvider.DB.Table.FeaturedTable;
+import jat.imview.contentProvider.DB.Table.ImageTable;
+import jat.imview.model.Image;
 
 /**
  * Created by bulat on 07.12.15.
  */
 public class ImageProvider extends ContentProvider {
-    public final static UriMatcher uriMatcher;
+    public static final UriMatcher uriMatcher;
     private DBHelper dbHelper;
     private static final int URI_IMAGES = 1;
     private static final int URI_IMAGES_ID = 2;
-    SQLiteDatabase db;
+    private static final int URI_FEATURED_IMAGES = 3;
+    private static final int URI_ABYSS_IMAGES = 4;
+    private SQLiteDatabase db;
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(ImageTable.AUTHORITY, ImageTable.URI_PATH, URI_IMAGES);
         uriMatcher.addURI(ImageTable.AUTHORITY, ImageTable.URI_PATH + "/#", URI_IMAGES_ID);
+        uriMatcher.addURI(ImageTable.AUTHORITY, ImageTable.URI_PATH + "/" + FeaturedTable.URI_PATH, URI_FEATURED_IMAGES);
+        uriMatcher.addURI(ImageTable.AUTHORITY, ImageTable.URI_PATH + "/" + AbyssTable.URI_PATH, URI_ABYSS_IMAGES);
     }
 
     @Override
@@ -53,7 +64,7 @@ public class ImageProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
         db = dbHelper.getWritableDatabase();
         if (uriMatcher.match(uri) != URI_IMAGES_ID) {
             throw new IllegalArgumentException("Unknown URI " + uri);
@@ -67,7 +78,7 @@ public class ImageProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         switch (uriMatcher.match(uri)) {
             case URI_IMAGES:
                 if (TextUtils.isEmpty(sortOrder)) {
@@ -88,7 +99,31 @@ public class ImageProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int bulkInsert(@NonNull Uri uri, ContentValues[] values) {
+        switch (uriMatcher.match(uri)) {
+            case URI_FEATURED_IMAGES:
+            case URI_ABYSS_IMAGES:
+                db = dbHelper.getWritableDatabase();
+                int insertCount = 0;
+                try{
+                    db.beginTransaction();
+                    for (ContentValues valuesItem: values) {
+                        db.insert(FeaturedTable.TABLE_NAME, null, valuesItem);
+                    }
+                    db.setTransactionSuccessful();
+                    insertCount = values.length;
+                } catch (Exception e){
+                    e.printStackTrace();
+                } finally {
+                    db.endTransaction();
+                }
+                return insertCount;
+        }
+        return 0;
+    }
+
+    @Override
+    public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         switch (uriMatcher.match(uri)) {
             case URI_IMAGES:
                 throw new UnsupportedOperationException("Not implemented");
@@ -106,8 +141,19 @@ public class ImageProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
-        throw new UnsupportedOperationException("Not implemented");
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
+        switch (uriMatcher.match(uri)) {
+            case URI_FEATURED_IMAGES:
+                db = dbHelper.getWritableDatabase();
+                db.execSQL(DBHelper.getTruncateSqlQuery(FeaturedTable.TABLE_NAME));
+                break;
+            case URI_ABYSS_IMAGES:
+                db = dbHelper.getWritableDatabase();
+                db.execSQL(DBHelper.getTruncateSqlQuery(AbyssTable.TABLE_NAME));
+            default:
+                throw new IllegalArgumentException("Wrong URI: " + uri);
+        }
+        return 0;
     }
 
     // Чтобы проверяло и по id
