@@ -5,7 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,17 +18,20 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
+
 import jat.imview.R;
 import jat.imview.adapter.GalleryAdapter;
-import jat.imview.service.SendService;
+import jat.imview.contentProvider.DB.Table.FeaturedTable;
 import jat.imview.service.SendServiceHelper;
 import jat.imview.ui.view.GalleryViewPager;
 
-public class FeaturedActivity extends DrawerActivity implements View.OnClickListener {
+public class FeaturedActivity extends DrawerActivity implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
     private static final String LOG_TAG = "MyFeaturedActivity";
     private static final boolean IS_FEATURED = true;
     private GalleryViewPager mViewPager;
-
+    private GalleryAdapter mGalleryAdapter;
     private LinearLayout mVoteUpButton;
     private LinearLayout mCommentsButton;
     private ImageButton mShareButton;
@@ -43,9 +50,11 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
         mShareButton = (ImageButton) findViewById(R.id.share_button);
         mShareButton.setOnClickListener(this);
         SendServiceHelper.getInstance(this).requestImageList(true);
+
+        getSupportLoaderManager().restartLoader(0, null, this);
+        mGalleryAdapter = new GalleryAdapter(this);
         mViewPager = (GalleryViewPager) findViewById(R.id.view_pager);
-        Cursor cursor = null;// getContentResolver().query();
-        mViewPager.setAdapter(new GalleryAdapter(this, cursor));
+        mViewPager.setAdapter(mGalleryAdapter);
     }
 
     @Override
@@ -63,6 +72,12 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
                 startActivity(intent);
                 break;
             case R.id.share_button:
+                ShareLinkContent shareLinkContent = new ShareLinkContent.Builder()
+                        .setContentTitle("ImView")
+                        .setContentUrl(Uri.parse("http://yandex.ru"))
+                        .setImageUrl(Uri.parse("https://yastatic.net/lego/_/X31pO5JJJKEifJ7sfvuf3mGeD_8.png"))
+                        .build();
+                ShareDialog.show(this, shareLinkContent);
                 break;
         }
     }
@@ -110,5 +125,23 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
                 Log.e(LOG_TAG, e.getLocalizedMessage(), e);
             }
         }
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(this, FeaturedTable.CONTENT_URI, null, null, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if(mGalleryAdapter != null && mViewPager != null) {
+            mGalleryAdapter.changeCursor(data);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        if(mGalleryAdapter != null)
+            mGalleryAdapter.changeCursor(null);
     }
 }

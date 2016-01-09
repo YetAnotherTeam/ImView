@@ -24,6 +24,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     // Circular Image View
     compile 'com.pkmmte.view:circularimageview:1.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.8.1'
+    compile 'com.github.castorflex.smoothprogressbar:library-circular:1.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     // Material Navigation Drawer
     compile('com.mikepenz:materialdrawer:4.4.4@aar') {

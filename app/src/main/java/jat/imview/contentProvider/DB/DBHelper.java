@@ -5,7 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import jat.imview.contentProvider.DB.Table.FeaturedTable;
+import jat.imview.contentProvider.DB.Table.ImageListParams;
 import jat.imview.contentProvider.DB.Table.ImageTable;
+import jat.imview.service.SendService;
 
 /**
  * Created by bulat on 23.12.15.
@@ -13,11 +15,27 @@ import jat.imview.contentProvider.DB.Table.ImageTable;
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "imview.db";
     private static final int DATABASE_VERSION = 1;
+    private static final String IMAGE_LIST_SQL_QUERY;
+    private static final String TRUNCATE_SQL_QUERY;
+
+    static {
+        StringBuilder sqlBuilder = new StringBuilder();
+
+        sqlBuilder.append("SELECT * FROM %s");
+        sqlBuilder.append(" INNER JOIN ").append(ImageTable.TABLE_NAME);
+        sqlBuilder.append(" ON %s").append(".").append(ImageListParams.IMAGE_ID)
+                .append(" = ").append(ImageTable.TABLE_NAME).append(".").append(ImageTable.ID).append(";");
+        IMAGE_LIST_SQL_QUERY = sqlBuilder.toString();
+
+        sqlBuilder.setLength(0);
+        sqlBuilder.append("DELETE FROM %s;");
+        sqlBuilder.append("VACUUM;");
+        TRUNCATE_SQL_QUERY = sqlBuilder.toString();
+    }
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         StringBuilder sqlBuilder = new StringBuilder();
@@ -29,7 +47,6 @@ public class DBHelper extends SQLiteOpenHelper {
         sqlBuilder.append(ImageTable.NETPATH).append(" TEXT NOT NULL, ");
         sqlBuilder.append(ImageTable.RATING).append(" INTEGER NOT NULL DEFAULT 0, ");
         sqlBuilder.append(ImageTable.PUBLISH_DATE).append(" DATETIME NOT NULL, ");
-        sqlBuilder.append(ImageTable.FILEPATH).append(" TEXT, ");
         sqlBuilder.append(ImageTable.STATE).append(" INTEGER NOT NULL DEFAULT ")
                 .append(RequestState.WAITING.ordinal());
         sqlBuilder.append(");");
@@ -53,9 +70,10 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public static String getTruncateSqlQuery(String tableName) {
-        StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("DELETE FROM ").append(tableName).append(";");
-        sqlBuilder.append("VACUUM;");
-        return sqlBuilder.toString();
+        return String.format(TRUNCATE_SQL_QUERY, tableName);
+    }
+
+    public static String getImageListSqlQuery(String tableName) {
+        return String.format(IMAGE_LIST_SQL_QUERY, tableName, tableName);
     }
 }

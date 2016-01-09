@@ -10,6 +10,10 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
+
+import java.sql.SQLException;
+import java.util.Arrays;
 
 import jat.imview.contentProvider.DB.DBHelper;
 import jat.imview.contentProvider.DB.Table.AbyssTable;
@@ -69,8 +73,8 @@ public class ImageProvider extends ContentProvider {
         if (uriMatcher.match(uri) != URI_IMAGES_ID) {
             throw new IllegalArgumentException("Unknown URI " + uri);
         }
-        long id = db.insertOrThrow(ImageTable.TABLE_NAME, null, values);
-
+        long id = db.insertWithOnConflict(ImageTable.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        Log.d("insert", String.valueOf(id));
         Uri newUri = ContentUris.withAppendedId(ImageTable.CONTENT_URI, id);
         getContext().getContentResolver().notifyChange(newUri, null);
         return newUri;
@@ -79,36 +83,44 @@ public class ImageProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor;
         switch (uriMatcher.match(uri)) {
+            case URI_FEATURED_IMAGES:
+                cursor = db.rawQuery(DBHelper.getImageListSqlQuery(FeaturedTable.TABLE_NAME), null);
+                break;
+            case URI_ABYSS_IMAGES:
+                cursor = db.rawQuery(DBHelper.getImageListSqlQuery(AbyssTable.TABLE_NAME), null);
+                break;
             case URI_IMAGES:
-                if (TextUtils.isEmpty(sortOrder)) {
-                    sortOrder = ImageTable.PUBLISH_DATE + " ASC";
-                }
+                cursor = db.query(ImageTable.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case URI_IMAGES_ID:
                 int id = Integer.parseInt(uri.getLastPathSegment());
                 selection = appendRowId(selection, id);
+                cursor = db.query(ImageTable.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             default:
                 throw new IllegalArgumentException("Wrong URI: " + uri);
         }
-        db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query(ImageTable.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
     @Override
     public int bulkInsert(@NonNull Uri uri, ContentValues[] values) {
+        int insertCount = 0;
         switch (uriMatcher.match(uri)) {
             case URI_FEATURED_IMAGES:
             case URI_ABYSS_IMAGES:
                 db = dbHelper.getWritableDatabase();
-                int insertCount = 0;
+                db.beginTransaction();
                 try{
-                    db.beginTransaction();
                     for (ContentValues valuesItem: values) {
-                        db.insert(FeaturedTable.TABLE_NAME, null, valuesItem);
+                        long newId = db.insertOrThrow(FeaturedTable.TABLE_NAME, null, valuesItem);
+                        if (newId <= 0) {
+                            throw new SQLException("Failed to insert row into " + uri);
+                        }
                     }
                     db.setTransactionSuccessful();
                     insertCount = values.length;
@@ -117,9 +129,9 @@ public class ImageProvider extends ContentProvider {
                 } finally {
                     db.endTransaction();
                 }
-                return insertCount;
+                getContext().getContentResolver().notifyChange(uri, null);
         }
-        return 0;
+        return insertCount;
     }
 
     @Override
@@ -129,13 +141,14 @@ public class ImageProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Not implemented");
             case URI_IMAGES_ID:
                 int id = Integer.parseInt(uri.getLastPathSegment());
-                selection = appendRowId(selection, id);
+                // selection = appendRowId(selection, id);
                 break;
             default:
                 throw new IllegalArgumentException("Wrong URI: " + uri);
         }
         db = dbHelper.getWritableDatabase();
         int count = db.update(ImageTable.TABLE_NAME, values, selection, selectionArgs);
+        Log.d("update", uri.toString() + " : " + String.valueOf(count));
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
     }

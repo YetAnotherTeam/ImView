@@ -4,6 +4,8 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -54,11 +56,9 @@ public class ImageListProcessor {
             values.put(ImageTable.NETPATH, image.getNetpath());
             values.put(ImageTable.RATING, image.getRating());
             values.put(ImageTable.PUBLISH_DATE, String.valueOf(image.getPublishDate()));
-            contentResolver.update(
+            contentResolver.insert(
                     ContentUris.withAppendedId(ImageTable.CONTENT_URI, image.getId()),
-                    values,
-                    null,
-                    null
+                    values
             );
 
             ContentValues featuredValues = new ContentValues();

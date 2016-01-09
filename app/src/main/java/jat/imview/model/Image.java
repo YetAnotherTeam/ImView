@@ -8,7 +8,6 @@ import java.util.Date;
 public class Image {
     private int id;
     private int rating;
-    private String filepath;
     private String netpath;
     private Date publishDate;
 
@@ -36,14 +35,6 @@ public class Image {
 
     public void setRating(int rating) {
         this.rating = rating;
-    }
-
-    public String getFilepath() {
-        return filepath;
-    }
-
-    public void setFilepath(String filepath) {
-        this.filepath = filepath;
     }
 
     public String getNetpath() {
