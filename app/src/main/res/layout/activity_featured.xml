@@ -42,11 +42,9 @@
 
     <jat.imview.ui.view.GalleryViewPager
         android:id="@+id/view_pager"
-        android:paddingTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/advertising_block"
-        android:layout_alignParentTop="true"
         android:layout_below="@id/app_bar_layout" />
     <!-- Control block aligned to advertising block -->
     <RelativeLayout

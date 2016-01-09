@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 
+import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 import jat.imview.R;
 import jat.imview.adapter.GalleryAdapter;
 import jat.imview.contentProvider.DB.Table.FeaturedTable;

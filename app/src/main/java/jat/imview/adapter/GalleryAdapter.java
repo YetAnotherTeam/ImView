@@ -2,6 +2,9 @@ package jat.imview.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
@@ -13,9 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
 
-import jat.imview.contentProvider.DB.Table.FeaturedTable;
-import jat.imview.contentProvider.DB.Table.ImageTable;
-import jat.imview.rest.restMethod.ConnectionParams;
+import jat.imview.model.Image;
 import jat.imview.ui.view.TouchImageView;
 
 /**
@@ -28,6 +29,12 @@ public class GalleryAdapter extends PagerAdapter {
     public GalleryAdapter(Context context) {
         weakContext = new WeakReference<>(context);
     }
+/*
+    public GalleryAdapter(Context context, FragmentManager fm) {
+        super(fm);
+        weakContext = new WeakReference<>(context);
+    }
+*/
 
     @Override
     public int getCount() {
@@ -40,31 +47,28 @@ public class GalleryAdapter extends PagerAdapter {
 
     @Override
     public View instantiateItem(ViewGroup container, int position) {
+        final Context context = weakContext.get();
+
         TouchImageView touchImageView = new TouchImageView(container.getContext());
-        Context context = weakContext.get();
         if (cursor.moveToPosition(position)) {
-            int imageId = cursor.getInt(cursor.getColumnIndex(FeaturedTable.IMAGE_ID));
-            int columnIndex = cursor.getColumnIndex(ImageTable.NETPATH);
-            String path = cursor.getString(columnIndex);
-            String url = ConnectionParams.SCHEME + ConnectionParams.HOST + "/" + path;
+            String url = Image.getByCursor(cursor).getFullNetpath();
             Log.d("MyImageURL", url);
             Picasso.with(context)
                     .load(url)
                     .into(touchImageView, new Callback() {
                                 @Override
                                 public void onSuccess() {
-                                    Log.d("123", "success");
+                                    Log.d("MyImageLoading", "Success");
                                 }
 
                                 @Override
                                 public void onError() {
-                                    Log.d("123", "error");
+                                    Log.d("MyImageLoading", "Error");
                                 }
                             }
                     );
 
         }
-        // touchImageView.setImage(cursor.getString(cursor.getColumnIndex(FeaturedTable.IMAGE_ID)));
         container.addView(touchImageView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         return touchImageView;
     }

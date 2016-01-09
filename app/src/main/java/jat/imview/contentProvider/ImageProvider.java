@@ -74,7 +74,6 @@ public class ImageProvider extends ContentProvider {
             throw new IllegalArgumentException("Unknown URI " + uri);
         }
         long id = db.insertWithOnConflict(ImageTable.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-        Log.d("insert", String.valueOf(id));
         Uri newUri = ContentUris.withAppendedId(ImageTable.CONTENT_URI, id);
         getContext().getContentResolver().notifyChange(newUri, null);
         return newUri;
@@ -148,7 +147,6 @@ public class ImageProvider extends ContentProvider {
         }
         db = dbHelper.getWritableDatabase();
         int count = db.update(ImageTable.TABLE_NAME, values, selection, selectionArgs);
-        Log.d("update", uri.toString() + " : " + String.valueOf(count));
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
     }

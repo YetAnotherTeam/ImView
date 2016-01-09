@@ -5,9 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import jat.imview.contentProvider.DB.Table.FeaturedTable;
-import jat.imview.contentProvider.DB.Table.ImageListParams;
+import jat.imview.contentProvider.DB.Table.Base.ImageListParams;
 import jat.imview.contentProvider.DB.Table.ImageTable;
-import jat.imview.service.SendService;
 
 /**
  * Created by bulat on 23.12.15.

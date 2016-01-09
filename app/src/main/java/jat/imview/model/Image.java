@@ -1,6 +1,12 @@
 package jat.imview.model;
 
+import android.database.Cursor;
+
 import java.util.Date;
+
+import jat.imview.contentProvider.DB.Table.ImageTable;
+import jat.imview.rest.restMethod.ConnectionParams;
+import jat.imview.util.DateUtil;
 
 /**
  * Created by bulat on 23.12.15.
@@ -51,5 +57,23 @@ public class Image {
 
     public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
+    }
+
+    public static Image getByCursor(Cursor cursor) {
+        Image image = new Image();
+        int idIndex = cursor.getColumnIndex(ImageTable.ID);
+        int ratingIndex = cursor.getColumnIndex(ImageTable.RATING);
+        int netpathIndex = cursor.getColumnIndex(ImageTable.NETPATH);
+        int publishDateIndex = cursor.getColumnIndex(ImageTable.PUBLISH_DATE);
+        image.setId(cursor.getInt(idIndex));
+        image.setRating(cursor.getInt(ratingIndex));
+        image.setNetpath(cursor.getString(netpathIndex));
+        String stringPublishDate = cursor.getString(publishDateIndex);
+        image.setPublishDate(DateUtil.parseFromDBString(stringPublishDate));
+        return image;
+    }
+
+    public String getFullNetpath() {
+        return ConnectionParams.SCHEME + ConnectionParams.HOST + "/" + netpath;
     }
 }

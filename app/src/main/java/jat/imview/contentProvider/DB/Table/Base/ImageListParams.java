@@ -1,4 +1,4 @@
-package jat.imview.contentProvider.DB.Table;
+package jat.imview.contentProvider.DB.Table.Base;
 
 /**
  * Created by bulat on 09.01.16.
