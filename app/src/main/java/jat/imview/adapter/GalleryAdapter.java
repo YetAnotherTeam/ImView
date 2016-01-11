@@ -4,83 +4,42 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.lang.ref.WeakReference;
 
 import jat.imview.model.Image;
-import jat.imview.ui.view.TouchImageView;
+import jat.imview.ui.fragment.ImageFragment;
+
 
 /**
  * Created by bulat on 07.12.15.
  */
-public class GalleryAdapter extends PagerAdapter {
+public class GalleryAdapter extends FragmentStatePagerAdapter {
     private Cursor cursor;
     private WeakReference<Context> weakContext;
 
-    public GalleryAdapter(Context context) {
-        weakContext = new WeakReference<>(context);
-    }
-/*
     public GalleryAdapter(Context context, FragmentManager fm) {
         super(fm);
         weakContext = new WeakReference<>(context);
     }
-*/
 
     @Override
     public int getCount() {
-        if (cursor == null) {
-            return 0;
-        } else {
+        if (cursor != null) {
             return cursor.getCount();
+        } else {
+            return 0;
         }
     }
 
     @Override
-    public View instantiateItem(ViewGroup container, int position) {
-        final Context context = weakContext.get();
-
-        TouchImageView touchImageView = new TouchImageView(container.getContext());
+    public Fragment getItem(int position) {
+        Image image = null;
         if (cursor.moveToPosition(position)) {
-            String url = Image.getByCursor(cursor).getFullNetpath();
-            Log.d("MyImageURL", url);
-            Picasso.with(context)
-                    .load(url)
-                    .into(touchImageView, new Callback() {
-                                @Override
-                                public void onSuccess() {
-                                    Log.d("MyImageLoading", "Success");
-                                }
-
-                                @Override
-                                public void onError() {
-                                    Log.d("MyImageLoading", "Error");
-                                }
-                            }
-                    );
-
+            image = Image.getByCursor(cursor);
         }
-        container.addView(touchImageView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        return touchImageView;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
-    }
-
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view == object;
+        return ImageFragment.newInstance(image);
     }
 
     public void changeCursor(Cursor newCursor) {

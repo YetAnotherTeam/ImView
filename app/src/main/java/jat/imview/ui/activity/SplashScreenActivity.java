@@ -8,6 +8,7 @@ import com.facebook.FacebookSdk;
 
 import jat.imview.R;
 import jat.imview.asyncTask.PreloadTask;
+import jat.imview.service.SendServiceHelper;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private PreloadTask mPreloadTask;
@@ -16,6 +17,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        SendServiceHelper.getInstance(this).requestImageList(true);
         setContentView(R.layout.activity_splash_screen);
         if (mPreloadTask == null) {
             mPreloadTask = new PreloadTask(this);

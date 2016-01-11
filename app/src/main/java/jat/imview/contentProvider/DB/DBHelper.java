@@ -3,6 +3,7 @@ package jat.imview.contentProvider.DB;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 
 import jat.imview.contentProvider.DB.Table.FeaturedTable;
 import jat.imview.contentProvider.DB.Table.Base.ImageListParams;
@@ -45,6 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sqlBuilder.append(ImageTable.ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT, ");
         sqlBuilder.append(ImageTable.NETPATH).append(" TEXT NOT NULL, ");
         sqlBuilder.append(ImageTable.RATING).append(" INTEGER NOT NULL DEFAULT 0, ");
+        sqlBuilder.append(ImageTable.COMMENTS_COUNT).append(" INTEGER NOT NULL DEFAULT 0, ");
         sqlBuilder.append(ImageTable.PUBLISH_DATE).append(" DATETIME NOT NULL, ");
         sqlBuilder.append(ImageTable.STATE).append(" INTEGER NOT NULL DEFAULT ")
                 .append(RequestState.WAITING.ordinal());
@@ -74,5 +76,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static String getImageListSqlQuery(String tableName) {
         return String.format(IMAGE_LIST_SQL_QUERY, tableName, tableName);
+    }
+
+    // Чтобы проверяло и по id
+    public static String appendRowId(String selection, long id) {
+        return ImageTable.ID + " = " + id + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : "");
     }
 }

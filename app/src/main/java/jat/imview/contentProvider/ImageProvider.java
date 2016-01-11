@@ -10,16 +10,13 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 
 import jat.imview.contentProvider.DB.DBHelper;
 import jat.imview.contentProvider.DB.Table.AbyssTable;
 import jat.imview.contentProvider.DB.Table.FeaturedTable;
 import jat.imview.contentProvider.DB.Table.ImageTable;
-import jat.imview.model.Image;
 
 /**
  * Created by bulat on 07.12.15.
@@ -27,16 +24,17 @@ import jat.imview.model.Image;
 public class ImageProvider extends ContentProvider {
     public static final UriMatcher uriMatcher;
     private DBHelper dbHelper;
+    private SQLiteDatabase db;
+
     private static final int URI_IMAGES = 1;
-    private static final int URI_IMAGES_ID = 2;
+    private static final int URI_IMAGE_ID = 2;
     private static final int URI_FEATURED_IMAGES = 3;
     private static final int URI_ABYSS_IMAGES = 4;
-    private SQLiteDatabase db;
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(ImageTable.AUTHORITY, ImageTable.URI_PATH, URI_IMAGES);
-        uriMatcher.addURI(ImageTable.AUTHORITY, ImageTable.URI_PATH + "/#", URI_IMAGES_ID);
+        uriMatcher.addURI(ImageTable.AUTHORITY, ImageTable.URI_PATH + "/#", URI_IMAGE_ID);
         uriMatcher.addURI(ImageTable.AUTHORITY, ImageTable.URI_PATH + "/" + FeaturedTable.URI_PATH, URI_FEATURED_IMAGES);
         uriMatcher.addURI(ImageTable.AUTHORITY, ImageTable.URI_PATH + "/" + AbyssTable.URI_PATH, URI_ABYSS_IMAGES);
     }
@@ -58,8 +56,10 @@ public class ImageProvider extends ContentProvider {
     public String getType(Uri uri) {
         switch (uriMatcher.match(uri)) {
             case URI_IMAGES:
+            case URI_ABYSS_IMAGES:
+            case URI_FEATURED_IMAGES:
                 return ImageTable.CONTENT_TYPE;
-            case URI_IMAGES_ID:
+            case URI_IMAGE_ID:
                 return ImageTable.CONTENT_ITEM_TYPE;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
@@ -69,10 +69,10 @@ public class ImageProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
-        db = dbHelper.getWritableDatabase();
-        if (uriMatcher.match(uri) != URI_IMAGES_ID) {
+        if (uriMatcher.match(uri) != URI_IMAGE_ID) {
             throw new IllegalArgumentException("Unknown URI " + uri);
         }
+        db = dbHelper.getWritableDatabase();
         long id = db.insertWithOnConflict(ImageTable.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         Uri newUri = ContentUris.withAppendedId(ImageTable.CONTENT_URI, id);
         getContext().getContentResolver().notifyChange(newUri, null);
@@ -94,9 +94,9 @@ public class ImageProvider extends ContentProvider {
             case URI_IMAGES:
                 cursor = db.query(ImageTable.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
-            case URI_IMAGES_ID:
+            case URI_IMAGE_ID:
                 int id = Integer.parseInt(uri.getLastPathSegment());
-                selection = appendRowId(selection, id);
+                selection = DBHelper.appendRowId(selection, id);
                 cursor = db.query(ImageTable.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             default:
@@ -138,9 +138,9 @@ public class ImageProvider extends ContentProvider {
         switch (uriMatcher.match(uri)) {
             case URI_IMAGES:
                 throw new UnsupportedOperationException("Not implemented");
-            case URI_IMAGES_ID:
+            case URI_IMAGE_ID:
                 int id = Integer.parseInt(uri.getLastPathSegment());
-                // selection = appendRowId(selection, id);
+                selection = DBHelper.appendRowId(selection, id);
                 break;
             default:
                 throw new IllegalArgumentException("Wrong URI: " + uri);
@@ -165,10 +165,5 @@ public class ImageProvider extends ContentProvider {
                 throw new IllegalArgumentException("Wrong URI: " + uri);
         }
         return 0;
-    }
-
-    // Чтобы проверяло и по id
-    private String appendRowId(String selection, long id) {
-        return ImageTable.ID + " = " + id + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : "");
     }
 }

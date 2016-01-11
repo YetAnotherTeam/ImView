@@ -2,6 +2,7 @@ package jat.imview.model;
 
 import android.database.Cursor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import jat.imview.contentProvider.DB.Table.ImageTable;
@@ -11,20 +12,22 @@ import jat.imview.util.DateUtil;
 /**
  * Created by bulat on 23.12.15.
  */
-public class Image {
+public class Image implements Serializable {
     private int id;
     private int rating;
     private String netpath;
     private Date publishDate;
+    private int commentsCount;
 
     public Image() {
     }
 
-    public Image(int id, String netpath, Date publishDate, int rating) {
+    public Image(int id, String netpath, Date publishDate, int rating, int commentsCount) {
         this.id = id;
         this.netpath = netpath;
         this.publishDate = publishDate;
         this.rating = rating;
+        this.commentsCount = commentsCount;
     }
 
     public int getId() {
@@ -57,6 +60,14 @@ public class Image {
 
     public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
+    }
+
+    public int getCommentsCount() {
+        return commentsCount;
+    }
+
+    public void setCommentsCount(int commentsCount) {
+        this.commentsCount = commentsCount;
     }
 
     public static Image getByCursor(Cursor cursor) {

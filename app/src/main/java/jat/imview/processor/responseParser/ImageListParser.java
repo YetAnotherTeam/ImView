@@ -30,7 +30,8 @@ public class ImageListParser {
                         jsonImage.getInt("id"),
                         jsonImage.getString("path"),
                         DateUtil.parseFromServerString(jsonImage.getString("publish_date")),
-                        jsonImage.getInt("rating")
+                        jsonImage.getInt("rating"),
+                        jsonImage.getInt("comments_count")
                 );
                 imageList.add(image);
             }
