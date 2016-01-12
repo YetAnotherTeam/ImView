@@ -56,7 +56,7 @@ public class ImageListProcessor {
             values.put(ImageTable.NETPATH, image.getNetpath());
             values.put(ImageTable.RATING, image.getRating());
             values.put(ImageTable.PUBLISH_DATE, String.valueOf(image.getPublishDate()));
-                values.put(ImageTable.COMMENTS_COUNT, String.valueOf(image.getCommentsCount()));
+            values.put(ImageTable.COMMENTS_COUNT, String.valueOf(image.getCommentsCount()));
             contentResolver.insert(
                     ContentUris.withAppendedId(ImageTable.CONTENT_URI, image.getId()),
                     values

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
 
+import jat.imview.processor.CommentListProcessor;
 import jat.imview.processor.ImageListProcessor;
 import jat.imview.processor.ProcessorCallback;
 import jat.imview.rest.HTTPMethod;
@@ -99,7 +100,10 @@ public class SendService extends IntentService {
                 break;
             case COMMENT_LIST:
                 if (httpMethod.equals(HTTPMethod.GET)) {
-
+                    Log.d(LOG_TAG, "Comment List");
+                    int imageId = mOriginalRequestIntent.getIntExtra(COMMENT_LIST_IMAGE_ID_EXTRA, 0);
+                    CommentListProcessor commentListProcessor = new CommentListProcessor(getApplicationContext(), imageId);
+                    commentListProcessor.getCommentList(makeProcessorCallback());
                 } else {
                     sendInvalidRequestCode();
                 }

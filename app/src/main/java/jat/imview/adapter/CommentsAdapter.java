@@ -29,7 +29,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         // MOCK TODO delete after network done
         comment.setRating(12);
         comment.setPublishDate(new Date());
-        comment.setText("dlsad;lkqlsdklasd");
+        comment.setMessage("dlsad;lkqlsdklasd");
         for (int i = 0; i < 90; ++i) {
             comments.add(comment);
         }

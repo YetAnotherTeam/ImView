@@ -10,17 +10,47 @@ import java.util.Locale;
  * Created by bulat on 17.12.15.
  */
 public class Comment {
-    private int userId;
+    private int id;
+    private int imageId;
+    private UserProfile userProfile;
     private Date publishDate;
-    private String text;
-    private int Rating;
+    private String message;
+    private int rating;
 
-    public int getUserId() {
-        return userId;
+    public Comment() {
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public Comment(int id, int imageId, UserProfile userProfile, Date publishDate, String message, int rating) {
+        this.id = id;
+        this.imageId = imageId;
+        this.userProfile = userProfile;
+        this.publishDate = publishDate;
+        this.message = message;
+        this.rating = rating;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
     }
 
     public Date getPublishDate() {
@@ -40,19 +70,19 @@ public class Comment {
         }
     }
 
-    public String getText() {
-        return text;
+    public String getMessage() {
+        return message;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public int getRating() {
-        return Rating;
+        return rating;
     }
 
     public void setRating(int rating) {
-        Rating = rating;
+        this.rating = rating;
     }
 }

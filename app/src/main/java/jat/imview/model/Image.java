@@ -76,11 +76,13 @@ public class Image implements Serializable {
         int ratingIndex = cursor.getColumnIndex(ImageTable.RATING);
         int netpathIndex = cursor.getColumnIndex(ImageTable.NETPATH);
         int publishDateIndex = cursor.getColumnIndex(ImageTable.PUBLISH_DATE);
+        int commentsCountIndex = cursor.getColumnIndex(ImageTable.COMMENTS_COUNT);
         image.setId(cursor.getInt(idIndex));
         image.setRating(cursor.getInt(ratingIndex));
         image.setNetpath(cursor.getString(netpathIndex));
         String stringPublishDate = cursor.getString(publishDateIndex);
         image.setPublishDate(DateUtil.parseFromDBString(stringPublishDate));
+        image.setCommentsCount(cursor.getInt(commentsCountIndex));
         return image;
     }
 
