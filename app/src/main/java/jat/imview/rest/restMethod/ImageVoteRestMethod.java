@@ -1,51 +1,48 @@
 package jat.imview.rest.restMethod;
 
 import android.content.Context;
-import android.net.Uri;
 
 import java.lang.ref.WeakReference;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 import jat.imview.rest.http.HTTPMethod;
 import jat.imview.rest.http.Request;
-import jat.imview.rest.resource.ImageListResource;
+import jat.imview.rest.resource.ImageVoteResource;
 import jat.imview.rest.restMethod.base.AbstractRestMethod;
 
 import static jat.imview.rest.http.ConnectionParams.HOST;
 import static jat.imview.rest.http.ConnectionParams.SCHEME;
 
-public class ImageVoteRestMethod extends AbstractRestMethod<ImageListResource> {
+public class ImageVoteRestMethod extends AbstractRestMethod<ImageVoteResource> {
     private WeakReference<Context> weekContext;
-    private boolean isUpVote = true;
+    private HTTPMethod httpMethod;
     private int imageId;
+    private boolean isUpVote;
     private static final String PATH = "/image/vote";
-    private static final URI IMAGE_URL = URI.create(SCHEME + HOST + PATH);
+    private static final URI IMAGE_VOTE_URL = URI.create(SCHEME + HOST + PATH);
 
     public ImageVoteRestMethod(Context context) {
         weekContext = new WeakReference<>(context.getApplicationContext());
     }
 
-    public void setImageId(int imageId) {
+    public ImageVoteRestMethod(HTTPMethod httpMethod, int imageId, boolean isUpVote) {
+        this.httpMethod = httpMethod;
         this.imageId = imageId;
-    }
-
-    public void setIsUpVote(boolean isUpVote) {
         this.isUpVote = isUpVote;
     }
 
     @Override
     protected Request buildRequest() {
-        URI currentURL = IMAGE_URL;
-        currentURL = URI.create(
-                Uri.parse(IMAGE_URL.toString()).buildUpon()
-                        .appendQueryParameter("is_featured", "1")
-                        .build().toString()
-        );
-        return new Request(HTTPMethod.POST, currentURL, null);
+        Map<String, String> params = new HashMap<>();
+        params.put("image_id", String.valueOf(imageId));
+        params.put("is_upvote", String.valueOf(isUpVote ? 1 : -1));
+        return new Request(HTTPMethod.POST, IMAGE_VOTE_URL, params);
     }
 
     @Override
-    protected ImageListResource parseResponseBody(byte[] responseBody) throws Exception {
+    protected ImageVoteResource parseResponseBody(byte[] responseBody) throws Exception {
         return null;
     }
 }

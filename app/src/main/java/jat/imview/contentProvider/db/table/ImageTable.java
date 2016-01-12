@@ -1,5 +1,7 @@
 package jat.imview.contentProvider.db.table;
 
+import android.net.Uri;
+
 import jat.imview.contentProvider.db.table.base.BaseParams;
 
 /**
@@ -17,4 +19,5 @@ public interface ImageTable extends BaseParams, ResourceTable {
     String URI_PATH = "images";
     String CONTENT_TYPE = "vnd.android.cursor.dir/vnd." + AUTHORITY + "." + URI_PATH;
     String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd." + AUTHORITY + "." + URI_PATH;
+    Uri CONTENT_URI = Uri.parse(SCHEME + AUTHORITY + "/" + URI_PATH);
 }

@@ -101,7 +101,7 @@ public class SendService extends IntentService {
                     int imageId = mOriginalRequestIntent.getIntExtra(IMAGE_VOTE_IMAGE_ID_EXTRA, -1);
                     boolean isUpVote = mOriginalRequestIntent.getBooleanExtra(IMAGE_VOTE_IS_UP_VOTE_EXTRA, false);
                     ImageVoteProcessor imageVoteProcessor = new ImageVoteProcessor(getApplicationContext(), imageId, isUpVote);
-                    //imageVoteProcessor.getImage(makeProcessorCallback());
+                    imageVoteProcessor.getImage(makeProcessorCallback());
                 } else {
                     sendInvalidRequestCode();
                 }

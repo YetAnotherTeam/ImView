@@ -12,7 +12,7 @@ import java.util.Locale;
 public class Comment {
     private int id;
     private int imageId;
-    private UserProfile userProfile;
+    private int userId;
     private Date publishDate;
     private String message;
     private int rating;
@@ -20,10 +20,10 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(int id, int imageId, UserProfile userProfile, Date publishDate, String message, int rating) {
+    public Comment(int id, int imageId, int userId, Date publishDate, String message, int rating) {
         this.id = id;
         this.imageId = imageId;
-        this.userProfile = userProfile;
+        this.userId = userId;
         this.publishDate = publishDate;
         this.message = message;
         this.rating = rating;
@@ -45,12 +45,12 @@ public class Comment {
         this.imageId = imageId;
     }
 
-    public UserProfile getUserProfile() {
-        return userProfile;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public Date getPublishDate() {

@@ -13,10 +13,10 @@ import static jat.imview.rest.http.ConnectionParams.HOST;
 import static jat.imview.rest.http.ConnectionParams.SCHEME;
 
 public class ImageListRestMethod extends AbstractRestMethod<ImageListResource> {
-    private boolean isFeatured;
     private HTTPMethod httpMethod;
+    private boolean isFeatured;
     private static final String PATH = "/image/list";
-    private static final URI IMAGE_URL = URI.create(SCHEME + HOST + PATH);
+    private static final URI IMAGE_LIST_URL = URI.create(SCHEME + HOST + PATH);
 
     public ImageListRestMethod(HTTPMethod httpMethod, boolean isFeatured) {
         this.httpMethod = httpMethod;
@@ -25,10 +25,10 @@ public class ImageListRestMethod extends AbstractRestMethod<ImageListResource> {
 
     @Override
     protected Request buildRequest() {
-        URI currentURL = IMAGE_URL;
+        URI currentURL = IMAGE_LIST_URL;
         if (isFeatured) {
             currentURL = URI.create(
-                    Uri.parse(IMAGE_URL.toString()).buildUpon()
+                    Uri.parse(IMAGE_LIST_URL.toString()).buildUpon()
                             .appendQueryParameter("is_featured", "1")
                             .build().toString()
             );

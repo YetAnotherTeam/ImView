@@ -42,7 +42,7 @@ public class SendServiceHelper {
     }
 
     private SendServiceHelper(Context context) {
-        weakContext = new WeakReference<>(context);
+        weakContext = new WeakReference<>(context.getApplicationContext());
     }
 
     public boolean isRequestPending(RequestType requestType) {

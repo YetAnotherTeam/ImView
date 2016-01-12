@@ -1,10 +1,23 @@
 package jat.imview.processor;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
+import jat.imview.contentProvider.db.table.FeaturedTable;
+import jat.imview.contentProvider.db.table.ImageTable;
+import jat.imview.model.Image;
+import jat.imview.rest.http.HTTPMethod;
 import jat.imview.rest.http.Response;
+import jat.imview.rest.resource.ImageListResource;
+import jat.imview.rest.resource.ImageVoteResource;
+import jat.imview.rest.restMethod.ImageVoteRestMethod;
+import jat.imview.rest.restMethod.base.RestMethod;
+import jat.imview.rest.restMethod.base.RestMethodResult;
 
 /**
  * Created by bulat on 23.12.15.
@@ -20,21 +33,19 @@ public class ImageVoteProcessor {
         this.isUpVote = isUpVote;
     }
 
-    public void getImageVote(ProcessorCallback processorCallback) {
-        /*ImageVoteRestMethod imageVoteRestMethod = ImageVoteRestMethod.getRestMethod(ImageListResource.CONTENT_URI, HTTPMethod.POST);
-        imageVoteRestMethod.setImageId(imageId);
-        imageVoteRestMethod.setIsUpVote(isUpVote);
-        Response response = imageVoteRestMethod.execute();
-
-        if (response.status == 200) {
-            updateContentProvider(response);
+    public void getImage(ProcessorCallback processorCallback) {
+        RestMethod<ImageVoteResource> imageVoteRestMethod = new ImageVoteRestMethod(HTTPMethod.POST, imageId, isUpVote);
+        RestMethodResult<ImageVoteResource> restMethodResult = imageVoteRestMethod.execute();
+        if (restMethodResult.getStatusCode() == 200) {
+            updateContentProvider(restMethodResult);
+        } else {
+            processorCallback.send(restMethodResult.getStatusCode());
         }
-        processorCallback.send(response.status);*/
     }
 
-    private void updateContentProvider(Response response) {
-        /*ImageListResource imageListResponse = new ImageListResource(response);
-        List<Image> imageList = imageListResponse.getImageList();
+    private void updateContentProvider(RestMethodResult<ImageVoteResource> restMethodResult) {
+        ImageVoteResource imageVoteResource = restMethodResult.getResource();
+        List<Image> imageList = imageVoteResource.getImageList();
         ContentResolver contentResolver = weakContext.get().getContentResolver();
         ContentValues[] featuredValuesArray = new ContentValues[imageList.size()];
         for (int i = 0; i < imageList.size(); ++i) {
@@ -46,7 +57,7 @@ public class ImageVoteProcessor {
             values.put(ImageTable.PUBLISH_DATE, String.valueOf(image.getPublishDate()));
             values.put(ImageTable.COMMENTS_COUNT, String.valueOf(image.getCommentsCount()));
             contentResolver.insert(
-                    ContentUris.withAppendedId(ImageListResource.CONTENT_URI, image.getId()),
+                    ContentUris.withAppendedId(ImageTable.CONTENT_URI, image.getId()),
                     values
             );
 
@@ -56,6 +67,5 @@ public class ImageVoteProcessor {
         }
         contentResolver.delete(FeaturedTable.CONTENT_URI, null, null);
         contentResolver.bulkInsert(FeaturedTable.CONTENT_URI, featuredValuesArray);
-        */
     }
 }

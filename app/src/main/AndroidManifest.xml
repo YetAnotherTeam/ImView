@@ -26,7 +26,7 @@
             android:name=".ui.activity.CommentsActivity"
             android:label="Comments"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activity.ImageNewActivity"></activity>
+        <activity android:name=".ui.activity.ImageNewActivity"/>
         <activity
             android:name=".ui.activity.ImageActivity"
             android:label="@string/title_activity_image"
@@ -51,9 +51,11 @@
         <service android:name=".service.SendService" />
 
         <provider
+            android:name=".contentProvider.UserProvider"
+            android:authorities="jat.imview.userProfileProvider" />
+        <provider
             android:name=".contentProvider.ImageProvider"
             android:authorities="jat.imview.imageProvider" />
-
         <provider
             android:name=".contentProvider.CommentProvider"
             android:authorities="jat.imview.commentProvider" />

@@ -15,16 +15,13 @@ import static jat.imview.rest.http.ConnectionParams.HOST;
 import static jat.imview.rest.http.ConnectionParams.SCHEME;
 
 public class CommentListRestMethod extends AbstractRestMethod<CommentListResource> {
-    private WeakReference<Context> weekContext;
+    private HTTPMethod httpMethod;
     private int imageId;
     private static final String PATH = "/comment/list";
     private static final URI COMMENT_LIST_URL = URI.create(SCHEME + HOST + PATH);
 
-    public CommentListRestMethod(Context context) {
-        weekContext = new WeakReference<>(context.getApplicationContext());
-    }
-
-    public void setImageId(int imageId) {
+    public CommentListRestMethod(HTTPMethod httpMethod, int imageId) {
+        this.httpMethod = httpMethod;
         this.imageId = imageId;
     }
 
@@ -40,6 +37,6 @@ public class CommentListRestMethod extends AbstractRestMethod<CommentListResourc
 
     @Override
     protected CommentListResource parseResponseBody(byte[] responseBody) throws Exception {
-        return null;
+        return new CommentListResource(responseBody);
     }
 }

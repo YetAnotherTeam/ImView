@@ -11,7 +11,6 @@ import java.util.List;
 
 import jat.imview.model.Comment;
 import jat.imview.model.UserProfile;
-import jat.imview.rest.http.Response;
 import jat.imview.rest.resource.base.Resource;
 import jat.imview.util.DateUtil;
 
@@ -21,12 +20,13 @@ import jat.imview.util.DateUtil;
 public class CommentListResource implements Resource {
     private static final String LOG_TAG = "MyResponse";
     private List<Comment> commentList = new ArrayList<>();
+    private List<UserProfile> userProfileList = new ArrayList<>();
 
-    public CommentListResource(Response response) {
+    public CommentListResource(byte[] responseBody) {
         try {
-            String responseBody = new String(response.body);
-            Log.d(LOG_TAG, responseBody);
-            JSONArray jsonComments = new JSONArray(responseBody);
+            String responseString = new String(responseBody);
+            Log.d(LOG_TAG, responseString);
+            JSONArray jsonComments = new JSONArray(responseString);
             for (int i = 0; i < jsonComments.length(); ++i) {
                 JSONObject jsonComment = (JSONObject) jsonComments.get(i);
                 JSONObject jsonUserProfile = jsonComment.getJSONObject("author");
@@ -34,10 +34,11 @@ public class CommentListResource implements Resource {
                         jsonUserProfile.getInt("id"),
                         jsonUserProfile.getString("name")
                 );
+                userProfileList.add(userProfile);
                 Comment comment = new Comment(
                         jsonComment.getInt("id"),
                         jsonComment.getInt("image_id"),
-                        userProfile,
+                        userProfile.getId(),
                         DateUtil.parseFromServerString(jsonComment.getString("publish_date")),
                         jsonComment.getString("text"),
                         jsonComment.getInt("rating")
@@ -51,5 +52,9 @@ public class CommentListResource implements Resource {
 
     public List<Comment> getCommentList() {
         return commentList;
+    }
+
+    public List<UserProfile> getUserProfileList() {
+        return userProfileList;
     }
 }

@@ -43,6 +43,7 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
 
     private TextView mCommentsCount;
     private TextView mVoteUpCount;
+
     private Integer requestId;
     private BroadcastReceiver requestReceiver;
 
@@ -79,7 +80,7 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.vote_up_button:
-                SendServiceHelper.getInstance(this).requestImageList(true);
+                SendServiceHelper.getInstance(this).requestImageVote(currentImageId, true);
                 break;
             case R.id.comments_button:
                 Intent intent = new Intent(this, CommentsActivity.class);
@@ -125,8 +126,10 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
             public void onReceive(Context context, Intent intent) {
                 int resultRequestId = intent.getIntExtra(SendServiceHelper.EXTRA_REQUEST_ID, 0);
                 Log.d(LOG_TAG, "Received intent " + intent.getAction() + ", request ID " + resultRequestId);
+                int resultCode = intent.getIntExtra(SendServiceHelper.EXTRA_RESULT_CODE, 0);
+                Log.d(LOG_TAG, String.valueOf(resultCode));
                 if (resultRequestId == requestId) {
-                    int resultCode = intent.getIntExtra(SendServiceHelper.EXTRA_RESULT_CODE, 0);
+                    resultCode = intent.getIntExtra(SendServiceHelper.EXTRA_RESULT_CODE, 0);
                 }
             }
         };
