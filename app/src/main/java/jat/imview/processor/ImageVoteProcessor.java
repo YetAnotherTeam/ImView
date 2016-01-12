@@ -1,48 +1,40 @@
 package jat.imview.processor;
 
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
-import jat.imview.contentProvider.db.table.FeaturedTable;
-import jat.imview.model.Image;
-import jat.imview.rest.http.HTTPMethod;
-import jat.imview.rest.resource.ImageListResource;
-import jat.imview.contentProvider.db.table.ImageTable;
-import jat.imview.rest.restMethod.base.RestMethod;
-import jat.imview.rest.restMethod.base.RestMethodResult;
-import jat.imview.rest.restMethod.ImageListRestMethod;
+import jat.imview.rest.http.Response;
 
 /**
  * Created by bulat on 23.12.15.
  */
-public class ImageListProcessor {
+public class ImageVoteProcessor {
     private WeakReference<Context> weakContext;
-    private boolean isFeatured;
+    private int imageId;
+    private boolean isUpVote;
 
-    public ImageListProcessor(Context context, boolean isFeatured) {
+    public ImageVoteProcessor(Context context, int imageId, boolean isUpVote) {
         weakContext = new WeakReference<>(context);
-        this.isFeatured = isFeatured;
+        this.imageId = imageId;
+        this.isUpVote = isUpVote;
     }
 
-    public void getImageList(ProcessorCallback processorCallback) {
-        RestMethod<ImageListResource> imageListMethod = new ImageListRestMethod(HTTPMethod.GET, isFeatured);
-        RestMethodResult<ImageListResource> restMethodResult = imageListMethod.execute();
+    public void getImageVote(ProcessorCallback processorCallback) {
+        /*ImageVoteRestMethod imageVoteRestMethod = ImageVoteRestMethod.getRestMethod(ImageListResource.CONTENT_URI, HTTPMethod.POST);
+        imageVoteRestMethod.setImageId(imageId);
+        imageVoteRestMethod.setIsUpVote(isUpVote);
+        Response response = imageVoteRestMethod.execute();
 
-        if (restMethodResult.getStatusCode() == 200) {
-            updateContentProvider(restMethodResult);
-        } else {
-            processorCallback.send(restMethodResult.getStatusCode());
+        if (response.status == 200) {
+            updateContentProvider(response);
         }
+        processorCallback.send(response.status);*/
     }
 
-    private void updateContentProvider(RestMethodResult<ImageListResource> restMethodResult) {
-        ImageListResource imageListResource = restMethodResult.getResource();
-        List<Image> imageList = imageListResource.getImageList();
+    private void updateContentProvider(Response response) {
+        /*ImageListResource imageListResponse = new ImageListResource(response);
+        List<Image> imageList = imageListResponse.getImageList();
         ContentResolver contentResolver = weakContext.get().getContentResolver();
         ContentValues[] featuredValuesArray = new ContentValues[imageList.size()];
         for (int i = 0; i < imageList.size(); ++i) {
@@ -64,5 +56,6 @@ public class ImageListProcessor {
         }
         contentResolver.delete(FeaturedTable.CONTENT_URI, null, null);
         contentResolver.bulkInsert(FeaturedTable.CONTENT_URI, featuredValuesArray);
+        */
     }
 }

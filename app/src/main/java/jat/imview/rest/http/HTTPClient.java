@@ -1,17 +1,20 @@
-package jat.imview.rest;
+package jat.imview.rest.http;
 
 import android.util.Log;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
 
-public class RestClient {
+import jat.imview.rest.Utils;
+
+public class HTTPClient {
     private static final int CHUNK_SIZE = 1024;
 	private static final String LOG_TAG = "MyRequest";
 
@@ -28,10 +31,13 @@ public class RestClient {
 				connection.setDoOutput(false);
 				break;
 			case POST:
-				byte[] payload = request.getBody();
 				connection.setDoOutput(true);
-				connection.setFixedLengthStreamingMode(payload.length);
-				connection.getOutputStream().write(payload);
+				OutputStream os = connection.getOutputStream();
+				BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+				writer.write(Utils.getPostDataString(request.getPostDataParams()));
+				writer.flush();
+				writer.close();
+                os.close();
 			default:
 				break;
 			}

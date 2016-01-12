@@ -1,19 +1,17 @@
-package jat.imview.contentProvider.DB;
+package jat.imview.contentProvider.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
 import android.text.TextUtils;
 
-import jat.imview.contentProvider.DB.Table.AbyssTable;
-import jat.imview.contentProvider.DB.Table.Base.BaseParams;
-import jat.imview.contentProvider.DB.Table.CommentTable;
-import jat.imview.contentProvider.DB.Table.FeaturedTable;
-import jat.imview.contentProvider.DB.Table.Base.ImageListParams;
-import jat.imview.contentProvider.DB.Table.ImageTable;
-import jat.imview.contentProvider.DB.Table.UserProfileTable;
-import jat.imview.model.UserProfile;
+import jat.imview.contentProvider.db.table.AbyssTable;
+import jat.imview.contentProvider.db.table.base.BaseParams;
+import jat.imview.contentProvider.db.table.CommentTable;
+import jat.imview.contentProvider.db.table.FeaturedTable;
+import jat.imview.contentProvider.db.table.base.ImageListParams;
+import jat.imview.contentProvider.db.table.ImageTable;
+import jat.imview.contentProvider.db.table.UserProfileTable;
 
 /**
  * Created by bulat on 23.12.15.

@@ -10,8 +10,10 @@ public enum RequestType {
     IMAGE_NEW,
     IMAGE_GET,
     IMAGE_LIST,
+    IMAGE_VOTE,
 
     COMMENT_NEW,
-    COMMENT_LIST
+    COMMENT_LIST,
+    COMMENT_VOTE
 }
 

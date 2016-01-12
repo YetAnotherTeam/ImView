@@ -1,30 +1,25 @@
 package jat.imview.rest.restMethod;
 
-import android.content.Context;
 import android.net.Uri;
 
-import java.lang.ref.WeakReference;
 import java.net.URI;
-import java.util.List;
 
-import jat.imview.model.Image;
-import jat.imview.rest.HTTPMethod;
-import jat.imview.rest.Request;
+import jat.imview.rest.http.HTTPMethod;
+import jat.imview.rest.http.Request;
+import jat.imview.rest.resource.ImageListResource;
+import jat.imview.rest.restMethod.base.AbstractRestMethod;
 
-import static jat.imview.rest.restMethod.ConnectionParams.HOST;
-import static jat.imview.rest.restMethod.ConnectionParams.SCHEME;
+import static jat.imview.rest.http.ConnectionParams.HOST;
+import static jat.imview.rest.http.ConnectionParams.SCHEME;
 
-public class ImageListRestMethod extends AbstractRestMethod<List<Image>> {
-    private WeakReference<Context> weekContext;
-    private boolean isFeatured = false;
+public class ImageListRestMethod extends AbstractRestMethod<ImageListResource> {
+    private boolean isFeatured;
+    private HTTPMethod httpMethod;
     private static final String PATH = "/image/list";
     private static final URI IMAGE_URL = URI.create(SCHEME + HOST + PATH);
 
-    public ImageListRestMethod(Context context) {
-        weekContext = new WeakReference<>(context.getApplicationContext());
-    }
-
-    public void setIsFeatured(boolean isFeatured) {
+    public ImageListRestMethod(HTTPMethod httpMethod, boolean isFeatured) {
+        this.httpMethod = httpMethod;
         this.isFeatured = isFeatured;
     }
 
@@ -38,6 +33,11 @@ public class ImageListRestMethod extends AbstractRestMethod<List<Image>> {
                             .build().toString()
             );
         }
-        return new Request(HTTPMethod.GET, currentURL);
+        return new Request(httpMethod, currentURL, null);
+    }
+
+    @Override
+    protected ImageListResource parseResponseBody(byte[] responseBody) throws Exception {
+        return new ImageListResource(responseBody);
     }
 }

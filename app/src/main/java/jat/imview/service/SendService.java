@@ -8,8 +8,9 @@ import android.util.Log;
 
 import jat.imview.processor.CommentListProcessor;
 import jat.imview.processor.ImageListProcessor;
+import jat.imview.processor.ImageVoteProcessor;
 import jat.imview.processor.ProcessorCallback;
-import jat.imview.rest.HTTPMethod;
+import jat.imview.rest.http.HTTPMethod;
 
 /**
  * Created by bulat on 07.12.15.
@@ -29,6 +30,9 @@ public class SendService extends IntentService {
     public static final String IMAGE_NEW_FILEPATH_EXTRA = "jat.imview.service.IMAGE_NEW_FILEPATH_EXTRA";
     public static final String IMAGE_GET_IMAGE_ID_EXTRA = "jat.imview.service.IMAGE_GET_IMAGE_ID_EXTRA";
     public static final String IMAGE_LIST_IS_FEATURED_EXTRA = "jat.imview.service.IMAGE_LIST_IS_FEATURED_EXTRA";
+    public static final String IMAGE_VOTE_IMAGE_ID_EXTRA = "jat.imview.service.IMAGE_VOTE_IMAGE_ID_EXTRA";
+    public static final String IMAGE_VOTE_IS_UP_VOTE_EXTRA = "jat.imview.service.IMAGE_VOTE_IS_UP_VOTE_EXTRA";
+
 
     public static final String COMMENT_NEW_IMAGE_ID_EXTRA = "jat.imview.service.COMMENT_NEW_IMAGE_ID_EXTRA";
     public static final String COMMENT_NEW_TEXT_EXTRA = "jat.imview.service.COMMENT_NEW_TEXT_EXTRA";
@@ -87,6 +91,17 @@ public class SendService extends IntentService {
                     boolean isFeatured = mOriginalRequestIntent.getBooleanExtra(IMAGE_LIST_IS_FEATURED_EXTRA, false);
                     ImageListProcessor imageListProcessor = new ImageListProcessor(getApplicationContext(), isFeatured);
                     imageListProcessor.getImageList(makeProcessorCallback());
+                } else {
+                    sendInvalidRequestCode();
+                }
+                break;
+            case IMAGE_VOTE:
+                if (httpMethod.equals(HTTPMethod.POST)) {
+                    Log.d(LOG_TAG, "Image Vote");
+                    int imageId = mOriginalRequestIntent.getIntExtra(IMAGE_VOTE_IMAGE_ID_EXTRA, -1);
+                    boolean isUpVote = mOriginalRequestIntent.getBooleanExtra(IMAGE_VOTE_IS_UP_VOTE_EXTRA, false);
+                    ImageVoteProcessor imageVoteProcessor = new ImageVoteProcessor(getApplicationContext(), imageId, isUpVote);
+                    //imageVoteProcessor.getImage(makeProcessorCallback());
                 } else {
                     sendInvalidRequestCode();
                 }

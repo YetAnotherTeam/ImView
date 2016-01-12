@@ -8,19 +8,20 @@ import java.net.URI;
 
 import jat.imview.rest.http.HTTPMethod;
 import jat.imview.rest.http.Request;
-import jat.imview.rest.resource.CommentListResource;
+import jat.imview.rest.resource.ImageListResource;
 import jat.imview.rest.restMethod.base.AbstractRestMethod;
 
 import static jat.imview.rest.http.ConnectionParams.HOST;
 import static jat.imview.rest.http.ConnectionParams.SCHEME;
 
-public class CommentListRestMethod extends AbstractRestMethod<CommentListResource> {
+public class ImageVoteRestMethod extends AbstractRestMethod<ImageListResource> {
     private WeakReference<Context> weekContext;
+    private boolean isUpVote = true;
     private int imageId;
-    private static final String PATH = "/comment/list";
-    private static final URI COMMENT_LIST_URL = URI.create(SCHEME + HOST + PATH);
+    private static final String PATH = "/image/vote";
+    private static final URI IMAGE_URL = URI.create(SCHEME + HOST + PATH);
 
-    public CommentListRestMethod(Context context) {
+    public ImageVoteRestMethod(Context context) {
         weekContext = new WeakReference<>(context.getApplicationContext());
     }
 
@@ -28,18 +29,23 @@ public class CommentListRestMethod extends AbstractRestMethod<CommentListResourc
         this.imageId = imageId;
     }
 
-    @Override
-    protected Request buildRequest() {
-        URI currentURL = URI.create(
-                Uri.parse(COMMENT_LIST_URL.toString()).buildUpon()
-                        .appendQueryParameter("image_id", String.valueOf(imageId))
-                        .build().toString()
-        );
-        return new Request(HTTPMethod.GET, currentURL, null);
+    public void setIsUpVote(boolean isUpVote) {
+        this.isUpVote = isUpVote;
     }
 
     @Override
-    protected CommentListResource parseResponseBody(byte[] responseBody) throws Exception {
+    protected Request buildRequest() {
+        URI currentURL = IMAGE_URL;
+        currentURL = URI.create(
+                Uri.parse(IMAGE_URL.toString()).buildUpon()
+                        .appendQueryParameter("is_featured", "1")
+                        .build().toString()
+        );
+        return new Request(HTTPMethod.POST, currentURL, null);
+    }
+
+    @Override
+    protected ImageListResource parseResponseBody(byte[] responseBody) throws Exception {
         return null;
     }
 }

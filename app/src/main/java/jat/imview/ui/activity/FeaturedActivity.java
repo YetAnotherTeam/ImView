@@ -23,11 +23,9 @@ import android.widget.TextView;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 
-import org.w3c.dom.Text;
-
 import jat.imview.R;
 import jat.imview.adapter.GalleryAdapter;
-import jat.imview.contentProvider.DB.Table.FeaturedTable;
+import jat.imview.contentProvider.db.table.FeaturedTable;
 import jat.imview.model.Image;
 import jat.imview.service.SendServiceHelper;
 import jat.imview.ui.view.GalleryViewPager;
@@ -35,13 +33,16 @@ import jat.imview.ui.view.GalleryViewPager;
 public class FeaturedActivity extends DrawerActivity implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>, ViewPager.OnPageChangeListener {
     private static final String LOG_TAG = "MyFeaturedActivity";
     private static final boolean IS_FEATURED = true;
+    private int currentImageId;
     private GalleryViewPager mViewPager;
     private GalleryAdapter mGalleryAdapter;
+
     private LinearLayout mVoteUpButton;
     private LinearLayout mCommentsButton;
+    private ImageButton mShareButton;
+
     private TextView mCommentsCount;
     private TextView mVoteUpCount;
-    private ImageButton mShareButton;
     private Integer requestId;
     private BroadcastReceiver requestReceiver;
 
@@ -78,9 +79,11 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.vote_up_button:
+                SendServiceHelper.getInstance(this).requestImageList(true);
                 break;
             case R.id.comments_button:
                 Intent intent = new Intent(this, CommentsActivity.class);
+                intent.putExtra(CommentsActivity.IMAGE_ID_EXTRA, currentImageId);
                 startActivity(intent);
                 break;
             case R.id.share_button:
@@ -182,6 +185,7 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
         Cursor cursor = getContentResolver().query(FeaturedTable.CONTENT_URI, null, null, null, null);
         if (cursor.moveToPosition(position)) {
             Image image = Image.getByCursor(cursor);
+            currentImageId = image.getId();
             mCommentsCount.setText(String.valueOf(image.getCommentsCount()));
             mVoteUpCount.setText(String.valueOf(image.getRating()));
         }

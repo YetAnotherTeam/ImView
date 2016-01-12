@@ -10,9 +10,9 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import jat.imview.contentProvider.DB.DBHelper;
-import jat.imview.contentProvider.DB.Table.CommentTable;
-import jat.imview.contentProvider.DB.Table.ImageTable;
+import jat.imview.contentProvider.db.DBHelper;
+import jat.imview.contentProvider.db.table.CommentTable;
+import jat.imview.contentProvider.db.table.ImageTable;
 
 /**
  * Created by bulat on 10.01.16.

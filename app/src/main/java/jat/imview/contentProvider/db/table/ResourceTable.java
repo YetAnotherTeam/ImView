@@ -1,4 +1,4 @@
-package jat.imview.contentProvider.DB.Table;
+package jat.imview.contentProvider.db.table;
 
 public interface ResourceTable {
     /* Статус операции будет храниться в этих колонках */

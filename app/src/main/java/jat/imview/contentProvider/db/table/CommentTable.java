@@ -1,8 +1,8 @@
-package jat.imview.contentProvider.DB.Table;
+package jat.imview.contentProvider.db.table;
 
 import android.net.Uri;
 
-import jat.imview.contentProvider.DB.Table.Base.BaseParams;
+import jat.imview.contentProvider.db.table.base.BaseParams;
 
 /**
  * Created by bulat on 10.01.16.

@@ -9,14 +9,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
 import java.sql.SQLException;
 
-import jat.imview.contentProvider.DB.DBHelper;
-import jat.imview.contentProvider.DB.Table.AbyssTable;
-import jat.imview.contentProvider.DB.Table.FeaturedTable;
-import jat.imview.contentProvider.DB.Table.ImageTable;
+import jat.imview.contentProvider.db.DBHelper;
+import jat.imview.contentProvider.db.table.AbyssTable;
+import jat.imview.contentProvider.db.table.FeaturedTable;
+import jat.imview.contentProvider.db.table.ImageTable;
+import jat.imview.rest.resource.ImageListResource;
 
 /**
  * Created by bulat on 07.12.15.
@@ -26,10 +26,10 @@ public class ImageProvider extends ContentProvider {
     private DBHelper dbHelper;
     private SQLiteDatabase db;
 
-    private static final int URI_IMAGES = 1;
-    private static final int URI_IMAGE_ID = 2;
-    private static final int URI_FEATURED_IMAGES = 3;
-    private static final int URI_ABYSS_IMAGES = 4;
+    public static final int URI_IMAGES = 1;
+    public static final int URI_IMAGE_ID = 2;
+    public static final int URI_FEATURED_IMAGES = 3;
+    public static final int URI_ABYSS_IMAGES = 4;
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -74,7 +74,7 @@ public class ImageProvider extends ContentProvider {
         }
         db = dbHelper.getWritableDatabase();
         long id = db.insertWithOnConflict(ImageTable.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-        Uri newUri = ContentUris.withAppendedId(ImageTable.CONTENT_URI, id);
+        Uri newUri = ContentUris.withAppendedId(ImageListResource.CONTENT_URI, id);
         getContext().getContentResolver().notifyChange(newUri, null);
         return newUri;
     }

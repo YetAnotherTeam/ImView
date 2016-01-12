@@ -14,7 +14,7 @@ public class PreferenceActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(jat.imview.R.layout.activity_preference);
 
-        Toolbar toolbar = (Toolbar) findViewById(jat.imview.R.id.pref_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(jat.imview.R.id.toolbar);
         toolbar.setTitleTextColor(0xFFFFFFFF);
 
         setSupportActionBar(toolbar);

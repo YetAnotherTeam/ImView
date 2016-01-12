@@ -1,5 +1,6 @@
 package jat.imview.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +13,11 @@ import jat.imview.R;
 import jat.imview.adapter.CommentsAdapter;
 
 public class CommentsActivity extends DrawerActivity implements CommentsAdapter.OnItemClickListener, OnClickListener {
+    public static final String IMAGE_ID_EXTRA = "IMAGE_ID_EXTRA";
     private RecyclerView mCommentsRecyclerView;
     private CommentsAdapter mCommentsAdapter;
     private EditText mMessageTextInput;
+    private int imageId;
 
     @Override
     public NavigationDrawerItem getCurrentNavDrawerItem() {
@@ -24,6 +27,10 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if (intent.hasExtra(IMAGE_ID_EXTRA)) {
+            imageId = intent.getIntExtra(IMAGE_ID_EXTRA, -1);
+        }
         setContentView(R.layout.activity_comments);
         mCommentsRecyclerView = (RecyclerView) findViewById(R.id.comments_recycler_view);
         mCommentsAdapter = new CommentsAdapter();

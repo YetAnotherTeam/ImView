@@ -1,18 +1,17 @@
-package jat.imview.rest;
+package jat.imview.rest.http;
 
 import java.net.URI;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Request {
     private URI requestUri;
-    private byte[] body;
     private HTTPMethod method;
+    private HashMap<String, String> postDataParams;
 
-    public Request(HTTPMethod method, URI requestUri) {
+    public Request(HTTPMethod method, URI requestUri, HashMap<String, String> postDataParams) {
         this.method = method;
         this.requestUri = requestUri;
+        this.postDataParams = postDataParams;
     }
 
     public HTTPMethod getMethod() {
@@ -23,7 +22,7 @@ public class Request {
         return requestUri;
     }
 
-    public byte[] getBody() {
-        return body;
+    public HashMap<String, String> getPostDataParams() {
+        return postDataParams;
     }
 }

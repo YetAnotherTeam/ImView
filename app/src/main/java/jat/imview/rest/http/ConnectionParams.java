@@ -1,4 +1,4 @@
-package jat.imview.rest.restMethod;
+package jat.imview.rest.http;
 
 /**
  * Created by bulat on 20.12.15.

@@ -1,4 +1,4 @@
-package jat.imview.processor.responseParser;
+package jat.imview.rest.resource;
 
 import android.util.Log;
 
@@ -11,17 +11,18 @@ import java.util.List;
 
 import jat.imview.model.Comment;
 import jat.imview.model.UserProfile;
-import jat.imview.rest.Response;
+import jat.imview.rest.http.Response;
+import jat.imview.rest.resource.base.Resource;
 import jat.imview.util.DateUtil;
 
 /**
  * Created by bulat on 23.12.15.
  */
-public class CommentListParser {
+public class CommentListResource implements Resource {
     private static final String LOG_TAG = "MyResponse";
     private List<Comment> commentList = new ArrayList<>();
 
-    public CommentListParser(Response response) {
+    public CommentListResource(Response response) {
         try {
             String responseBody = new String(response.body);
             Log.d(LOG_TAG, responseBody);

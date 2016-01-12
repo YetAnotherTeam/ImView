@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import jat.imview.rest.HTTPMethod;
+import jat.imview.rest.http.HTTPMethod;
 
 /**
  * Created by bulat on 07.12.15.
@@ -155,6 +155,22 @@ public class SendServiceHelper {
         Context context = weakContext.get();
         Intent intent = prepareIntent(context, requestId, requestType, HTTPMethod.GET);
         intent.putExtra(SendService.IMAGE_LIST_IS_FEATURED_EXTRA, isFeatured);
+        context.startService(intent);
+        return requestId;
+    }
+
+    public int requestImageVote(int imageId, boolean isUpVote) {
+        RequestType requestType = RequestType.IMAGE_VOTE;
+        if (isRequestPending(requestType)) {
+            return pendingRequests.get(requestType);
+        }
+        int requestId = generateRequestId();
+        pendingRequests.put(requestType, requestId);
+
+        Context context = weakContext.get();
+        Intent intent = prepareIntent(context, requestId, requestType, HTTPMethod.POST);
+        intent.putExtra(SendService.IMAGE_VOTE_IMAGE_ID_EXTRA, imageId);
+        intent.putExtra(SendService.IMAGE_VOTE_IS_UP_VOTE_EXTRA, isUpVote);
         context.startService(intent);
         return requestId;
     }

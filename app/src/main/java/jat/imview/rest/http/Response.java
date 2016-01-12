@@ -1,4 +1,4 @@
-package jat.imview.rest;
+package jat.imview.rest.http;
 
 public class Response {
     public int status;

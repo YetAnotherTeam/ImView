@@ -5,8 +5,8 @@ import android.database.Cursor;
 import java.io.Serializable;
 import java.util.Date;
 
-import jat.imview.contentProvider.DB.Table.ImageTable;
-import jat.imview.rest.restMethod.ConnectionParams;
+import jat.imview.contentProvider.db.table.ImageTable;
+import jat.imview.rest.http.ConnectionParams;
 import jat.imview.util.DateUtil;
 
 /**
