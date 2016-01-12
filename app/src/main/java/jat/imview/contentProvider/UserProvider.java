@@ -9,8 +9,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import jat.imview.contentProvider.db.DBHelper;
 import jat.imview.contentProvider.db.table.UserProfileTable;
@@ -70,6 +72,32 @@ public class UserProvider extends ContentProvider {
         return newUri;
     }
 
+    @Override
+    public int bulkInsert(@NonNull Uri uri, ContentValues[] values) {
+        int insertCount = 0;
+        switch (uriMatcher.match(uri)) {
+            case URI_USERS:
+                db = dbHelper.getWritableDatabase();
+                db.beginTransaction();
+                try {
+                    for (ContentValues valuesItem : values) {
+                        long newId = db.insertWithOnConflict(UserProfileTable.TABLE_NAME, null, valuesItem, SQLiteDatabase.CONFLICT_REPLACE);
+                        if (newId <= 0) {
+                            throw new SQLException("Failed to insert row into " + uri);
+                        }
+                    }
+                    db.setTransactionSuccessful();
+                    insertCount = values.length;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    db.endTransaction();
+                }
+                getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return insertCount;
+    }
+
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
@@ -87,32 +115,6 @@ public class UserProvider extends ContentProvider {
         Cursor cursor = db.query(UserProfileTable.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
-    }
-
-    @Override
-    public int bulkInsert(@NonNull Uri uri, ContentValues[] values) {
-        int insertCount = 0;
-        switch (uriMatcher.match(uri)) {
-            case URI_USERS:
-                db = dbHelper.getWritableDatabase();
-                db.beginTransaction();
-                try{
-                    for (ContentValues valuesItem: values) {
-                        long newId = db.insertOrThrow(UserProfileTable.TABLE_NAME, null, valuesItem);
-                        if (newId <= 0) {
-                            throw new SQLException("Failed to insert row into " + uri);
-                        }
-                    }
-                    db.setTransactionSuccessful();
-                    insertCount = values.length;
-                } catch (Exception e){
-                    e.printStackTrace();
-                } finally {
-                    db.endTransaction();
-                }
-                getContext().getContentResolver().notifyChange(uri, null);
-        }
-        return insertCount;
     }
 
     @Override

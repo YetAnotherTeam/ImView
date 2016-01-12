@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.sql.SQLException;
+
 import jat.imview.contentProvider.db.DBHelper;
 import jat.imview.contentProvider.db.table.CommentTable;
 import jat.imview.contentProvider.db.table.ImageTable;
@@ -42,7 +44,6 @@ public class CommentProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         switch (uriMatcher.match(uri)) {
             case URI_COMMENTS:
-
                 break;
             case URI_COMMENT_ID:
                 int id = Integer.parseInt(uri.getLastPathSegment());
@@ -82,6 +83,33 @@ public class CommentProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(newUri, null);
         return newUri;
     }
+
+    @Override
+    public int bulkInsert(@NonNull Uri uri, ContentValues[] values) {
+        int insertCount = 0;
+        switch (uriMatcher.match(uri)) {
+            case URI_COMMENTS:
+                db = dbHelper.getWritableDatabase();
+                db.beginTransaction();
+                try {
+                    for (ContentValues valuesItem : values) {
+                        long newId = db.insertWithOnConflict(CommentTable.TABLE_NAME, null, valuesItem, SQLiteDatabase.CONFLICT_REPLACE);
+                        if (newId <= 0) {
+                            throw new SQLException("Failed to insert row into " + uri);
+                        }
+                    }
+                    db.setTransactionSuccessful();
+                    insertCount = values.length;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    db.endTransaction();
+                }
+                getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return insertCount;
+    }
+
 
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {

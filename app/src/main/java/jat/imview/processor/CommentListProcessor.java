@@ -3,6 +3,7 @@ package jat.imview.processor;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -54,6 +55,7 @@ public class CommentListProcessor {
             ContentValues values = new ContentValues();
             values.put(UserProfileTable.ID, userProfile.getId());
             values.put(UserProfileTable.NAME, userProfile.getName());
+            userProfileValuesArray[i] = values;
         }
         contentResolver.bulkInsert(UserProfileTable.CONTENT_URI, userProfileValuesArray);
 
