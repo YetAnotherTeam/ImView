@@ -4,8 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,11 +19,12 @@ import android.widget.EditText;
 
 import jat.imview.R;
 import jat.imview.adapter.CommentsAdapter;
+import jat.imview.contentProvider.db.table.CommentTable;
 import jat.imview.service.SendServiceHelper;
 
-public class CommentsActivity extends DrawerActivity implements CommentsAdapter.OnItemClickListener, OnClickListener, LoaderManager.LoaderCallbacks<Object> {
-    public static final String IMAGE_ID_EXTRA = "IMAGE_ID_EXTRA";
+public class CommentsActivity extends DrawerActivity implements CommentsAdapter.OnItemClickListener, OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
     private static final String LOG_TAG = "MyCommentsActivity";
+    public static final String IMAGE_ID_EXTRA = "IMAGE_ID_EXTRA";
     private RecyclerView mCommentsRecyclerView;
     private CommentsAdapter mCommentsAdapter;
     private EditText mMessageTextInput;
@@ -69,8 +72,9 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
             // на случай дальнейших улучшений
             case R.id.user_avatar:
             case R.id.username:
-            default:
                 break;
+            default:
+
         }
     }
 
@@ -126,17 +130,20 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
     }
 
     @Override
-    public Loader<Object> onCreateLoader(int id, Bundle args) {
-        return null;
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(this, CommentTable.CONTENT_URI, null, null, null, null);
     }
 
     @Override
-    public void onLoadFinished(Loader<Object> loader, Object data) {
-
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if(mCommentsAdapter != null) {
+            mCommentsAdapter.changeCursor(data);
+        }
     }
 
     @Override
-    public void onLoaderReset(Loader<Object> loader) {
-
+    public void onLoaderReset(Loader<Cursor> loader) {
+        if(mCommentsAdapter != null)
+            mCommentsAdapter.changeCursor(null);
     }
 }

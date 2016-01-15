@@ -14,7 +14,6 @@ import java.sql.SQLException;
 
 import jat.imview.contentProvider.db.DBHelper;
 import jat.imview.contentProvider.db.table.CommentTable;
-import jat.imview.contentProvider.db.table.ImageTable;
 
 /**
  * Created by bulat on 10.01.16.
@@ -53,7 +52,7 @@ public class CommentProvider extends ContentProvider {
                 throw new IllegalArgumentException("Wrong URI: " + uri);
         }
         db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query(ImageTable.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+        Cursor cursor = db.rawQuery(dbHelper.getCommentListUserSqlQuery(), null);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }

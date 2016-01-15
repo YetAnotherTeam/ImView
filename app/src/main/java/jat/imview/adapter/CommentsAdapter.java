@@ -1,5 +1,6 @@
 package jat.imview.adapter;
 
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import jat.imview.R;
 import jat.imview.model.Comment;
@@ -20,23 +24,10 @@ import jat.imview.model.Comment;
  * Created by bulat on 16.12.15.
  */
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
-    private final List<Comment> comments;
+    private Cursor cursor;
     private OnItemClickListener onItemClickListener;
 
     public CommentsAdapter() {
-        this.comments = new ArrayList<>();
-        Comment comment = new Comment();
-        // MOCK TODO delete after network done
-        comment.setRating(12);
-        comment.setPublishDate(new Date());
-        comment.setMessage("dlsad;lkqlsdklasd");
-        for (int i = 0; i < 90; ++i) {
-            comments.add(comment);
-        }
-    }
-
-    public CommentsAdapter(List<Comment> comments) {
-        this.comments = comments;
     }
 
     @Override
@@ -46,12 +37,26 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     @Override
     public void onBindViewHolder(CommentViewHolder holder, int position) {
-        Comment comment = comments.get(position);
+        Comment comment = null;
+        if (cursor.moveToPosition(position)) {
+            comment = Comment.getByCursor(cursor);
+            holder.mCommentText.setText(comment.getMessage());
+            Locale locale = new Locale("ru");
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm dd MMMM",locale);
+            holder.mPublishDate.setText(dateFormat.format(comment.getPublishDate()));
+            holder.mRating.setText(String.valueOf(comment.getRating()));
+            holder.mUsername.setText(comment.getUserName());
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return comments.size();
+        if (cursor != null) {
+            return cursor.getCount();
+        } else {
+            return 0;
+        }
     }
 
     public OnItemClickListener getOnItemClickListener() {
@@ -62,17 +67,18 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         onItemClickListener = listener;
     }
 
+    public void changeCursor(Cursor newCursor) {
+        if (cursor == newCursor)
+            return;
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        this.cursor = newCursor;
+        notifyDataSetChanged();
+    }
+
     public interface OnItemClickListener {
         void onItemClick(int position, int itemViewId);
-    }
-
-    public void add(Comment comment) {
-        comments.add(comment);
-        notifyItemInserted(getItemCount());
-    }
-
-    public List<Comment> getComments() {
-        return comments;
     }
 
     public class CommentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

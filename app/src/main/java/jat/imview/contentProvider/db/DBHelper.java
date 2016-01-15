@@ -20,16 +20,27 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "imview.db";
     private static final int DATABASE_VERSION = 1;
     private static final String IMAGE_LIST_GET_SQL_QUERY;
+    private static final String COMMENT_LIST_USER_SQL_QUERY;
     private static final String TRUNCATE_SQL_QUERY;
 
     static {
         StringBuilder sqlBuilder = new StringBuilder();
+
 
         sqlBuilder.append("SELECT * FROM %s");
         sqlBuilder.append(" INNER JOIN ").append(ImageTable.TABLE_NAME);
         sqlBuilder.append(" ON %s").append(".").append(ImageListParams.IMAGE_ID)
                 .append(" = ").append(ImageTable.TABLE_NAME).append(".").append(ImageTable.ID).append(";");
         IMAGE_LIST_GET_SQL_QUERY = sqlBuilder.toString();
+
+        sqlBuilder.setLength(0);
+        sqlBuilder.append("SELECT * FROM ").append(CommentTable.TABLE_NAME);
+        sqlBuilder.append(" INNER JOIN ").append(UserProfileTable.TABLE_NAME);
+        sqlBuilder.append(" ON ").append(CommentTable.USER_ID)
+                .append(" = ").append(UserProfileTable.TABLE_NAME).append(".").append(UserProfileTable.ID);
+        sqlBuilder.append(" ORDER BY ").append(CommentTable.PUBLISH_DATE).append(" DESC");
+        sqlBuilder.append(";");
+        COMMENT_LIST_USER_SQL_QUERY = sqlBuilder.toString();
 
         sqlBuilder.setLength(0);
         sqlBuilder.append("DELETE FROM %s;");
@@ -114,6 +125,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static String getImageListSqlQuery(String tableName) {
         return String.format(IMAGE_LIST_GET_SQL_QUERY, tableName, tableName);
+    }
+
+    public static String getCommentListUserSqlQuery() {
+        return COMMENT_LIST_USER_SQL_QUERY;
     }
 
     // Чтобы проверяло и по id

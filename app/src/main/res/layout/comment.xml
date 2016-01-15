@@ -94,6 +94,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@id/username"
             android:layout_marginBottom="3dp"
+            android:textSize="12sp"
             android:text="14c назад"
             android:textColor="#6C6C73" />
     </RelativeLayout>

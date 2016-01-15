@@ -1,10 +1,16 @@
 package jat.imview.model;
 
+import android.database.Cursor;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import jat.imview.contentProvider.db.table.CommentTable;
+import jat.imview.contentProvider.db.table.UserProfileTable;
+import jat.imview.util.DateUtil;
 
 /**
  * Created by bulat on 17.12.15.
@@ -13,6 +19,7 @@ public class Comment {
     private int id;
     private int imageId;
     private int userId;
+    private String userName;
     private Date publishDate;
     private String message;
     private int rating;
@@ -53,21 +60,20 @@ public class Comment {
         this.userId = userId;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public Date getPublishDate() {
         return publishDate;
     }
 
     public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
-    }
-
-    public void setPublishDateFromString(String publishDateString) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH);
-        try {
-            this.publishDate = dateFormat.parse(publishDateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     public String getMessage() {
@@ -85,4 +91,22 @@ public class Comment {
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+    public static Comment getByCursor(Cursor cursor) {
+        Comment comment = new Comment();
+        int idIndex = cursor.getColumnIndex(CommentTable.ID);
+        int userProfileNameIndex = cursor.getColumnIndex(UserProfileTable.NAME);
+        int publishDateIndex = cursor.getColumnIndex(CommentTable.PUBLISH_DATE);
+        int messageIndex = cursor.getColumnIndex(CommentTable.MESSAGE);
+        int ratingIndex = cursor.getColumnIndex(CommentTable.RATING);
+
+        comment.setId(cursor.getInt(idIndex));
+        comment.setUserName(cursor.getString(userProfileNameIndex));
+        comment.setPublishDate(DateUtil.parseFromDBString(cursor.getString(publishDateIndex)));
+        comment.setMessage(cursor.getString(messageIndex));
+        comment.setRating(cursor.getInt(ratingIndex));
+
+        return comment;
+    }
+
 }
