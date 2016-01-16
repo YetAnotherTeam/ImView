@@ -105,7 +105,9 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
                 Log.d(LOG_TAG, "Received intent " + intent.getAction() + ", request ID " + resultRequestId);
                 int resultCode = intent.getIntExtra(SendServiceHelper.EXTRA_RESULT_CODE, 0);
                 Log.d(LOG_TAG, String.valueOf(resultCode));
-                handleResponseErrors(resultCode);
+                if (resultCode != 200) {
+                    handleResponseErrors(resultCode);
+                }
             }
         };
         registerReceiver(requestReceiver, filter);

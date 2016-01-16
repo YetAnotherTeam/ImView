@@ -32,7 +32,7 @@ import jat.imview.ui.view.GalleryViewPager;
 
 public class FeaturedActivity extends DrawerActivity implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>, ViewPager.OnPageChangeListener {
     private static final String LOG_TAG = "MyFeaturedActivity";
-    public static final String FROM_PRELOADER_EXTRA = "FROM_PRELOADER_EXTRA";
+    public static final String IS_NEED_TO_LOAD_EXTRA = "IS_NEED_TO_LOAD_EXTRA";
 
     private static final boolean IS_FEATURED = true;
     private int currentImageId;
@@ -61,7 +61,7 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
         mCommentsButton.setOnClickListener(this);
         mShareButton.setOnClickListener(this);
 
-        if (getIntent().getBooleanExtra(FROM_PRELOADER_EXTRA, true)) {
+        if (getIntent().getBooleanExtra(IS_NEED_TO_LOAD_EXTRA, true)) {
             SendServiceHelper.getInstance(this).requestImageList(IS_FEATURED);
         }
 
