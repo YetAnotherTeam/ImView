@@ -32,6 +32,8 @@ import jat.imview.ui.view.GalleryViewPager;
 
 public class FeaturedActivity extends DrawerActivity implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>, ViewPager.OnPageChangeListener {
     private static final String LOG_TAG = "MyFeaturedActivity";
+    public static final String FROM_PRELOADER_EXTRA = "FROM_PRELOADER_EXTRA";
+
     private static final boolean IS_FEATURED = true;
     private int currentImageId;
     private GalleryViewPager mViewPager;
@@ -43,9 +45,6 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
 
     private TextView mCommentsCount;
     private TextView mVoteUpCount;
-
-    private Integer requestId;
-    private BroadcastReceiver requestReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +61,10 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
         mCommentsButton.setOnClickListener(this);
         mShareButton.setOnClickListener(this);
 
-        SendServiceHelper.getInstance(this).requestImageList(true);
+        if (getIntent().getBooleanExtra(FROM_PRELOADER_EXTRA, true)) {
+            SendServiceHelper.getInstance(this).requestImageList(IS_FEATURED);
+        }
+
         getSupportLoaderManager().restartLoader(0, null, this);
         mGalleryAdapter = new GalleryAdapter(this, getSupportFragmentManager());
         mViewPager = (GalleryViewPager) findViewById(R.id.view_pager);
@@ -134,23 +136,6 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
             }
         };
         registerReceiver(requestReceiver, filter);
-        if (requestId == null) {
-            requestId = SendServiceHelper.getInstance(this).requestImageList(IS_FEATURED);
-        } else {
-
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (requestReceiver != null) {
-            try {
-                this.unregisterReceiver(requestReceiver);
-            } catch (IllegalArgumentException e) {
-                Log.e(LOG_TAG, e.getLocalizedMessage(), e);
-            }
-        }
     }
 
     @Override

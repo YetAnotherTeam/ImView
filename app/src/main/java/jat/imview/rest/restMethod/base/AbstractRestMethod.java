@@ -1,5 +1,7 @@
 package jat.imview.rest.restMethod.base;
 
+import android.util.Log;
+
 import jat.imview.rest.http.Request;
 import jat.imview.rest.http.Response;
 import jat.imview.rest.http.HTTPClient;
@@ -18,12 +20,16 @@ public abstract class AbstractRestMethod<T extends Resource> implements RestMeth
         int status = response.status;
         String statusMessage = "";
         T resource = null;
-        try {
-            resource = parseResponseBody(response.body);
-        } catch (Exception ex) {
-            status = 503;
-            statusMessage = ex.getMessage();
-        }
+
+            if (response.status == 200) {
+                try {
+                    resource = parseResponseBody(response.body);
+                } catch (Exception ex) {
+                    status = 503;
+                    statusMessage = ex.getMessage();
+                }
+            }
+
         return new RestMethodResult<>(status, statusMessage, resource);
     }
 

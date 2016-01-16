@@ -73,7 +73,6 @@
                 android:id="@+id/vote_up_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="49,229"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -109,7 +108,6 @@
                 android:id="@+id/comments_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4,229"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
         </LinearLayout>

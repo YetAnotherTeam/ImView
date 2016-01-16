@@ -58,7 +58,6 @@
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
 
-    <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
 
     <string name="pref_title_new_message_notifications">New message notifications</string>
@@ -75,7 +74,14 @@
     <string name="action_new_image">Add new image</string>
     <string name="comment_placeholder">Напиши нам что-нибудь</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_required">Требуется выполнить вход</string>
+    <string name="network_unreachable">Сеть недоступна</string>
+    <string name="time_limit_succeed">Время ожидания истекло</string>
+
+
     <string name="check_your_connection">Проверьте ваше соединение.</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="do_login">Войти</string>
+    <string name="register">Зарегистрироваться</string>
 </resources>
