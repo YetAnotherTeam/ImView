@@ -38,6 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sqlBuilder.append(" INNER JOIN ").append(UserProfileTable.TABLE_NAME);
         sqlBuilder.append(" ON ").append(CommentTable.USER_ID)
                 .append(" = ").append(UserProfileTable.TABLE_NAME).append(".").append(UserProfileTable.ID);
+        sqlBuilder.append(" WHERE ").append(CommentTable.IMAGE_ID).append(" = ?");
         sqlBuilder.append(" ORDER BY ").append(CommentTable.PUBLISH_DATE).append(" DESC");
         sqlBuilder.append(";");
         COMMENT_LIST_USER_SQL_QUERY = sqlBuilder.toString();

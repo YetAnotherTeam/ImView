@@ -41,10 +41,13 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(LOG_TAG, "onCreate");
         Intent intent = getIntent();
-        if (intent.hasExtra(IMAGE_ID_EXTRA)) {
-            imageId = intent.getIntExtra(IMAGE_ID_EXTRA, -1);
-        }
+        imageId = intent.getIntExtra(IMAGE_ID_EXTRA, -1);
+        Log.d(LOG_TAG, "Image ID: " + String.valueOf(imageId));
+
+        getSupportLoaderManager().restartLoader(0, null, this);
+
         setContentView(R.layout.activity_comments);
         mCommentsRecyclerView = (RecyclerView) findViewById(R.id.comments_recycler_view);
         mCommentsAdapter = new CommentsAdapter();
@@ -57,9 +60,7 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
         mMessageTextInput = (EditText) findViewById(R.id.message_text_input);
         findViewById(R.id.send_button).setOnClickListener(this);
 
-        getSupportLoaderManager().restartLoader(0, null, this);
-
-        SendServiceHelper.getInstance(this).requestCommentList(imageId);
+        requestId = SendServiceHelper.getInstance(this).requestCommentList(imageId);
     }
 
     @Override
@@ -104,17 +105,10 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
                 Log.d(LOG_TAG, "Received intent " + intent.getAction() + ", request ID " + resultRequestId);
                 int resultCode = intent.getIntExtra(SendServiceHelper.EXTRA_RESULT_CODE, 0);
                 Log.d(LOG_TAG, String.valueOf(resultCode));
-                if (resultRequestId == requestId) {
-                    resultCode = intent.getIntExtra(SendServiceHelper.EXTRA_RESULT_CODE, 0);
-                }
+                handleResponseErrors(resultCode);
             }
         };
         registerReceiver(requestReceiver, filter);
-        if (requestId == null) {
-            requestId = SendServiceHelper.getInstance(this).requestCommentList(imageId);
-        } else {
-            //TODO
-        }
     }
 
     @Override
@@ -131,12 +125,13 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, CommentTable.CONTENT_URI, null, null, null, null);
+        return new CursorLoader(this, CommentTable.CONTENT_URI, null, null, new String[] {String.valueOf(imageId)}, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if(mCommentsAdapter != null) {
+            Log.d(LOG_TAG, "Cursor items count: " + String.valueOf(data.getCount()));
             mCommentsAdapter.changeCursor(data);
         }
     }

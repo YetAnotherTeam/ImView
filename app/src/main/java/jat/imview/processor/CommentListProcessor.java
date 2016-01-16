@@ -39,9 +39,8 @@ public class CommentListProcessor {
 
         if (restMethodResult.getStatusCode() == 200) {
             updateContentProvider(restMethodResult);
-        } else {
-            processorCallback.send(restMethodResult.getStatusCode());
         }
+        processorCallback.send(restMethodResult.getStatusCode());
     }
 
     private void updateContentProvider(RestMethodResult<CommentListResource> restMethodResult) {

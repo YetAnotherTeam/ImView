@@ -130,6 +130,7 @@ public class SendService extends IntentService {
     }
 
     private ProcessorCallback makeProcessorCallback() {
+        Log.d(LOG_TAG, "makeProcessorCallback");
         return new ProcessorCallback() {
             @Override
             public void send(int resultCode) {

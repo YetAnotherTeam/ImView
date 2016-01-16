@@ -20,6 +20,7 @@ import jat.imview.contentProvider.db.table.CommentTable;
  */
 public class CommentProvider extends ContentProvider {
     public static final UriMatcher uriMatcher;
+    private static final String LOG_TAG = "MyCommentProvider";
     private DBHelper dbHelper;
     private SQLiteDatabase db;
 
@@ -41,18 +42,20 @@ public class CommentProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        Cursor cursor;
+        db = dbHelper.getReadableDatabase();
         switch (uriMatcher.match(uri)) {
             case URI_COMMENTS:
+                cursor = db.rawQuery(DBHelper.getCommentListUserSqlQuery(), selectionArgs);
                 break;
             case URI_COMMENT_ID:
                 int id = Integer.parseInt(uri.getLastPathSegment());
                 selection = DBHelper.appendRowId(selection, id);
+                cursor = db.query(CommentTable.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             default:
                 throw new IllegalArgumentException("Wrong URI: " + uri);
         }
-        db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery(dbHelper.getCommentListUserSqlQuery(), null);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }

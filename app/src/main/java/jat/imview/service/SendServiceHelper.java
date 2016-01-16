@@ -70,10 +70,12 @@ public class SendServiceHelper {
     }
 
     private void handleResponse(int resultCode, Bundle resultData) {
+        Log.d(LOG_TAG, "handleResponse");
         Intent originalIntent = resultData.getParcelable(SendService.ORIGINAL_INTENT_EXTRA);
         if (originalIntent != null) {
             int requestId = originalIntent.getIntExtra(REQUEST_ID, -1);
-            pendingRequests.remove(RequestType.LOGIN);
+            Log.d(LOG_TAG, "Remove request from map");
+            pendingRequests.values().remove(requestId);
 
             Intent broadcastIntent = new Intent(ACTION_REQUEST_RESULT);
             broadcastIntent.putExtra(EXTRA_REQUEST_ID, requestId);

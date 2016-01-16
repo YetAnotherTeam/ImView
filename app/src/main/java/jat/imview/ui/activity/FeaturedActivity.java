@@ -128,8 +128,8 @@ public class FeaturedActivity extends DrawerActivity implements View.OnClickList
                 Log.d(LOG_TAG, "Received intent " + intent.getAction() + ", request ID " + resultRequestId);
                 int resultCode = intent.getIntExtra(SendServiceHelper.EXTRA_RESULT_CODE, 0);
                 Log.d(LOG_TAG, String.valueOf(resultCode));
-                if (resultRequestId == requestId) {
-                    resultCode = intent.getIntExtra(SendServiceHelper.EXTRA_RESULT_CODE, 0);
+                if (resultCode != 200) {
+                    handleResponseErrors(resultCode);
                 }
             }
         };

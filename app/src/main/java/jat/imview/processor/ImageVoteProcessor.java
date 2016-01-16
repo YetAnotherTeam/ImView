@@ -38,9 +38,8 @@ public class ImageVoteProcessor {
         RestMethodResult<ImageVoteResource> restMethodResult = imageVoteRestMethod.execute();
         if (restMethodResult.getStatusCode() == 200) {
             updateContentProvider(restMethodResult);
-        } else {
-            processorCallback.send(restMethodResult.getStatusCode());
         }
+        processorCallback.send(restMethodResult.getStatusCode());
     }
 
     private void updateContentProvider(RestMethodResult<ImageVoteResource> restMethodResult) {
