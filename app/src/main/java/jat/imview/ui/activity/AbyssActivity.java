@@ -7,19 +7,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import jat.imview.R;
-import jat.imview.contentProvider.db.table.FeaturedTable;
+import jat.imview.contentProvider.db.table.AbyssTable;
 import jat.imview.service.SendServiceHelper;
 
 /**
  * Created by bulat on 16.01.16.
  */
-public class FeaturedActivity extends ImageListActivity {
+public class AbyssActivity extends ImageListActivity {
     private LinearLayout mVoteUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        isFeatured = true;
-        contentUri = FeaturedTable.CONTENT_URI;
+        isFeatured = false;
+        contentUri = AbyssTable.CONTENT_URI;
         super.onCreate(savedInstanceState);
         ViewStub viewStub = (ViewStub) findViewById(R.id.votes_placeholder);
         viewStub.setLayoutResource(R.layout.featured_votes);
@@ -32,7 +32,7 @@ public class FeaturedActivity extends ImageListActivity {
 
     @Override
     public NavigationDrawerItem getCurrentNavDrawerItem() {
-        return NavigationDrawerItem.FEATURED;
+        return NavigationDrawerItem.ABYSS;
     }
 
     @Override

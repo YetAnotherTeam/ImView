@@ -9,15 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.mikepenz.materialdrawer.AccountHeader;
-import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.util.ArrayList;
 
@@ -32,7 +28,7 @@ public abstract class DrawerActivity extends BaseActivity {
 
     public enum NavigationDrawerItem {
         FEATURED(R.drawable.ic_crop_original_black_18dp, R.string.featured_activity_string, FeaturedActivity.class, true),
-        ABYSS(R.drawable.ic_crop_original_black_18dp, R.string.abyss_activity_string, ImageActivity.class, true),
+        ABYSS(R.drawable.ic_crop_original_black_18dp, R.string.abyss_activity_string, AbyssActivity.class, true),
         SETTINGS(R.drawable.ic_settings_black_18dp, R.string.settings_activity_string, PreferenceActivity.class, false);
 
 

@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.sql.SQLException;
 
@@ -105,33 +106,41 @@ public class ImageProvider extends ContentProvider {
         return cursor;
     }
 
+    private int bulkInsertImageList(String tableName, @NonNull Uri uri, ContentValues[] values) {
+        int insertCount = 0;
+        db = dbHelper.getWritableDatabase();
+        db.beginTransaction();
+        try{
+            for (ContentValues valuesItem: values) {
+                long newId = db.insertOrThrow(tableName, null, valuesItem);
+                if (newId <= 0) {
+                    throw new SQLException("Failed to insert row into " + uri);
+                }
+            }
+            db.setTransactionSuccessful();
+            insertCount = values.length;
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+        }
+        return insertCount;
+    }
+
     @Override
     public int bulkInsert(@NonNull Uri uri, ContentValues[] values) {
-        int insertCount = 0;
+        int insertCount;
         switch (uriMatcher.match(uri)) {
             case URI_FEATURED_IMAGES:
+                insertCount = bulkInsertImageList(FeaturedTable.TABLE_NAME, uri, values);
+                break;
             case URI_ABYSS_IMAGES:
-                db = dbHelper.getWritableDatabase();
-                db.beginTransaction();
-                try{
-                    for (ContentValues valuesItem: values) {
-                        long newId = db.insertOrThrow(FeaturedTable.TABLE_NAME, null, valuesItem);
-                        if (newId <= 0) {
-                            throw new SQLException("Failed to insert row into " + uri);
-                        }
-                    }
-                    db.setTransactionSuccessful();
-                    insertCount = values.length;
-                } catch (Exception e){
-                    e.printStackTrace();
-                } finally {
-                    db.endTransaction();
-                }
-                getContext().getContentResolver().notifyChange(uri, null);
+                insertCount = bulkInsertImageList(AbyssTable.TABLE_NAME, uri, values);
                 break;
             default:
                 throw new IllegalArgumentException("Wrong URI: " + uri);
         }
+        getContext().getContentResolver().notifyChange(uri, null);
         return insertCount;
     }
 
@@ -163,6 +172,7 @@ public class ImageProvider extends ContentProvider {
             case URI_ABYSS_IMAGES:
                 db = dbHelper.getWritableDatabase();
                 db.execSQL(DBHelper.getTruncateSqlQuery(AbyssTable.TABLE_NAME));
+                break;
             default:
                 throw new IllegalArgumentException("Wrong URI: " + uri);
         }

@@ -76,9 +76,9 @@ public class SplashScreenActivity extends BaseActivity {
         Intent intent = new Intent(this, FeaturedActivity.class);
         if (preloadTimeLimitSucceed) {
             Toast.makeText(getApplicationContext(), R.string.time_limit_succeed, Toast.LENGTH_SHORT).show();
-            intent.putExtra(FeaturedActivity.IS_NEED_TO_LOAD_EXTRA, true);
+            intent.putExtra(ImageListActivity.IS_NEED_TO_LOAD_EXTRA, true);
         } else {
-            intent.putExtra(FeaturedActivity.IS_NEED_TO_LOAD_EXTRA, false);
+            intent.putExtra(ImageListActivity.IS_NEED_TO_LOAD_EXTRA, false);
         }
         startActivity(intent);
         finish();

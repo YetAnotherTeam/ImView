@@ -4,11 +4,14 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import jat.imview.contentProvider.db.table.AbyssTable;
 import jat.imview.contentProvider.db.table.FeaturedTable;
+import jat.imview.contentProvider.db.table.base.ImageListTable;
 import jat.imview.model.Image;
 import jat.imview.rest.http.HTTPMethod;
 import jat.imview.rest.resource.ImageListResource;
@@ -43,7 +46,7 @@ public class ImageListProcessor {
         ImageListResource imageListResource = restMethodResult.getResource();
         List<Image> imageList = imageListResource.getImageList();
         ContentResolver contentResolver = weakContext.get().getContentResolver();
-        ContentValues[] featuredValuesArray = new ContentValues[imageList.size()];
+        ContentValues[] ImageListValuesArray = new ContentValues[imageList.size()];
         for (int i = 0; i < imageList.size(); ++i) {
             Image image = imageList.get(i);
             ContentValues values = new ContentValues();
@@ -57,11 +60,17 @@ public class ImageListProcessor {
                     values
             );
 
-            ContentValues featuredValues = new ContentValues();
-            featuredValues.put(FeaturedTable.IMAGE_ID, image.getId());
-            featuredValuesArray[i] = featuredValues;
+            ContentValues imageListValues = new ContentValues();
+            imageListValues.put(ImageListTable.IMAGE_ID, image.getId());
+            ImageListValuesArray[i] = imageListValues;
         }
-        contentResolver.delete(FeaturedTable.CONTENT_URI, null, null);
-        contentResolver.bulkInsert(FeaturedTable.CONTENT_URI, featuredValuesArray);
+        Uri imageTableConcreteUri;
+        if (isFeatured) {
+            imageTableConcreteUri = FeaturedTable.CONTENT_URI;
+        } else {
+            imageTableConcreteUri = AbyssTable.CONTENT_URI;
+        }
+        contentResolver.delete(imageTableConcreteUri, null, null);
+        contentResolver.bulkInsert(imageTableConcreteUri, ImageListValuesArray);
     }
 }

@@ -9,7 +9,7 @@ import jat.imview.contentProvider.db.table.AbyssTable;
 import jat.imview.contentProvider.db.table.base.BaseParams;
 import jat.imview.contentProvider.db.table.CommentTable;
 import jat.imview.contentProvider.db.table.FeaturedTable;
-import jat.imview.contentProvider.db.table.base.ImageListParams;
+import jat.imview.contentProvider.db.table.base.ImageListTable;
 import jat.imview.contentProvider.db.table.ImageTable;
 import jat.imview.contentProvider.db.table.UserProfileTable;
 
@@ -29,7 +29,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         sqlBuilder.append("SELECT * FROM %s");
         sqlBuilder.append(" INNER JOIN ").append(ImageTable.TABLE_NAME);
-        sqlBuilder.append(" ON %s").append(".").append(ImageListParams.IMAGE_ID)
+        sqlBuilder.append(" ON %s").append(".").append(ImageListTable.IMAGE_ID)
                 .append(" = ").append(ImageTable.TABLE_NAME).append(".").append(ImageTable.ID).append(";");
         IMAGE_LIST_GET_SQL_QUERY = sqlBuilder.toString();
 
@@ -83,8 +83,8 @@ public class DBHelper extends SQLiteOpenHelper {
         sqlBuilder.setLength(0);
         sqlBuilder.append("CREATE TABLE %s (");
         sqlBuilder.append(BaseParams.ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT, ");
-        sqlBuilder.append(ImageListParams.IMAGE_ID).append(" INTEGER NOT NULL, ");
-        sqlBuilder.append("FOREIGN KEY(").append(ImageListParams.IMAGE_ID).append(") REFERENCES ")
+        sqlBuilder.append(ImageListTable.IMAGE_ID).append(" INTEGER NOT NULL, ");
+        sqlBuilder.append("FOREIGN KEY(").append(ImageListTable.IMAGE_ID).append(") REFERENCES ")
                 .append(ImageTable.TABLE_NAME).append("(").append(ImageTable.ID).append(")");
         sqlBuilder.append(");");
         String imageListCreateSQLQuery = sqlBuilder.toString();
