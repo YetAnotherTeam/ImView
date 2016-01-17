@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,22 +24,15 @@
     </android.support.design.widget.AppBarLayout>
 
     <!-- Advertising block aligned to bottom -->
-    <RelativeLayout
+    <com.google.android.gms.ads.AdView
         android:id="@+id/advertising_block"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#FC0"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Advertising block"
-            android:textColor="#000"
-            android:textSize="20sp" />
-    </RelativeLayout>
+        android:layout_centerHorizontal="true"
+        android:background="#19191C"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id" />
 
     <jat.imview.ui.view.GalleryViewPager
         android:id="@+id/view_pager"

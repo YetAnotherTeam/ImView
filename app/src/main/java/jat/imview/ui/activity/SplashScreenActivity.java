@@ -16,7 +16,7 @@ import jat.imview.service.SendServiceHelper;
 
 public class SplashScreenActivity extends BaseActivity {
     private static final String LOG_TAG = "MySplashScreenActivity";
-    private final long ACTIVITY_SLEEP_TIME_MILLISECONDS = 1500;
+    private final long ACTIVITY_MIN_SLEEP_TIME_MILLISECONDS = 1500;
     private final long ACTIVITY_MAX_SLEEP_TIME_MILLISECONDS = 5000;
     private PreloadTask mPreloadTask;
     private long startLoadingTime;
@@ -37,11 +37,11 @@ public class SplashScreenActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         mPreloadTask.cancel(true);
+        finish();
     }
-
 
     @Override
     protected void onResume() {
@@ -60,7 +60,7 @@ public class SplashScreenActivity extends BaseActivity {
                 if (mPreloadTask != null) {
                     mPreloadTask.cancel(true);
                     mPreloadTask = new PreloadTask((SplashScreenActivity)context);
-                    long newSleepTime = ACTIVITY_SLEEP_TIME_MILLISECONDS - (System.currentTimeMillis() - startLoadingTime);
+                    long newSleepTime = ACTIVITY_MIN_SLEEP_TIME_MILLISECONDS - (System.currentTimeMillis() - startLoadingTime);
                     if (newSleepTime > 0) {
                         mPreloadTask.execute(newSleepTime);
                     } else {

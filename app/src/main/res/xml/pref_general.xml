@@ -8,7 +8,7 @@
             android:hint=""
             android:inputType="number"
             android:key="400"
-            android:summary="500"
+            android:summary="400"
             android:title="Edit text" />
     </PreferenceCategory>
 </PreferenceScreen>

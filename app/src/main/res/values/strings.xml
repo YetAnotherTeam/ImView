@@ -1,8 +1,11 @@
 <resources>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
     <string name="app_name">ImView</string>
     <string name="main_activity_string">Главная</string>
     <string name="account_activity_string">Личный кабинет</string>
     <string name="settings_activity_string">Настройки</string>
+    <string name="authentification_activities_string">Профиль</string>
     <string name="title_activity_image">ImageActivity</string>
     <string name="image_description">Image</string>
     <string name="title_activity_settings">Settings</string>
@@ -80,8 +83,15 @@
 
 
     <string name="check_your_connection">Проверьте ваше соединение.</string>
+    <string name="fill_all_fields_please">Заполните, пожалуйста, все поля</string>
+
+
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="do_login">Войти</string>
     <string name="register">Зарегистрироваться</string>
+    <string name="back">Назад</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="prompt_email">Email</string>
+    <string name="or_you_can">Или вы можете</string>
 </resources>

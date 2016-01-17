@@ -22,7 +22,7 @@ public class SendService extends IntentService {
     public static final String REQUEST_TYPE_EXTRA = "jat.imview.service.REQUEST_TYPE_EXTRA";
     public static final String SERVICE_CALLBACK_EXTRA = "jat.imview.service.SERVICE_CALLBACK_EXTRA";
 
-    public static final String LOGIN_USERNAME_EXTRA = "jat.imview.service.LOGIN_USERNAME_EXTRA";
+    public static final String LOGIN_EMAIL_EXTRA = "jat.imview.service.LOGIN_EMAIL_EXTRA";
     public static final String LOGIN_PASSWORD_EXTRA = "jat.imview.service.LOGIN_PASSWORD_EXTRA";
     public static final String SIGNUP_USERNAME_EXTRA = "jat.imview.service.SIGNUP_USERNAME_EXTRA";
     public static final String SIGNUP_PASSWORD_EXTRA = "jat.imview.service.SIGNUP_PASSWORD_EXTRA";

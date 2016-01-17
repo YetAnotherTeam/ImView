@@ -9,17 +9,26 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+
 import jat.imview.R;
 import jat.imview.service.SendServiceHelper;
 
 public abstract class BaseActivity extends AppCompatActivity {
     private static final String LOG_TAG = "MyBaseActivity";
+    protected boolean isNeedToShowAd = false;
+    protected AdRequest adRequest;
     protected Integer requestId;
     protected BroadcastReceiver requestReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (isNeedToShowAd) {
+            adRequest = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .build();
+        }
     }
 
     protected void handleResponseErrors(int resultCode) {

@@ -84,7 +84,7 @@ public class SendServiceHelper {
         }
     }
 
-    public int requestLogin(String username, String password) {
+    public int requestLogin(String email, String password) {
         RequestType requestType = RequestType.LOGIN;
         if (isRequestPending(requestType)) {
             return pendingRequests.get(requestType);
@@ -94,7 +94,7 @@ public class SendServiceHelper {
 
         Context context = weakContext.get();
         Intent intent = prepareIntent(context, requestId, requestType, HTTPMethod.POST);
-        intent.putExtra(SendService.LOGIN_USERNAME_EXTRA, username);
+        intent.putExtra(SendService.LOGIN_EMAIL_EXTRA, email);
         intent.putExtra(SendService.LOGIN_PASSWORD_EXTRA, password);
         context.startService(intent);
         return requestId;

@@ -23,15 +23,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.CommentsActivity"
-            android:label="Comments"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activity.ImageNewActivity" />
-        <activity
-            android:name=".ui.activity.PreferenceActivity"
-            android:label="Settings"
-            android:theme="@style/PreferenceTheme" />
-        <activity
             android:name=".ui.activity.FeaturedActivity"
             android:label="Featured"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -39,8 +30,25 @@
             android:name=".ui.activity.AbyssActivity"
             android:label="Abyss"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.SignupActivity" />
+        <activity
+            android:name=".ui.activity.CommentsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Comments"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activity.ImageNewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".ui.activity.PreferenceActivity"
+            android:label="Settings"
+            android:theme="@style/PreferenceTheme" />
+
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activity.SignupActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"

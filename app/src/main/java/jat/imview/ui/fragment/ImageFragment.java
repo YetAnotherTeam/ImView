@@ -22,6 +22,7 @@ import jat.imview.ui.view.TouchImageView;
 public class ImageFragment extends Fragment {
     private static final String ARGUMENT_IMAGE = "argument_image";
     private Image image;
+    private TouchImageView mTouchImageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,17 +37,17 @@ public class ImageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_image, container, false);
-        final TouchImageView touchImageView = (TouchImageView) rootView.findViewById(R.id.image);
+        mTouchImageView = (TouchImageView) rootView.findViewById(R.id.image);
         final CircularProgressBar circularProgressBar = (CircularProgressBar) rootView.findViewById(R.id.preloader);
         final TextView textView = (TextView) rootView.findViewById(R.id.check_connection);
         String url = image.getFullNetpath();
         Log.d("MyImageURL", url);
         Picasso.with(getActivity())
                 .load(url)
-                .into(touchImageView, new Callback() {
+                .into(mTouchImageView, new Callback() {
                             @Override
                             public void onSuccess() {
-                                touchImageView.setVisibility(View.VISIBLE);
+                                mTouchImageView.setVisibility(View.VISIBLE);
                                 circularProgressBar.setVisibility(View.INVISIBLE);
                                 Log.d("MyImageLoading", "Success");
                             }
@@ -60,6 +61,11 @@ public class ImageFragment extends Fragment {
                         }
                 );
         return rootView;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     public static ImageFragment newInstance(Image image) {

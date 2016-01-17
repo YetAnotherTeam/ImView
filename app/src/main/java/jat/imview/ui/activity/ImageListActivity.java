@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.google.android.gms.ads.AdView;
 
 import jat.imview.R;
 import jat.imview.adapter.GalleryAdapter;
@@ -41,6 +42,7 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
 
     private LinearLayout mCommentsButton;
     private ImageButton mShareButton;
+    private AdView mAdView;
 
     protected TextView mCommentsCount;
     protected TextView mImageRating;
@@ -66,6 +68,11 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
         mViewPager = (GalleryViewPager) findViewById(R.id.view_pager);
         mViewPager.setAdapter(mGalleryAdapter);
         mViewPager.addOnPageChangeListener(this);
+
+        if (isNeedToShowAd) {
+            mAdView = (AdView) findViewById(R.id.advertising_block);
+            mAdView.loadAd(adRequest);
+        }
     }
 
     @Override
@@ -110,6 +117,14 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         IntentFilter filter = new IntentFilter(SendServiceHelper.ACTION_REQUEST_RESULT);
@@ -126,6 +141,17 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
             }
         };
         registerReceiver(requestReceiver, filter);
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -135,14 +161,14 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if(mGalleryAdapter != null && mViewPager != null) {
+        if (mGalleryAdapter != null && mViewPager != null) {
             mGalleryAdapter.changeCursor(data);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        if(mGalleryAdapter != null)
+        if (mGalleryAdapter != null)
             mGalleryAdapter.changeCursor(null);
     }
 

@@ -15,7 +15,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+
+import com.google.android.gms.ads.AdView;
 
 import jat.imview.R;
 import jat.imview.adapter.CommentsAdapter;
@@ -29,6 +33,7 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
     private CommentsAdapter mCommentsAdapter;
     private EditText mMessageTextInput;
     private int imageId;
+    private AdView mAdView;
 
     private Integer requestId;
     private BroadcastReceiver requestReceiver;
@@ -59,6 +64,11 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
 
         mMessageTextInput = (EditText) findViewById(R.id.message_text_input);
         findViewById(R.id.send_button).setOnClickListener(this);
+
+        if (isNeedToShowAd) {
+            mAdView = (AdView) findViewById(R.id.advertising_block);
+            mAdView.loadAd(adRequest);
+        }
 
         requestId = SendServiceHelper.getInstance(this).requestCommentList(imageId);
     }

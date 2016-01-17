@@ -5,12 +5,12 @@ import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import java.lang.ref.WeakReference;
 
 import jat.imview.model.Image;
 import jat.imview.ui.fragment.ImageFragment;
-
 
 /**
  * Created by bulat on 07.12.15.
@@ -40,6 +40,11 @@ public class GalleryAdapter extends FragmentStatePagerAdapter {
             image = Image.getByCursor(cursor);
         }
         return ImageFragment.newInstance(image);
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        super.destroyItem(container, position, object);
     }
 
     public void changeCursor(Cursor newCursor) {

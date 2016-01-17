@@ -2,7 +2,13 @@
 <resources>
     <color name="colorPrimary">#252529</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#000000</color>
+    <color name="windowBackground">#19191C</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorSecondary">#6C6C73</color>
+    <color name="colorAccent">#FFC34A</color>
+
+    <color name="buttonPressed">#6C6C73</color>
+    <color name="buttonUnpressed">#252529</color>
 
     <integer-array name="gplus_colors">
         <item>@color/gplus_color_1</item>

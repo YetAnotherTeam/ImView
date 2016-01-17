@@ -31,7 +31,6 @@ public abstract class DrawerActivity extends BaseActivity {
         ABYSS(R.drawable.ic_crop_original_black_18dp, R.string.abyss_activity_string, AbyssActivity.class, true),
         SETTINGS(R.drawable.ic_settings_black_18dp, R.string.settings_activity_string, PreferenceActivity.class, false);
 
-
         private int name;
         private int icon;
         private Class<? extends Activity> activity;
