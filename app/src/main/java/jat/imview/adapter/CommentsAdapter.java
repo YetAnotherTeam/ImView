@@ -33,9 +33,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     @Override
     public void onBindViewHolder(CommentViewHolder holder, int position) {
-        Comment comment = null;
         if (cursor.moveToPosition(position)) {
-            comment = Comment.getByCursor(cursor);
+            Comment comment = Comment.getByCursor(cursor);
             holder.mCommentText.setText(comment.getMessage());
             Locale locale = new Locale("ru");
             DateFormat dateFormat = new SimpleDateFormat("HH:mm dd MMMM", locale);

@@ -66,7 +66,7 @@ public class CommentListProcessor {
             values.put(CommentTable.ID, comment.getId());
             values.put(CommentTable.IMAGE_ID, comment.getImageId());
             values.put(CommentTable.USER_ID, comment.getUserId());
-            values.put(CommentTable.PUBLISH_DATE, String.valueOf(comment.getPublishDate()));
+            values.put(CommentTable.PUBLISH_DATE, comment.getPublishDate().getTime() / 1000);
             values.put(CommentTable.MESSAGE, comment.getMessage());
             values.put(CommentTable.RATING, comment.getRating());
             commentValuesArray[i] = values;

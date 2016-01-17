@@ -29,7 +29,8 @@ public abstract class DrawerActivity extends BaseActivity {
     public enum NavigationDrawerItem {
         FEATURED(R.drawable.ic_crop_original_black_18dp, R.string.featured_activity_string, FeaturedActivity.class, true),
         ABYSS(R.drawable.ic_crop_original_black_18dp, R.string.abyss_activity_string, AbyssActivity.class, true),
-        SETTINGS(R.drawable.ic_settings_black_18dp, R.string.settings_activity_string, PreferenceActivity.class, false);
+        AUTHENTICATION(R.drawable.ic_crop_original_black_18dp, R.string.authentication_activity_string, AuthenticationActivity.class, true),
+        SETTINGS(R.drawable.ic_settings_black_18dp, R.string.settings_activity_string, PreferenceActivity.class, true);
 
         private int name;
         private int icon;

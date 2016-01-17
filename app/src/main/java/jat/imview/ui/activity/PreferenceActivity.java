@@ -7,24 +7,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class PreferenceActivity extends BaseActivity {
+public class PreferenceActivity extends DrawerActivity {
+
+    @Override
+    public NavigationDrawerItem getCurrentNavDrawerItem() {
+        return null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(jat.imview.R.layout.activity_preference);
 
-        Toolbar toolbar = (Toolbar) findViewById(jat.imview.R.id.toolbar);
-        toolbar.setTitleTextColor(0xFFFFFFFF);
+        //Toolbar toolbar = (Toolbar) findViewById(jat.imview.R.id.toolbar);
+        //toolbar.setTitleTextColor(0xFFFFFFFF);
 
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        getFragmentManager().beginTransaction()
-                .replace(jat.imview.R.id.pref_fragment_container, new PrefFragment()).commit();
+        getFragmentManager().beginTransaction().replace(jat.imview.R.id.pref_fragment_container, new PrefFragment()).commit();
     }
 
     public static class PrefFragment extends PreferenceFragment {

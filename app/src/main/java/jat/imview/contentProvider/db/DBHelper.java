@@ -69,7 +69,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sqlBuilder.append(ImageTable.NETPATH).append(" TEXT NOT NULL, ");
         sqlBuilder.append(ImageTable.RATING).append(" INTEGER NOT NULL DEFAULT 0, ");
         sqlBuilder.append(ImageTable.COMMENTS_COUNT).append(" INTEGER NOT NULL DEFAULT 0, ");
-        sqlBuilder.append(ImageTable.PUBLISH_DATE).append(" DATETIME NOT NULL, ");
+        sqlBuilder.append(ImageTable.PUBLISH_DATE).append(" INTEGER NOT NULL, ");
         sqlBuilder.append(ImageTable.STATE).append(" INTEGER NOT NULL DEFAULT ")
                 .append(RequestState.WAITING.ordinal());
         sqlBuilder.append(");");
@@ -98,7 +98,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sqlBuilder.append(CommentTable.ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT, ");
         sqlBuilder.append(CommentTable.IMAGE_ID).append(" INTEGER NOT NULL, ");
         sqlBuilder.append(CommentTable.USER_ID).append(" INTEGER NOT NULL, ");
-        sqlBuilder.append(CommentTable.PUBLISH_DATE).append(" DATE NOT NULL, ");
+        sqlBuilder.append(CommentTable.PUBLISH_DATE).append(" INTEGER NOT NULL, ");
         sqlBuilder.append(CommentTable.MESSAGE).append(" TEXT NOT NULL, ");
         sqlBuilder.append(CommentTable.RATING).append(" INTEGER NOT NULL DEFAULT 0, ");
         sqlBuilder.append(ImageTable.STATE).append(" INTEGER NOT NULL DEFAULT ")

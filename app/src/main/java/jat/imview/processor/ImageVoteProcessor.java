@@ -50,7 +50,7 @@ public class ImageVoteProcessor {
         values.put(ImageTable.ID, image.getId());
         values.put(ImageTable.NETPATH, image.getNetpath());
         values.put(ImageTable.RATING, image.getRating());
-        values.put(ImageTable.PUBLISH_DATE, String.valueOf(image.getPublishDate()));
+        values.put(ImageTable.PUBLISH_DATE, image.getPublishDate().getTime() / 1000);
         values.put(ImageTable.COMMENTS_COUNT, String.valueOf(image.getCommentsCount()));
         contentResolver.insert(ImageTable.CONTENT_URI, values);
     }

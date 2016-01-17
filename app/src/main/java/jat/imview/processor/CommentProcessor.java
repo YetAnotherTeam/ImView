@@ -59,7 +59,7 @@ public class CommentProcessor {
         commentValues.put(CommentTable.ID, comment.getId());
         commentValues.put(CommentTable.IMAGE_ID, comment.getImageId());
         commentValues.put(CommentTable.USER_ID, comment.getUserId());
-        commentValues.put(CommentTable.PUBLISH_DATE, String.valueOf(comment.getPublishDate()));
+        commentValues.put(CommentTable.PUBLISH_DATE, comment.getPublishDate().getTime() / 1000);
         commentValues.put(CommentTable.MESSAGE, comment.getMessage());
         commentValues.put(CommentTable.RATING, comment.getRating());
         contentResolver.insert(CommentTable.CONTENT_URI, commentValues);

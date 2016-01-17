@@ -2,15 +2,10 @@ package jat.imview.model;
 
 import android.database.Cursor;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import jat.imview.contentProvider.db.table.CommentTable;
 import jat.imview.contentProvider.db.table.UserProfileTable;
-import jat.imview.util.DateUtil;
 
 /**
  * Created by bulat on 17.12.15.
@@ -102,7 +97,7 @@ public class Comment {
 
         comment.setId(cursor.getInt(idIndex));
         comment.setUserName(cursor.getString(userProfileNameIndex));
-        comment.setPublishDate(DateUtil.parseFromDBString(cursor.getString(publishDateIndex)));
+        comment.setPublishDate(new Date(cursor.getLong(publishDateIndex) * 1000));
         comment.setMessage(cursor.getString(messageIndex));
         comment.setRating(cursor.getInt(ratingIndex));
 

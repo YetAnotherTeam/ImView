@@ -42,7 +42,6 @@
             android:name=".ui.activity.PreferenceActivity"
             android:label="Settings"
             android:theme="@style/PreferenceTheme" />
-
         <activity
             android:name=".ui.activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -66,12 +65,16 @@
         <provider
             android:name=".contentProvider.CommentProvider"
             android:authorities="jat.imview.commentProvider" />
-
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider1673826382890524"
             android:exported="true" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity android:name=".ui.activity.AuthenticationActivity"></activity>
     </application>
 
 </manifest>

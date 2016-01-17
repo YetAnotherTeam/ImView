@@ -188,12 +188,18 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
                 }
             }
         };
+        if (mAdView != null) {
+            mAdView.resume();
+        }
         registerReceiver(requestReceiver, filter);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        if (mAdView != null) {
+            mAdView.pause();
+        }
         if (requestReceiver != null) {
             try {
                 this.unregisterReceiver(requestReceiver);
@@ -219,5 +225,13 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
     public void onLoaderReset(Loader<Cursor> loader) {
         if (mCommentsAdapter != null)
             mCommentsAdapter.changeCursor(null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 }
