@@ -7,6 +7,7 @@ import android.os.ResultReceiver;
 import android.util.Log;
 
 import jat.imview.processor.CommentListProcessor;
+import jat.imview.processor.CommentProcessor;
 import jat.imview.processor.ImageListProcessor;
 import jat.imview.processor.ImageVoteProcessor;
 import jat.imview.processor.LoginProcessor;
@@ -118,7 +119,11 @@ public class SendService extends IntentService {
                 break;
             case COMMENT_NEW:
                 if (httpMethod.equals(HTTPMethod.POST)) {
-
+                    Log.d(LOG_TAG, "Comment New");
+                    int imageId = mOriginalRequestIntent.getIntExtra(COMMENT_NEW_IMAGE_ID_EXTRA, 0);
+                    String text = mOriginalRequestIntent.getStringExtra(COMMENT_NEW_TEXT_EXTRA);
+                    CommentProcessor commentProcessor = new CommentProcessor(getApplicationContext(), imageId, text);
+                    commentProcessor.getComment(makeProcessorCallback());
                 } else {
                     sendInvalidRequestCode();
                 }

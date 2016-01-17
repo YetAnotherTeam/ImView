@@ -55,7 +55,6 @@ public class HTTPClient {
                     break;
             }
             statusCode = connection.getResponseCode();
-
             // Записываем cookie из заголовков ответа
             Map<String, List<String>> headerFields = connection.getHeaderFields();
             List<String> cookiesHeader = headerFields.get(COOKIES_HEADER);
@@ -66,7 +65,7 @@ public class HTTPClient {
             }
 
             byte[] body;
-            if (connection.getContentLength() > 0) {
+            if (connection.getContentLength() > 0 && statusCode < HttpURLConnection.HTTP_BAD_REQUEST) {
                 BufferedInputStream in = new BufferedInputStream(connection.getInputStream());
                 body = readStream(in);
             } else {

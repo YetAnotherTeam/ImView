@@ -12,12 +12,13 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 
 import com.google.android.gms.ads.AdView;
 
@@ -29,9 +30,11 @@ import jat.imview.service.SendServiceHelper;
 public class CommentsActivity extends DrawerActivity implements CommentsAdapter.OnItemClickListener, OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
     private static final String LOG_TAG = "MyCommentsActivity";
     public static final String IMAGE_ID_EXTRA = "IMAGE_ID_EXTRA";
+    private static final int MIN_INPUT_TEXT_LENGTH = 3;
     private RecyclerView mCommentsRecyclerView;
     private CommentsAdapter mCommentsAdapter;
     private EditText mMessageTextInput;
+    private ImageView mSendButton;
     private int imageId;
     private AdView mAdView;
 
@@ -61,9 +64,31 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
         mCommentsRecyclerView.setAdapter(mCommentsAdapter);
         mCommentsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mCommentsRecyclerView.setLayoutManager(new LinearLayoutManager(getApplication().getApplicationContext()));
+        mSendButton = (ImageView) findViewById(R.id.send_button);
+        mSendButton.setOnClickListener(this);
 
         mMessageTextInput = (EditText) findViewById(R.id.message_text_input);
-        findViewById(R.id.send_button).setOnClickListener(this);
+        mMessageTextInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mSendButton.setImageDrawable(getResources().getDrawable(
+                        s.length() >= MIN_INPUT_TEXT_LENGTH ? R.drawable.ic_arrow_forward_white_48dp : R.drawable.ic_arrow_forward_black_48dp
+                ));
+                if (s.length() >= MIN_INPUT_TEXT_LENGTH) {
+
+                } else {
+
+                }
+            }
+        });
 
         if (isNeedToShowAd) {
             mAdView = (AdView) findViewById(R.id.advertising_block);
@@ -94,8 +119,8 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
         switch (v.getId()) {
             case R.id.send_button:
                 String commentText = mMessageTextInput.getText().toString();
-                if (commentText.length() > 0) {
-
+                if (commentText.length() >= MIN_INPUT_TEXT_LENGTH) {
+                    SendServiceHelper.getInstance(this).requestCommentNew(imageId, commentText);
                 }
                 break;
             case R.id.profile:
@@ -117,6 +142,8 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
                 Log.d(LOG_TAG, String.valueOf(resultCode));
                 if (resultCode != 200) {
                     handleResponseErrors(resultCode);
+                } else {
+                    mMessageTextInput.setText("");
                 }
             }
         };
@@ -137,20 +164,19 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, CommentTable.CONTENT_URI, null, null, new String[] {String.valueOf(imageId)}, null);
+        return new CursorLoader(this, CommentTable.CONTENT_URI, null, null, new String[]{String.valueOf(imageId)}, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if(mCommentsAdapter != null) {
-            Log.d(LOG_TAG, "Cursor items count: " + String.valueOf(data.getCount()));
+        if (mCommentsAdapter != null) {
             mCommentsAdapter.changeCursor(data);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        if(mCommentsAdapter != null)
+        if (mCommentsAdapter != null)
             mCommentsAdapter.changeCursor(null);
     }
 }

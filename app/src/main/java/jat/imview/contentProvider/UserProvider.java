@@ -9,10 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 
 import jat.imview.contentProvider.db.DBHelper;
 import jat.imview.contentProvider.db.table.UserProfileTable;
@@ -62,7 +60,7 @@ public class UserProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
-        if (uriMatcher.match(uri) != URI_USER_ID) {
+        if (uriMatcher.match(uri) != URI_USERS) {
             throw new IllegalArgumentException("Unknown URI " + uri);
         }
         db = dbHelper.getWritableDatabase();

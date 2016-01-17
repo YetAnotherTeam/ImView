@@ -76,7 +76,7 @@ public class CommentProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
-        if (uriMatcher.match(uri) != URI_COMMENT_ID) {
+        if (uriMatcher.match(uri) != URI_COMMENTS) {
             throw new IllegalArgumentException("Unknown URI " + uri);
         }
         db = dbHelper.getWritableDatabase();

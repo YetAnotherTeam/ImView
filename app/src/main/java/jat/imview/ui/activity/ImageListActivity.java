@@ -98,15 +98,12 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
                 break;
             case R.id.share_button:
                 if (ShareDialog.canShow(ShareLinkContent.class)) {
-                    Log.d("123", "123");
                     Cursor cursor = getContentResolver().query(ContentUris.withAppendedId(ImageTable.CONTENT_URI, currentImageId), null, null, null, null);
                     if (cursor.moveToFirst()) {
                         Image image = Image.getByCursor(cursor);
-                        Log.d("123", "123");
                         ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                                .setContentTitle(String.valueOf(R.string.app_name))
-                                .setContentDescription(
-                                        "ImView - one of the greatest app in the world")
+                                .setContentTitle(getResources().getString(R.string.app_name))
+                                .setContentDescription(getResources().getString(R.string.slogan))
                                 .setContentUrl(Uri.parse(image.getFullNetpath()))
                                 .setImageUrl(Uri.parse(image.getFullNetpath()))
                                 .build();
@@ -114,7 +111,6 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
                         shareDialog.show(linkContent);
                     }
                     cursor.close();
-
                 }
                 break;
         }
