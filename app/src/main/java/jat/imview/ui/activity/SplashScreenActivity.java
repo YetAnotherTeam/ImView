@@ -4,7 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -86,6 +88,9 @@ public class SplashScreenActivity extends BaseActivity {
     }
 
     private void updateCookiesFromSharedPreferences() {
-        HTTPClient.setCookiesFromSharedPreferences(getSharedPreferences("cookies", Context.MODE_PRIVATE));
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean("save_cookies_at_close", false)) {
+            HTTPClient.setCookiesFromSharedPreferences(getSharedPreferences("cookies", Context.MODE_PRIVATE));
+        }
     }
 }

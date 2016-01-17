@@ -80,8 +80,7 @@ public class Image implements Serializable {
         image.setId(cursor.getInt(idIndex));
         image.setRating(cursor.getInt(ratingIndex));
         image.setNetpath(cursor.getString(netpathIndex));
-        String stringPublishDate = cursor.getString(publishDateIndex);
-        image.setPublishDate(DateUtil.parseFromDBString(stringPublishDate));
+        image.setPublishDate(new Date(cursor.getLong(publishDateIndex) / 1000));
         image.setCommentsCount(cursor.getInt(commentsCountIndex));
         return image;
     }

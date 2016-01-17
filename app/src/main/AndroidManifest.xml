@@ -36,6 +36,10 @@
             android:label="Comments"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".ui.activity.AuthenticationActivity"
+            android:label="Authentication"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ui.activity.ImageNewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
@@ -44,16 +48,17 @@
             android:theme="@style/PreferenceTheme" />
         <activity
             android:name=".ui.activity.LoginActivity"
+            android:label="Login"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.SignupActivity"
+            android:label="Signup"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <service android:name=".service.SendService" />
 
         <provider
@@ -73,8 +78,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
-        <activity android:name=".ui.activity.AuthenticationActivity"></activity>
     </application>
 
 </manifest>

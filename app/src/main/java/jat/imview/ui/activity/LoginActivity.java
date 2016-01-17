@@ -4,7 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -46,7 +48,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (resultCode != 200) {
                     handleResponseErrors(resultCode);
                 } else {
-                    HTTPClient.writeCookiesToSharedPreferences(getSharedPreferences("cookies", MODE_PRIVATE));
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+                    if (sharedPreferences.getBoolean("save_cookies_at_close", false)) {
+                        HTTPClient.writeCookiesToSharedPreferences(getSharedPreferences("cookies", MODE_PRIVATE));
+                    }
                     finish();
                 }
             }

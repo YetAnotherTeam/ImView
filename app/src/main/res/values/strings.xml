@@ -96,7 +96,8 @@
     <string name="prompt_username">Пользователь</string>
     <string name="or_you_can">Или вы можете</string>
     <string name="unhandled_error">Необработанная ошибка</string>
-    <string name="save_cookies_at_close">Сохранять cookies при закрытии</string>
+    <string name="save_cookies_at_close">Сохранять при закрытии</string>
     <string name="cookies">Cookies</string>
     <string name="authentication_activity_string">Аутентификация</string>
+    <string name="authentication">Аутентификация</string>
 </resources>
