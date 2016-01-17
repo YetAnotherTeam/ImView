@@ -1,6 +1,9 @@
 <resources>
     <!-- Google Ads ID -->
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <!-- Facebook App ID -->
+    <string name="facebook_app_id">1673826382890524</string>
+
 
     <string name="app_name">ImView</string>
     <string name="main_activity_string">Главная</string>
@@ -84,7 +87,7 @@
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="do_login">Войти</string>
-    <string name="register">Зарегистрироваться</string>
+    <string name="register">Создать аккаунт</string>
     <string name="cancel">Отмена</string>
     <string name="prompt_password">Пароль</string>
     <string name="prompt_username">Пользователь</string>

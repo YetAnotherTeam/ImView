@@ -1,6 +1,7 @@
 package jat.imview.ui.activity;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -21,12 +22,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.ads.AdView;
 
 import jat.imview.R;
 import jat.imview.adapter.GalleryAdapter;
+import jat.imview.contentProvider.db.table.ImageTable;
 import jat.imview.model.Image;
 import jat.imview.service.SendServiceHelper;
 import jat.imview.ui.view.GalleryViewPager;
@@ -54,7 +61,7 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_list);
-        
+
         mCommentsButton = (LinearLayout) findViewById(R.id.comments_button);
         mShareButton = (ImageButton) findViewById(R.id.share_button);
         mCommentsCount = (TextView) findViewById(R.id.comments_count);
@@ -90,12 +97,25 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
                 startActivity(intent);
                 break;
             case R.id.share_button:
-                ShareLinkContent shareLinkContent = new ShareLinkContent.Builder()
-                        .setContentTitle("ImView")
-                        .setContentUrl(Uri.parse("http://yandex.ru"))
-                        .setImageUrl(Uri.parse("https://yastatic.net/lego/_/X31pO5JJJKEifJ7sfvuf3mGeD_8.png"))
-                        .build();
-                ShareDialog.show(this, shareLinkContent);
+                if (ShareDialog.canShow(ShareLinkContent.class)) {
+                    Log.d("123", "123");
+                    Cursor cursor = getContentResolver().query(ContentUris.withAppendedId(ImageTable.CONTENT_URI, currentImageId), null, null, null, null);
+                    if (cursor.moveToFirst()) {
+                        Image image = Image.getByCursor(cursor);
+                        Log.d("123", "123");
+                        ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                                .setContentTitle(String.valueOf(R.string.app_name))
+                                .setContentDescription(
+                                        "ImView - one of the greatest app in the world")
+                                .setContentUrl(Uri.parse(image.getFullNetpath()))
+                                .setImageUrl(Uri.parse(image.getFullNetpath()))
+                                .build();
+                        ShareDialog shareDialog = new ShareDialog(this);
+                        shareDialog.show(linkContent);
+                    }
+                    cursor.close();
+
+                }
                 break;
         }
     }

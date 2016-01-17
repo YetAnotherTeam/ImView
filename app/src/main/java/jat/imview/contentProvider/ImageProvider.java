@@ -79,7 +79,7 @@ public class ImageProvider extends ContentProvider {
         }
         Uri newUri = ContentUris.withAppendedId(ImageTable.CONTENT_URI, id);
         getContext().getContentResolver().notifyChange(uri, null);
-        //getContext().getContentResolver().notifyChange(newUri, null);
+        getContext().getContentResolver().notifyChange(newUri, null);
         return newUri;
     }
 

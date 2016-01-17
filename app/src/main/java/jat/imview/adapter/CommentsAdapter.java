@@ -47,7 +47,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             holder.mRating.setText(String.valueOf(comment.getRating()));
             holder.mUsername.setText(comment.getUserName());
         }
-
     }
 
     @Override
@@ -86,7 +85,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         private final TextView mPublishDate;
         private final TextView mCommentText;
         private final TextView mRating;
-        private final RelativeLayout mVoteUpButton;
+        private final ImageButton mVoteUpButton;
         private final ImageButton mVoteDownButton;
         private final ImageView mUserAvatar;
 
@@ -97,7 +96,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             mCommentText = (TextView) itemView.findViewById(R.id.comment_text);
             mUserAvatar = (ImageView) itemView.findViewById(R.id.user_avatar);
             mRating = (TextView) itemView.findViewById(R.id.rating);
-            mVoteUpButton = (RelativeLayout) itemView.findViewById(R.id.vote_up_button);
+            mVoteUpButton = (ImageButton) itemView.findViewById(R.id.vote_up_button);
             mVoteDownButton = (ImageButton) itemView.findViewById(R.id.vote_down_button);
 
             itemView.setOnClickListener(this);

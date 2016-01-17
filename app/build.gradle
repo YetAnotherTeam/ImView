@@ -18,7 +18,7 @@ android {
         }
     }
 }
-
+repositories { mavenCentral() }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
@@ -30,7 +30,7 @@ dependencies {
     }
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     // Support libraries
-    compile 'com.facebook.android:facebook-android-sdk:4.8.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     compile 'com.github.castorflex.smoothprogressbar:library-circular:1.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.mikepenz:google-material-typeface:1.2.0.1@aar'

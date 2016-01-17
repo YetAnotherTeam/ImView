@@ -11,6 +11,7 @@ import jat.imview.processor.ImageListProcessor;
 import jat.imview.processor.ImageVoteProcessor;
 import jat.imview.processor.LoginProcessor;
 import jat.imview.processor.ProcessorCallback;
+import jat.imview.processor.SignupProcessor;
 import jat.imview.rest.http.HTTPMethod;
 
 /**
@@ -61,7 +62,6 @@ public class SendService extends IntentService {
             case LOGIN:
                 if (httpMethod.equals(HTTPMethod.POST)) {
                     Log.d(LOG_TAG, "Login");
-
                     String username = mOriginalRequestIntent.getStringExtra(LOGIN_USERNAME_EXTRA);
                     String password = mOriginalRequestIntent.getStringExtra(LOGIN_PASSWORD_EXTRA);
                     LoginProcessor loginProcessor = new LoginProcessor(getApplicationContext(), username, password);
@@ -72,7 +72,11 @@ public class SendService extends IntentService {
                 break;
             case SIGNUP:
                 if (httpMethod.equals(HTTPMethod.POST)) {
-
+                    Log.d(LOG_TAG, "Signup");
+                    String username = mOriginalRequestIntent.getStringExtra(SIGNUP_USERNAME_EXTRA);
+                    String password = mOriginalRequestIntent.getStringExtra(SIGNUP_PASSWORD_EXTRA);
+                    SignupProcessor signupProcessor = new SignupProcessor(getApplicationContext(), username, password);
+                    signupProcessor.getSignup(makeProcessorCallback());
                 } else {
                     sendInvalidRequestCode();
                 }

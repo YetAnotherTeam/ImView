@@ -1,5 +1,6 @@
 package jat.imview.rest.http;
 
+import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -13,16 +14,18 @@ import java.io.OutputStreamWriter;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import jat.imview.rest.Utils;
 
 public class HTTPClient {
     private static final int CHUNK_SIZE = 1024;
     private static final String LOG_TAG = "MyRequest";
-    static final String COOKIES_HEADER = "Set-Cookie";
-    static java.net.CookieManager msCookieManager = new java.net.CookieManager();
+    private static final String COOKIES_HEADER = "Set-Cookie";
+    private static java.net.CookieManager msCookieManager = new java.net.CookieManager();
 
     public Response execute(Request request) {
         HttpURLConnection connection = null;
@@ -101,7 +104,24 @@ public class HTTPClient {
         return byteArrayOutputStream.toByteArray();
     }
 
-    public static void updateCookies() {
+    public static void setCookiesFromSharedPreferences(SharedPreferences sharedPreferences) {
+        Set<String> cookiesSet = sharedPreferences.getStringSet("cookiesSet", new HashSet<String>());
+        for (String cookie : cookiesSet) {
+            msCookieManager.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
+        }
+    }
+
+    public static void writeCookiesToSharedPreferences(SharedPreferences sharedPreferences) {
+        if (msCookieManager.getCookieStore().getCookies().size() > 0) {
+            Set<String> cookiesSet = new HashSet<>();
+            for (HttpCookie httpCookie : msCookieManager.getCookieStore().getCookies()) {
+                cookiesSet.add(httpCookie.toString());
+            }
+            SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+            sharedPreferencesEditor.putStringSet("cookiesSet", cookiesSet);
+            sharedPreferencesEditor.apply();
+        }
+
 
     }
 }

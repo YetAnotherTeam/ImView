@@ -1,9 +1,6 @@
 package jat.imview.rest.restMethod;
 
-import android.content.Context;
 import android.net.Uri;
-
-import java.lang.ref.WeakReference;
 import java.net.URI;
 
 import jat.imview.rest.http.HTTPMethod;
@@ -32,7 +29,7 @@ public class CommentListRestMethod extends AbstractRestMethod<CommentListResourc
                         .appendQueryParameter("image_id", String.valueOf(imageId))
                         .build().toString()
         );
-        return new Request(HTTPMethod.GET, currentURL, null);
+        return new Request(httpMethod, currentURL, null);
     }
 
     @Override

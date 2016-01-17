@@ -41,37 +41,30 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_thumb_down_white_48dp" />
 
-        <RelativeLayout
+        <ImageButton
             android:id="@+id/vote_up_button"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/vote_down_button"
+            android:layout_toStartOf="@id/vote_down_button"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:padding="9dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_thumb_up_white_48dp" />
+
+        <TextView
+            android:id="@+id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@id/vote_down_button"
-            android:layout_toStartOf="@id/vote_down_button">
-
-            <ImageView
-                android:id="@+id/author_image"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:adjustViewBounds="true"
-                android:padding="9dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_thumb_up_white_48dp" />
-
-            <TextView
-                android:id="@+id/rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@id/author_image"
-                android:layout_toStartOf="@id/author_image"
-                android:paddingBottom="9dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp" />
-        </RelativeLayout>
+            android:layout_toLeftOf="@id/vote_up_button"
+            android:layout_toStartOf="@id/vote_up_button"
+            android:paddingBottom="9dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/username"
@@ -92,9 +85,8 @@
             android:layout_alignParentStart="true"
             android:layout_below="@id/username"
             android:layout_marginBottom="3dp"
-            android:textSize="12sp"
-            android:text="14c назад"
-            android:textColor="#6C6C73" />
+            android:textColor="#6C6C73"
+            android:textSize="12sp" />
     </RelativeLayout>
 
     <TextView
@@ -104,6 +96,5 @@
         android:layout_alignLeft="@id/active_block"
         android:layout_alignStart="@id/active_block"
         android:layout_below="@id/active_block"
-        android:text="Very long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text long texextVery long text*"
         android:textColor="#CCCCCC" />
 </RelativeLayout>

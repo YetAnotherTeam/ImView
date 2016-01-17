@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import jat.imview.R;
+import jat.imview.rest.http.HTTPClient;
 import jat.imview.service.SendServiceHelper;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
@@ -45,6 +46,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (resultCode != 200) {
                     handleResponseErrors(resultCode);
                 } else {
+                    HTTPClient.writeCookiesToSharedPreferences(getSharedPreferences("cookies", MODE_PRIVATE));
                     finish();
                 }
             }

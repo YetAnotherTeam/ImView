@@ -12,6 +12,7 @@ import com.facebook.FacebookSdk;
 
 import jat.imview.R;
 import jat.imview.asyncTask.PreloadTask;
+import jat.imview.rest.http.HTTPClient;
 import jat.imview.service.SendServiceHelper;
 
 public class SplashScreenActivity extends BaseActivity {
@@ -22,17 +23,17 @@ public class SplashScreenActivity extends BaseActivity {
     private long startLoadingTime;
     private boolean preloadTimeLimitSucceed = true;
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
         startLoadingTime = System.currentTimeMillis();
+        updateCookiesFromSharedPreferences();
         if (mPreloadTask == null) {
             mPreloadTask = new PreloadTask(this);
             mPreloadTask.execute(ACTIVITY_MAX_SLEEP_TIME_MILLISECONDS);
         }
-        FacebookSdk.sdkInitialize(getApplicationContext());
-
         SendServiceHelper.getInstance(this).requestImageList(true);
     }
 
@@ -82,5 +83,9 @@ public class SplashScreenActivity extends BaseActivity {
         }
         startActivity(intent);
         finish();
+    }
+
+    private void updateCookiesFromSharedPreferences() {
+        HTTPClient.setCookiesFromSharedPreferences(getSharedPreferences("cookies", Context.MODE_PRIVATE));
     }
 }
