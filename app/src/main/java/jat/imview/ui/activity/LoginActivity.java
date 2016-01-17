@@ -1,11 +1,12 @@
 package jat.imview.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,7 +15,7 @@ import jat.imview.service.SendServiceHelper;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private static String LOG_TAG = "MyLoginActivity";
-    private TextView mEmailTextView;
+    private TextView mUsernameTextView;
     private TextView mPasswordTextView;
 
     @Override
@@ -22,12 +23,33 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mEmailTextView = (TextView) findViewById(R.id.email);
+        mUsernameTextView = (TextView) findViewById(R.id.username);
         mPasswordTextView = (TextView) findViewById(R.id.password);
 
         findViewById(R.id.login_button).setOnClickListener(this);
         findViewById(R.id.back_button).setOnClickListener(this);
         findViewById(R.id.sign_up).setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(SendServiceHelper.ACTION_REQUEST_RESULT);
+        requestReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int resultRequestId = intent.getIntExtra(SendServiceHelper.EXTRA_REQUEST_ID, 0);
+                Log.d(LOG_TAG, "Received intent " + intent.getAction() + ", request ID " + resultRequestId);
+                int resultCode = intent.getIntExtra(SendServiceHelper.EXTRA_RESULT_CODE, 0);
+                Log.d(LOG_TAG, String.valueOf(resultCode));
+                if (resultCode != 200) {
+                    handleResponseErrors(resultCode);
+                } else {
+                    finish();
+                }
+            }
+        };
+        registerReceiver(requestReceiver, filter);
     }
 
     @Override
@@ -37,12 +59,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 finish();
                 break;
             case R.id.login_button:
-                String email = mEmailTextView.getText().toString();
+                String username = mUsernameTextView.getText().toString();
                 String password = mPasswordTextView.getText().toString();
-                if (email.length() > 0 && password.length() > 0) {
-                    SendServiceHelper.getInstance(this).requestLogin(email, password);
+                if (username.length() > 0 && password.length() > 0) {
+                    SendServiceHelper.getInstance(this).requestLogin(username, password);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Заполните, пожалуйста, все поля", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.fill_all_fields_please, Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.sign_up:

@@ -30,7 +30,6 @@ public class AbyssActivity extends ImageListActivity {
         mVoteDownButton = (ImageView) findViewById(R.id.vote_down_button);
         mVoteDownButton.setOnClickListener(this);
         mImageRating = (TextView) findViewById(R.id.image_rating);
-        updateActivityFromPosition(0);
     }
 
     @Override

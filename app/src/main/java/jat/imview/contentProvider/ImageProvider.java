@@ -69,13 +69,17 @@ public class ImageProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
-        if (uriMatcher.match(uri) != URI_IMAGE_ID) {
+        if (uriMatcher.match(uri) != URI_IMAGES) {
             throw new IllegalArgumentException("Unknown URI " + uri);
         }
         db = dbHelper.getWritableDatabase();
         long id = db.insertWithOnConflict(ImageTable.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        if (id < 0) {
+            throw new IllegalArgumentException("Insert error: " + uri);
+        }
         Uri newUri = ContentUris.withAppendedId(ImageTable.CONTENT_URI, id);
-        getContext().getContentResolver().notifyChange(newUri, null);
+        getContext().getContentResolver().notifyChange(uri, null);
+        //getContext().getContentResolver().notifyChange(newUri, null);
         return newUri;
     }
 

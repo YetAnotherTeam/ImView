@@ -55,10 +55,7 @@ public class ImageListProcessor {
             values.put(ImageTable.RATING, image.getRating());
             values.put(ImageTable.PUBLISH_DATE, String.valueOf(image.getPublishDate()));
             values.put(ImageTable.COMMENTS_COUNT, String.valueOf(image.getCommentsCount()));
-            contentResolver.insert(
-                    ContentUris.withAppendedId(ImageTable.CONTENT_URI, image.getId()),
-                    values
-            );
+            contentResolver.insert(ImageTable.CONTENT_URI, values);
 
             ContentValues imageListValues = new ContentValues();
             imageListValues.put(ImageListTable.IMAGE_ID, image.getId());

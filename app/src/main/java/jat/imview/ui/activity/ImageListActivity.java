@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
@@ -47,11 +48,13 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
     protected TextView mCommentsCount;
     protected TextView mImageRating;
 
+    private int currentPosition = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_list);
-
+        
         mCommentsButton = (LinearLayout) findViewById(R.id.comments_button);
         mShareButton = (ImageButton) findViewById(R.id.share_button);
         mCommentsCount = (TextView) findViewById(R.id.comments_count);
@@ -136,7 +139,18 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
                 int resultCode = intent.getIntExtra(SendServiceHelper.EXTRA_RESULT_CODE, 0);
                 Log.d(LOG_TAG, String.valueOf(resultCode));
                 if (resultCode != 200) {
-                    handleResponseErrors(resultCode);
+                    switch (resultCode) {
+                        case 403:
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    R.string.you_already_vote_for_this_image,
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                            break;
+                        default:
+                            handleResponseErrors(resultCode);
+                            break;
+                    }
                 }
             }
         };
@@ -164,6 +178,7 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
         if (mGalleryAdapter != null && mViewPager != null) {
             mGalleryAdapter.changeCursor(data);
         }
+        updateActivityFromPosition(currentPosition);
     }
 
     @Override
@@ -179,6 +194,7 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
     @Override
     public void onPageSelected(int position) {
         updateActivityFromPosition(position);
+        currentPosition = position;
     }
 
     @Override

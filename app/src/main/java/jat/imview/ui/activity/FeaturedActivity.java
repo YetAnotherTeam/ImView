@@ -27,7 +27,6 @@ public class FeaturedActivity extends ImageListActivity {
         mVoteUpButton = (LinearLayout) findViewById(R.id.vote_up_button);
         mVoteUpButton.setOnClickListener(this);
         mImageRating = (TextView) findViewById(R.id.image_rating);
-        updateActivityFromPosition(0);
     }
 
     @Override

@@ -44,27 +44,14 @@ public class ImageVoteProcessor {
 
     private void updateContentProvider(RestMethodResult<ImageVoteResource> restMethodResult) {
         ImageVoteResource imageVoteResource = restMethodResult.getResource();
-        List<Image> imageList = imageVoteResource.getImageList();
+        Image image = imageVoteResource.getImage();
         ContentResolver contentResolver = weakContext.get().getContentResolver();
-        ContentValues[] featuredValuesArray = new ContentValues[imageList.size()];
-        for (int i = 0; i < imageList.size(); ++i) {
-            Image image = imageList.get(i);
-            ContentValues values = new ContentValues();
-            values.put(ImageTable.ID, image.getId());
-            values.put(ImageTable.NETPATH, image.getNetpath());
-            values.put(ImageTable.RATING, image.getRating());
-            values.put(ImageTable.PUBLISH_DATE, String.valueOf(image.getPublishDate()));
-            values.put(ImageTable.COMMENTS_COUNT, String.valueOf(image.getCommentsCount()));
-            contentResolver.insert(
-                    ContentUris.withAppendedId(ImageTable.CONTENT_URI, image.getId()),
-                    values
-            );
-
-            ContentValues featuredValues = new ContentValues();
-            featuredValues.put(FeaturedTable.IMAGE_ID, image.getId());
-            featuredValuesArray[i] = featuredValues;
-        }
-        contentResolver.delete(FeaturedTable.CONTENT_URI, null, null);
-        contentResolver.bulkInsert(FeaturedTable.CONTENT_URI, featuredValuesArray);
+        ContentValues values = new ContentValues();
+        values.put(ImageTable.ID, image.getId());
+        values.put(ImageTable.NETPATH, image.getNetpath());
+        values.put(ImageTable.RATING, image.getRating());
+        values.put(ImageTable.PUBLISH_DATE, String.valueOf(image.getPublishDate()));
+        values.put(ImageTable.COMMENTS_COUNT, String.valueOf(image.getCommentsCount()));
+        contentResolver.insert(ImageTable.CONTENT_URI, values);
     }
 }

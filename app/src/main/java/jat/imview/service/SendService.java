@@ -9,6 +9,7 @@ import android.util.Log;
 import jat.imview.processor.CommentListProcessor;
 import jat.imview.processor.ImageListProcessor;
 import jat.imview.processor.ImageVoteProcessor;
+import jat.imview.processor.LoginProcessor;
 import jat.imview.processor.ProcessorCallback;
 import jat.imview.rest.http.HTTPMethod;
 
@@ -22,7 +23,7 @@ public class SendService extends IntentService {
     public static final String REQUEST_TYPE_EXTRA = "jat.imview.service.REQUEST_TYPE_EXTRA";
     public static final String SERVICE_CALLBACK_EXTRA = "jat.imview.service.SERVICE_CALLBACK_EXTRA";
 
-    public static final String LOGIN_EMAIL_EXTRA = "jat.imview.service.LOGIN_EMAIL_EXTRA";
+    public static final String LOGIN_USERNAME_EXTRA = "jat.imview.service.LOGIN_USERNAME_EXTRA";
     public static final String LOGIN_PASSWORD_EXTRA = "jat.imview.service.LOGIN_PASSWORD_EXTRA";
     public static final String SIGNUP_USERNAME_EXTRA = "jat.imview.service.SIGNUP_USERNAME_EXTRA";
     public static final String SIGNUP_PASSWORD_EXTRA = "jat.imview.service.SIGNUP_PASSWORD_EXTRA";
@@ -59,7 +60,12 @@ public class SendService extends IntentService {
         switch (requestType) {
             case LOGIN:
                 if (httpMethod.equals(HTTPMethod.POST)) {
+                    Log.d(LOG_TAG, "Login");
 
+                    String username = mOriginalRequestIntent.getStringExtra(LOGIN_USERNAME_EXTRA);
+                    String password = mOriginalRequestIntent.getStringExtra(LOGIN_PASSWORD_EXTRA);
+                    LoginProcessor loginProcessor = new LoginProcessor(getApplicationContext(), username, password);
+                    loginProcessor.getLogin(makeProcessorCallback());
                 } else {
                     sendInvalidRequestCode();
                 }
@@ -99,7 +105,7 @@ public class SendService extends IntentService {
                 if (httpMethod.equals(HTTPMethod.POST)) {
                     Log.d(LOG_TAG, "Image Vote");
                     int imageId = mOriginalRequestIntent.getIntExtra(IMAGE_VOTE_IMAGE_ID_EXTRA, -1);
-                    boolean isUpVote = mOriginalRequestIntent.getBooleanExtra(IMAGE_VOTE_IS_UP_VOTE_EXTRA, false);
+                    boolean isUpVote = mOriginalRequestIntent.getBooleanExtra(IMAGE_VOTE_IS_UP_VOTE_EXTRA, true);
                     ImageVoteProcessor imageVoteProcessor = new ImageVoteProcessor(getApplicationContext(), imageId, isUpVote);
                     imageVoteProcessor.getImage(makeProcessorCallback());
                 } else {

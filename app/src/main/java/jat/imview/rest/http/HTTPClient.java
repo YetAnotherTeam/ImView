@@ -1,5 +1,6 @@
 package jat.imview.rest.http;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -9,14 +10,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 import jat.imview.rest.Utils;
 
 public class HTTPClient {
     private static final int CHUNK_SIZE = 1024;
     private static final String LOG_TAG = "MyRequest";
+    static final String COOKIES_HEADER = "Set-Cookie";
+    static java.net.CookieManager msCookieManager = new java.net.CookieManager();
 
     public Response execute(Request request) {
         HttpURLConnection connection = null;
@@ -26,6 +32,10 @@ public class HTTPClient {
             URL url = request.getRequestUri().toURL();
             Log.d(LOG_TAG, url.toString());
             connection = (HttpURLConnection) url.openConnection();
+            if (msCookieManager.getCookieStore().getCookies().size() > 0) {
+                //While joining the Cookies, use ',' or ';' as needed. Most of the server are using ';'
+                connection.setRequestProperty("Cookie", TextUtils.join(";", msCookieManager.getCookieStore().getCookies()));
+            }
             switch (request.getMethod()) {
                 case GET:
                     connection.setDoOutput(false);
@@ -42,6 +52,16 @@ public class HTTPClient {
                     break;
             }
             statusCode = connection.getResponseCode();
+
+            // Записываем cookie из заголовков ответа
+            Map<String, List<String>> headerFields = connection.getHeaderFields();
+            List<String> cookiesHeader = headerFields.get(COOKIES_HEADER);
+            if (cookiesHeader != null) {
+                for (String cookie : cookiesHeader) {
+                    msCookieManager.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
+                }
+            }
+
             byte[] body;
             if (connection.getContentLength() > 0) {
                 BufferedInputStream in = new BufferedInputStream(connection.getInputStream());
@@ -79,5 +99,9 @@ public class HTTPClient {
         while ((count = inputStream.read(buffer)) != -1)
             byteArrayOutputStream.write(buffer, 0, count);
         return byteArrayOutputStream.toByteArray();
+    }
+
+    public static void updateCookies() {
+
     }
 }

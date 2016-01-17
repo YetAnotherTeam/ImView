@@ -33,15 +33,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void handleResponseErrors(int resultCode) {
         Log.d(LOG_TAG, "Handle error " + String.valueOf(resultCode));
-        switch (resultCode) {
-            case 401:
-                Intent intent = new Intent(this, LoginActivity.class);
-                Toast.makeText(getApplicationContext(), R.string.login_required, Toast.LENGTH_SHORT).show();
-                startActivity(intent);
-                break;
-            default:
-                Toast.makeText(getApplicationContext(), R.string.network_unreachable, Toast.LENGTH_SHORT).show();
-                break;
+        if (resultCode >= 500) {
+            Toast.makeText(getApplicationContext(), R.string.server_error, Toast.LENGTH_SHORT).show();
+        } else {
+            switch (resultCode) {
+                case 401:
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    Toast.makeText(getApplicationContext(), R.string.login_required, Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+                    break;
+                default:
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.unhandled_error) + ": " + resultCode, Toast.LENGTH_SHORT).show();
+                    break;
+            }
         }
     }
 
