@@ -7,14 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import jat.imview.R;
@@ -42,7 +38,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             comment = Comment.getByCursor(cursor);
             holder.mCommentText.setText(comment.getMessage());
             Locale locale = new Locale("ru");
-            DateFormat dateFormat = new SimpleDateFormat("HH:mm dd MMMM",locale);
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm dd MMMM", locale);
             holder.mPublishDate.setText(dateFormat.format(comment.getPublishDate()));
             holder.mRating.setText(String.valueOf(comment.getRating()));
             holder.mUsername.setText(comment.getUserName());

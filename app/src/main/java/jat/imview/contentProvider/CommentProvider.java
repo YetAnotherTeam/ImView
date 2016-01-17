@@ -14,6 +14,8 @@ import java.sql.SQLException;
 
 import jat.imview.contentProvider.db.DBHelper;
 import jat.imview.contentProvider.db.table.CommentTable;
+import jat.imview.contentProvider.db.table.UserProfileTable;
+import jat.imview.model.Comment;
 
 /**
  * Created by bulat on 10.01.16.
@@ -44,9 +46,23 @@ public class CommentProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         Cursor cursor;
         db = dbHelper.getReadableDatabase();
+        if (sortOrder == null) {
+            sortOrder = CommentTable.PUBLISH_DATE + " DESC";
+        }
+        if (projection == null) {
+            projection = new String[] {
+                    CommentTable.TABLE_NAME + "." + CommentTable.ID + " AS " + CommentTable.ID,
+                    CommentTable.IMAGE_ID,
+                    CommentTable.USER_ID,
+                    CommentTable.PUBLISH_DATE,
+                    CommentTable.MESSAGE,
+                    CommentTable.RATING,
+                    UserProfileTable.NAME
+            };
+        }
         switch (uriMatcher.match(uri)) {
             case URI_COMMENTS:
-                cursor = db.rawQuery(DBHelper.getCommentListUserSqlQuery(), selectionArgs);
+                cursor = db.query(DBHelper.getCommentJoinUserSqlQuery(), projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case URI_COMMENT_ID:
                 int id = Integer.parseInt(uri.getLastPathSegment());

@@ -74,7 +74,7 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
         }
 
         getSupportLoaderManager().restartLoader(0, null, this);
-        mGalleryAdapter = new GalleryAdapter(this, getSupportFragmentManager());
+        mGalleryAdapter = new GalleryAdapter(getSupportFragmentManager());
         mViewPager = (GalleryViewPager) findViewById(R.id.view_pager);
         mViewPager.setAdapter(mGalleryAdapter);
         mViewPager.addOnPageChangeListener(this);

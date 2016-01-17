@@ -20,7 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "imview.db";
     private static final int DATABASE_VERSION = 1;
     private static final String IMAGE_LIST_GET_SQL_QUERY;
-    private static final String COMMENT_LIST_USER_SQL_QUERY;
+    private static final String COMMENT_JOIN_USER_SQL_QUERY;
     private static final String TRUNCATE_SQL_QUERY;
 
     static {
@@ -34,14 +34,11 @@ public class DBHelper extends SQLiteOpenHelper {
         IMAGE_LIST_GET_SQL_QUERY = sqlBuilder.toString();
 
         sqlBuilder.setLength(0);
-        sqlBuilder.append("SELECT * FROM ").append(CommentTable.TABLE_NAME);
+        sqlBuilder.append(CommentTable.TABLE_NAME);
         sqlBuilder.append(" INNER JOIN ").append(UserProfileTable.TABLE_NAME);
-        sqlBuilder.append(" ON ").append(CommentTable.USER_ID)
-                .append(" = ").append(UserProfileTable.TABLE_NAME).append(".").append(UserProfileTable.ID);
-        sqlBuilder.append(" WHERE ").append(CommentTable.IMAGE_ID).append(" = ?");
-        sqlBuilder.append(" ORDER BY ").append(CommentTable.PUBLISH_DATE).append(" DESC");
-        sqlBuilder.append(";");
-        COMMENT_LIST_USER_SQL_QUERY = sqlBuilder.toString();
+        sqlBuilder.append(" ON ").append(CommentTable.USER_ID).append(" = ")
+                .append(UserProfileTable.TABLE_NAME).append(".").append(UserProfileTable.ID);
+        COMMENT_JOIN_USER_SQL_QUERY = sqlBuilder.toString();
 
         sqlBuilder.setLength(0);
         sqlBuilder.append("DELETE FROM %s;");
@@ -128,8 +125,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return String.format(IMAGE_LIST_GET_SQL_QUERY, tableName, tableName);
     }
 
-    public static String getCommentListUserSqlQuery() {
-        return COMMENT_LIST_USER_SQL_QUERY;
+    public static String getCommentJoinUserSqlQuery() {
+        return COMMENT_JOIN_USER_SQL_QUERY;
     }
 
     // Чтобы проверяло и по id

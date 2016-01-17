@@ -8,6 +8,7 @@ import android.util.Log;
 
 import jat.imview.processor.CommentListProcessor;
 import jat.imview.processor.CommentProcessor;
+import jat.imview.processor.CommentVoteProcessor;
 import jat.imview.processor.ImageListProcessor;
 import jat.imview.processor.ImageVoteProcessor;
 import jat.imview.processor.LoginProcessor;
@@ -40,6 +41,8 @@ public class SendService extends IntentService {
     public static final String COMMENT_NEW_IMAGE_ID_EXTRA = "jat.imview.service.COMMENT_NEW_IMAGE_ID_EXTRA";
     public static final String COMMENT_NEW_TEXT_EXTRA = "jat.imview.service.COMMENT_NEW_TEXT_EXTRA";
     public static final String COMMENT_LIST_IMAGE_ID_EXTRA = "jat.imview.service.COMMENT_LIST_IMAGE_ID_EXTRA";
+    public static final String COMMENT_VOTE_COMMENT_ID_EXTRA = "jat.imview.service.COMMENT_VOTE_COMMENT_ID_EXTRA";
+    public static final String COMMENT_VOTE_IS_UP_VOTE_EXTRA = "jat.imview.service.COMMENT_VOTE_IS_UP_VOTE_EXTRA";
 
     public static final String ORIGINAL_INTENT_EXTRA = "jat.imview.service.ORIGINAL_INTENT_EXTRA";
 
@@ -134,6 +137,17 @@ public class SendService extends IntentService {
                     int imageId = mOriginalRequestIntent.getIntExtra(COMMENT_LIST_IMAGE_ID_EXTRA, 0);
                     CommentListProcessor commentListProcessor = new CommentListProcessor(getApplicationContext(), imageId);
                     commentListProcessor.getCommentList(makeProcessorCallback());
+                } else {
+                    sendInvalidRequestCode();
+                }
+                break;
+            case COMMENT_VOTE:
+                if (httpMethod.equals(HTTPMethod.POST)) {
+                    Log.d(LOG_TAG, "Comment Vote");
+                    int commentId = mOriginalRequestIntent.getIntExtra(COMMENT_VOTE_COMMENT_ID_EXTRA, -1);
+                    boolean isUpVote = mOriginalRequestIntent.getBooleanExtra(COMMENT_VOTE_IS_UP_VOTE_EXTRA, true);
+                    CommentVoteProcessor commentVoteProcessor = new CommentVoteProcessor(getApplicationContext(), commentId, isUpVote);
+                    commentVoteProcessor.getImage(makeProcessorCallback());
                 } else {
                     sendInvalidRequestCode();
                 }

@@ -8,6 +8,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import jat.imview.contentProvider.db.table.CommentTable;
+import jat.imview.contentProvider.db.table.ImageTable;
 import jat.imview.contentProvider.db.table.UserProfileTable;
 import jat.imview.model.Comment;
 import jat.imview.model.UserProfile;

@@ -19,12 +19,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdView;
 
 import jat.imview.R;
 import jat.imview.adapter.CommentsAdapter;
 import jat.imview.contentProvider.db.table.CommentTable;
+import jat.imview.model.Comment;
+import jat.imview.service.RequestType;
 import jat.imview.service.SendServiceHelper;
 
 public class CommentsActivity extends DrawerActivity implements CommentsAdapter.OnItemClickListener, OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
@@ -37,8 +40,6 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
     private ImageView mSendButton;
     private int imageId;
     private AdView mAdView;
-
-    private Integer requestId;
     private BroadcastReceiver requestReceiver;
 
     @Override
@@ -82,11 +83,6 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
                 mSendButton.setImageDrawable(getResources().getDrawable(
                         s.length() >= MIN_INPUT_TEXT_LENGTH ? R.drawable.ic_arrow_forward_white_48dp : R.drawable.ic_arrow_forward_black_48dp
                 ));
-                if (s.length() >= MIN_INPUT_TEXT_LENGTH) {
-
-                } else {
-
-                }
             }
         });
 
@@ -95,23 +91,38 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
             mAdView.loadAd(adRequest);
         }
 
-        requestId = SendServiceHelper.getInstance(this).requestCommentList(imageId);
+        requestsIdMap.put(
+                SendServiceHelper.getInstance(this).requestCommentList(imageId),
+                RequestType.COMMENT_LIST
+        );
     }
 
     @Override
     public void onItemClick(int position, int itemViewId) {
+        boolean isUpVote;
         switch (itemViewId) {
             case R.id.vote_up_button:
+                isUpVote = true;
                 break;
             case R.id.vote_down_button:
+                isUpVote = false;
                 break;
             // на случай дальнейших улучшений
             case R.id.user_avatar:
             case R.id.username:
-                break;
             default:
-
+                return;
         }
+        Cursor cursor = getContentResolver().query(CommentTable.CONTENT_URI, null, CommentTable.IMAGE_ID + " = ?", new String[]{String.valueOf(imageId)}, null);
+        if (cursor.moveToPosition(position)) {
+            Comment comment = Comment.getByCursor(cursor);
+            int commentId = comment.getId();
+            requestsIdMap.put(
+                    SendServiceHelper.getInstance(this).requestCommentVote(commentId, isUpVote),
+                    RequestType.COMMENT_VOTE
+            );
+        }
+        cursor.close();
     }
 
     @Override
@@ -120,7 +131,10 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
             case R.id.send_button:
                 String commentText = mMessageTextInput.getText().toString();
                 if (commentText.length() >= MIN_INPUT_TEXT_LENGTH) {
-                    SendServiceHelper.getInstance(this).requestCommentNew(imageId, commentText);
+                    requestsIdMap.put(
+                            SendServiceHelper.getInstance(this).requestCommentNew(imageId, commentText),
+                            RequestType.COMMENT_NEW
+                    );
                 }
                 break;
             case R.id.profile:
@@ -140,10 +154,37 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
                 Log.d(LOG_TAG, "Received intent " + intent.getAction() + ", request ID " + resultRequestId);
                 int resultCode = intent.getIntExtra(SendServiceHelper.EXTRA_RESULT_CODE, 0);
                 Log.d(LOG_TAG, String.valueOf(resultCode));
-                if (resultCode != 200) {
-                    handleResponseErrors(resultCode);
-                } else {
-                    mMessageTextInput.setText("");
+                RequestType requestType = requestsIdMap.remove(resultRequestId);
+                switch (requestType) {
+                    case COMMENT_VOTE:
+                        if (resultCode != 200) {
+                            switch (resultCode) {
+                                case 403:
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            R.string.you_already_vote_for_this_comment,
+                                            Toast.LENGTH_SHORT
+                                    ).show();
+                                    break;
+                                default:
+                                    handleResponseErrors(resultCode);
+                                    break;
+                            }
+                        }
+                        break;
+                    case COMMENT_NEW:
+                        if (resultCode != 200) {
+                            handleResponseErrors(resultCode);
+                        } else {
+                            mMessageTextInput.setText("");
+                            mCommentsRecyclerView.smoothScrollToPosition(0);
+                        }
+                        break;
+                    case COMMENT_LIST:
+                        if (resultCode != 200) {
+                            handleResponseErrors(resultCode);
+                        }
+                        break;
                 }
             }
         };
@@ -164,7 +205,7 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, CommentTable.CONTENT_URI, null, null, new String[]{String.valueOf(imageId)}, null);
+        return new CursorLoader(this, CommentTable.CONTENT_URI, null, CommentTable.IMAGE_ID + " = ?", new String[]{String.valueOf(imageId)}, null);
     }
 
     @Override

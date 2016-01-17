@@ -207,4 +207,20 @@ public class SendServiceHelper {
         context.startService(intent);
         return requestId;
     }
+
+    public int requestCommentVote(int commentId, boolean isUpVote) {
+        RequestType requestType = RequestType.COMMENT_VOTE;
+        if (isRequestPending(requestType)) {
+            return pendingRequests.get(requestType);
+        }
+        int requestId = generateRequestId();
+        pendingRequests.put(requestType, requestId);
+
+        Context context = weakContext.get();
+        Intent intent = prepareIntent(context, requestId, requestType, HTTPMethod.POST);
+        intent.putExtra(SendService.COMMENT_VOTE_COMMENT_ID_EXTRA, commentId);
+        intent.putExtra(SendService.COMMENT_VOTE_IS_UP_VOTE_EXTRA, isUpVote);
+        context.startService(intent);
+        return requestId;
+    }
 }

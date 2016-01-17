@@ -1,13 +1,10 @@
 package jat.imview.adapter;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
-
-import java.lang.ref.WeakReference;
 
 import jat.imview.model.Image;
 import jat.imview.ui.fragment.ImageFragment;
@@ -17,11 +14,9 @@ import jat.imview.ui.fragment.ImageFragment;
  */
 public class GalleryAdapter extends FragmentStatePagerAdapter {
     private Cursor cursor;
-    private WeakReference<Context> weakContext;
 
-    public GalleryAdapter(Context context, FragmentManager fm) {
+    public GalleryAdapter(FragmentManager fm) {
         super(fm);
-        weakContext = new WeakReference<>(context);
     }
 
     @Override

@@ -12,17 +12,20 @@ import android.widget.Toast;
 import com.facebook.FacebookSdk;
 import com.google.android.gms.ads.AdRequest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import jat.imview.R;
 import jat.imview.rest.http.HTTPClient;
+import jat.imview.service.RequestType;
 import jat.imview.service.SendServiceHelper;
 
 public abstract class BaseActivity extends AppCompatActivity {
     private static final String LOG_TAG = "MyBaseActivity";
     protected boolean isNeedToShowAd = false;
     protected AdRequest adRequest;
-    protected Integer requestId;
     protected BroadcastReceiver requestReceiver;
-
+    protected Map<Integer, RequestType> requestsIdMap = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
