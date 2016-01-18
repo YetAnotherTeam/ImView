@@ -3,6 +3,7 @@ package jat.imview.processor;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

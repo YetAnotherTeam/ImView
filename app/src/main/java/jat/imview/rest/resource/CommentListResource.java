@@ -39,7 +39,7 @@ public class CommentListResource implements Resource {
                         jsonComment.getInt("id"),
                         jsonComment.getInt("image_id"),
                         userProfile.getId(),
-                        DateUtil.parseFromServerString(jsonComment.getString("publish_date")),
+                        DateUtil.parseServerString(jsonComment.getString("publish_date")),
                         jsonComment.getString("text"),
                         jsonComment.getInt("rating")
                 );

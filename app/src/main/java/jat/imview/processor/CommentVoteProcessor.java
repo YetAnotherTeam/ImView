@@ -7,7 +7,6 @@ import android.content.Context;
 import java.lang.ref.WeakReference;
 
 import jat.imview.contentProvider.db.table.CommentTable;
-import jat.imview.contentProvider.db.table.ImageTable;
 import jat.imview.model.Comment;
 import jat.imview.rest.http.HTTPMethod;
 import jat.imview.rest.resource.CommentVoteResource;

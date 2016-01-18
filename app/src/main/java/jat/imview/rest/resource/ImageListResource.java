@@ -1,6 +1,5 @@
 package jat.imview.rest.resource;
 
-import android.net.Uri;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -10,8 +9,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import jat.imview.contentProvider.db.table.base.BaseParams;
-import jat.imview.contentProvider.db.table.ImageTable;
 import jat.imview.model.Image;
 import jat.imview.rest.resource.base.Resource;
 import jat.imview.util.DateUtil;
@@ -33,7 +30,7 @@ public class ImageListResource implements Resource {
                 Image image = new Image(
                         jsonImage.getInt("id"),
                         jsonImage.getString("path"),
-                        DateUtil.parseFromServerString(jsonImage.getString("publish_date")),
+                        DateUtil.parseServerString(jsonImage.getString("publish_date")),
                         jsonImage.getInt("rating"),
                         jsonImage.getInt("comments_count")
                 );

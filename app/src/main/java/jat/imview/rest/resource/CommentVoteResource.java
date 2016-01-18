@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import jat.imview.model.Comment;
-import jat.imview.model.Image;
 import jat.imview.rest.resource.base.Resource;
 import jat.imview.util.DateUtil;
 
@@ -26,7 +25,7 @@ public class CommentVoteResource implements Resource {
                     jsonComment.getInt("id"),
                     jsonComment.getInt("image_id"),
                     jsonComment.getInt("user_id"),
-                    DateUtil.parseFromServerString(jsonComment.getString("publish_date")),
+                    DateUtil.parseServerString(jsonComment.getString("publish_date")),
                     jsonComment.getString("text"),
                     jsonComment.getInt("rating")
             );

@@ -24,7 +24,7 @@ public class ImageVoteResource implements Resource {
             image = new Image(
                     jsonImage.getInt("id"),
                     jsonImage.getString("path"),
-                    DateUtil.parseFromServerString(jsonImage.getString("publish_date")),
+                    DateUtil.parseServerString(jsonImage.getString("publish_date")),
                     jsonImage.getInt("rating"),
                     jsonImage.getInt("comments_count")
             );
