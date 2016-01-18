@@ -11,7 +11,6 @@
     <string name="main_activity_string">Главная</string>
     <string name="account_activity_string">Личный кабинет</string>
     <string name="settings_activity_string">Настройки</string>
-    <string name="authentification_activities_string">Профиль</string>
     <string name="title_activity_image">ImageActivity</string>
     <string name="image_description">Image</string>
     <string name="title_activity_settings">Settings</string>
@@ -90,6 +89,7 @@
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="do_login">Войти</string>
+    <string name="do_logout">Выйти</string>
     <string name="register">Создать аккаунт</string>
     <string name="cancel">Отмена</string>
     <string name="prompt_password">Пароль</string>
@@ -100,4 +100,8 @@
     <string name="cookies">Cookies</string>
     <string name="authentication_activity_string">Аутентификация</string>
     <string name="authentication">Аутентификация</string>
+    <string name="wrong_credentials">Неверные логин или пароль.</string>
+    <string name="user_already_exist">Пользователь с таким именем уже существует</string>
+    <string name="you_successful_logout">Вы успешно разлогинились</string>
+    <string name="settings_activity_label">Настройки</string>
 </resources>

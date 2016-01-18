@@ -3,6 +3,7 @@ package jat.imview.rest.http;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import jat.imview.R;
 import jat.imview.rest.Utils;
 
 public class HTTPClient {
@@ -120,7 +122,9 @@ public class HTTPClient {
             sharedPreferencesEditor.putStringSet("cookiesSet", cookiesSet);
             sharedPreferencesEditor.apply();
         }
+    }
 
-
+    public static void clearCookies() {
+        msCookieManager.getCookieStore().removeAll();
     }
 }

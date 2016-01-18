@@ -37,14 +37,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.AuthenticationActivity"
-            android:label="Authentication"
+            android:label="@string/authentication"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.ImageNewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".ui.activity.PreferenceActivity"
-            android:label="Settings"
+            android:label="@string/settings_activity_label"
             android:theme="@style/PreferenceTheme" />
         <activity
             android:name=".ui.activity.LoginActivity"
@@ -63,13 +63,16 @@
 
         <provider
             android:name=".contentProvider.UserProvider"
-            android:authorities="jat.imview.userProfileProvider" />
+            android:authorities="jat.imview.userProfileProvider"
+            android:exported="false"/>
         <provider
             android:name=".contentProvider.ImageProvider"
-            android:authorities="jat.imview.imageProvider" />
+            android:authorities="jat.imview.imageProvider"
+            android:exported="false"/>
         <provider
             android:name=".contentProvider.CommentProvider"
-            android:authorities="jat.imview.commentProvider" />
+            android:authorities="jat.imview.commentProvider"
+            android:exported="false"/>
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider1673826382890524"

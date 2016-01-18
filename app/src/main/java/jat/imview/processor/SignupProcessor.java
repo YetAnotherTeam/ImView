@@ -1,6 +1,7 @@
 package jat.imview.processor;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 

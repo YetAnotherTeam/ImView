@@ -45,7 +45,11 @@ public class SignupActivity extends BaseActivity implements View.OnClickListener
                 int resultCode = intent.getIntExtra(SendServiceHelper.EXTRA_RESULT_CODE, 0);
                 Log.d(LOG_TAG, String.valueOf(resultCode));
                 if (resultCode != 200) {
-                    handleResponseErrors(resultCode);
+                    if (resultCode == 400) {
+                        Toast.makeText(getApplicationContext(), R.string.user_already_exist, Toast.LENGTH_SHORT).show();
+                    } else {
+                        handleResponseErrors(resultCode);
+                    }
                 } else {
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                     if (sharedPreferences.getBoolean("save_cookies_at_close", false)) {

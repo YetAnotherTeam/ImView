@@ -159,7 +159,7 @@ public class CommentsActivity extends DrawerActivity implements CommentsAdapter.
                     case COMMENT_VOTE:
                         if (resultCode != 200) {
                             switch (resultCode) {
-                                case 403:
+                                case 406:
                                     Toast.makeText(
                                             getApplicationContext(),
                                             R.string.you_already_vote_for_this_comment,
