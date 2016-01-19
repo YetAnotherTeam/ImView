@@ -115,7 +115,7 @@ public class ImageNewActivity extends BaseActivity implements View.OnClickListen
             Rect rectText = new Rect();
             String[] captionStringLines = captionString.split("\n");
             int captionsLineHeight = captionHeight / captionStringLines.length;
-            int offset = 3;
+            int offset = 5;
             for (int i = 0; i < captionStringLines.length; ++i) {
                 String captionStringLine = captionStringLines[i];
                 paintText.getTextBounds(captionStringLine, 0, captionStringLine.length(), rectText);

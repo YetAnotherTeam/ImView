@@ -78,9 +78,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:adjustViewBounds="true"
-                android:src="@drawable/logo"
-                android:scaleType="fitCenter"
-                android:visibility="invisible"/>
+                android:src="@drawable/logo_placeholder"
+                android:scaleType="fitCenter" />
 
             <EditText
                 android:id="@+id/caption"
