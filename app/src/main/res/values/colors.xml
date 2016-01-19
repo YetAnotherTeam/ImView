@@ -21,4 +21,18 @@
     <color name="gplus_color_2">#f4b400</color>
     <color name="gplus_color_3">#427fed</color>
     <color name="gplus_color_4">#b23424</color>
+
+    <!-- MaterialDrawer DEFAULT colors -->
+    <color name="material_drawer_background">#F637373A</color>
+    <!-- Material DEFAULT text / items colors -->
+    <color name="material_drawer_primary_text">#CCCCCC</color>
+    <color name="material_drawer_primary_icon">#CCCCCC</color>
+    <color name="material_drawer_secondary_text">#CCCCCC</color>
+    <color name="material_drawer_hint_text">#42000000</color>
+    <color name="material_drawer_divider">#1F000000</color>
+    <!-- Material DEFAULT drawer colors -->
+    <color name="material_drawer_selected">#00000000</color>
+    <color name="material_drawer_selected_text">#FFC34A</color>
+    <color name="material_drawer_header_selection_text">#FFF</color>
+
 </resources>

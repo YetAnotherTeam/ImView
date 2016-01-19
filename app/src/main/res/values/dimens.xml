@@ -6,4 +6,6 @@
     <dimen name="auth_buttons_margin">80dp</dimen>
 
     <dimen name="progressbar_size_small">20dp</dimen>
+
+    <dimen name="material_drawer_item_primary_text">16sp</dimen>
 </resources>
