@@ -48,6 +48,7 @@ public class ImageFragment extends Fragment {
                             @Override
                             public void onSuccess() {
                                 mTouchImageView.setVisibility(View.VISIBLE);
+                                textView.setVisibility(View.INVISIBLE);
                                 circularProgressBar.setVisibility(View.INVISIBLE);
                                 Log.d("MyImageLoading", "Success");
                             }
