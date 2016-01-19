@@ -32,7 +32,7 @@
                 android:gravity="center"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
-                android:text="OPEN"
+                android:text="@string/open"
                 android:textColor="@android:color/white" />
         </FrameLayout>
 
@@ -56,42 +56,45 @@
                 android:gravity="center"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
-                android:text="PUBLISH"
+                android:text="@string/publish"
                 android:textColor="@android:color/white" />
         </FrameLayout>
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttons"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/buttons">
 
-        <LinearLayout
-            android:id="@+id/email_login_form"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
+            <jat.imview.ui.view.ResizableImageView
+                android:id="@+id/content_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/logo" />
+                android:layout_alignParentTop="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/logo"
+                android:scaleType="fitCenter"
+                android:visibility="invisible"/>
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/caption"
                 android:layout_width="match_parent"
+                android:ellipsize="start"
                 android:layout_height="wrap_content"
-                android:hint="Оставьте подпись здесь"
+                android:layout_below="@id/content_image"
+                android:gravity="center"
+                android:textColorHint="#CCCCCC"
+                android:hint="@string/tap_to_edit_caption"
                 android:imeActionId="@+id/login"
                 android:imeOptions="actionUnspecified"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:singleLine="true"
                 android:textColor="@color/textColorPrimary"
                 android:theme="@style/EditTextStyle" />
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

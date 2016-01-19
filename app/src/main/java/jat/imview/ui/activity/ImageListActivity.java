@@ -22,11 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.ads.AdView;
@@ -125,7 +120,7 @@ public abstract class ImageListActivity extends DrawerActivity implements View.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_favorite:
+            case R.id.action_create:
                 Intent intent = new Intent(this, ImageNewActivity.class);
                 startActivity(intent);
                 break;

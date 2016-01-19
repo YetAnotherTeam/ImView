@@ -104,4 +104,11 @@
     <string name="user_already_exist">Пользователь с таким именем уже существует</string>
     <string name="you_successful_logout">Вы успешно разлогинились</string>
     <string name="settings_activity_label">Настройки</string>
+    <string name="tap_to_edit_caption">Нажми, чтобы редактировать</string>
+    <string name="open">OPEN</string>
+    <string name="publish">PUBLISH</string>
+    <string name="load_image_and_put_caption">Загрузите картинку и оставьте подпись</string>
+    <string name="choose_image">Выберите изображение</string>
+    <string name="save">Сохранить</string>
+    <string name="image_saved">Изображение сохранено</string>
 </resources>
