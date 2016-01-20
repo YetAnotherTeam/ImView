@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+import jat.imview.rest.HTTPUtil;
 import jat.imview.rest.http.HTTPMethod;
 import jat.imview.rest.http.Request;
 import jat.imview.rest.resource.CommentResource;
@@ -30,7 +31,7 @@ public class CommentRestMethod extends AbstractRestMethod<CommentResource> {
         Map<String, String> params = new HashMap<>();
         params.put("image_id", String.valueOf(imageId));
         params.put("text", text);
-        return new Request(httpMethod, COMMENT_NEW_URL, params);
+        return new Request(httpMethod, COMMENT_NEW_URL, HTTPUtil.getPostDataString(params));
     }
 
     @Override

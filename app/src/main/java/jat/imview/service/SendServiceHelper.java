@@ -2,10 +2,12 @@ package jat.imview.service;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
@@ -116,7 +118,7 @@ public class SendServiceHelper {
         return requestId;
     }
 
-    public int requestImageNew(String filepath) {
+    public int requestImageNew(Bitmap bitmap) {
         RequestType requestType = RequestType.IMAGE_NEW;
         if (isRequestPending(requestType)) {
             return pendingRequests.get(requestType);
@@ -126,7 +128,12 @@ public class SendServiceHelper {
 
         Context context = weakContext.get();
         Intent intent = prepareIntent(context, requestId, requestType, HTTPMethod.POST);
-        intent.putExtra(SendService.IMAGE_NEW_FILEPATH_EXTRA, filepath);
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+
+        intent.putExtra(SendService.IMAGE_NEW_IMAGE_BYTE_ARRAY_EXTRA, byteArray);
         context.startService(intent);
         return requestId;
     }

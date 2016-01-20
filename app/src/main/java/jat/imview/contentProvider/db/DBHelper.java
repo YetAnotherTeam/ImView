@@ -26,11 +26,11 @@ public class DBHelper extends SQLiteOpenHelper {
     static {
         StringBuilder sqlBuilder = new StringBuilder();
 
-
         sqlBuilder.append("SELECT * FROM %s");
         sqlBuilder.append(" INNER JOIN ").append(ImageTable.TABLE_NAME);
         sqlBuilder.append(" ON %s").append(".").append(ImageListTable.IMAGE_ID)
-                .append(" = ").append(ImageTable.TABLE_NAME).append(".").append(ImageTable.ID).append(";");
+                .append(" = ").append(ImageTable.TABLE_NAME).append(".").append(ImageTable.ID);
+        sqlBuilder.append(" ORDER BY ").append(ImageTable.PUBLISH_DATE).append(" DESC").append(";");
         IMAGE_LIST_GET_SQL_QUERY = sqlBuilder.toString();
 
         sqlBuilder.setLength(0);

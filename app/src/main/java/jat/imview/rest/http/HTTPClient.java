@@ -3,7 +3,6 @@ package jat.imview.rest.http;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
@@ -20,14 +19,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import jat.imview.R;
-import jat.imview.rest.Utils;
+import jat.imview.rest.HTTPUtil;
 
 public class HTTPClient {
     private static final int CHUNK_SIZE = 1024;
     private static final String LOG_TAG = "MyRequest";
     private static final String COOKIES_HEADER = "Set-Cookie";
-    private static java.net.CookieManager msCookieManager = new java.net.CookieManager();
+    public static java.net.CookieManager msCookieManager = new java.net.CookieManager();
 
     public Response execute(Request request) {
         HttpURLConnection connection = null;
@@ -49,7 +47,7 @@ public class HTTPClient {
                     connection.setDoOutput(true);
                     OutputStream os = connection.getOutputStream();
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                    writer.write(Utils.getPostDataString(request.getPostDataParams()));
+                    writer.write(request.getPostDataString());
                     writer.flush();
                     writer.close();
                     os.close();

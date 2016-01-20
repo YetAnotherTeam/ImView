@@ -82,7 +82,7 @@
     <string name="fill_all_fields_please">Заполните, пожалуйста, все поля</string>
     <string name="you_already_vote_for_this_comment">Вы уже голосовали за этот комментарий.</string>
     <string name="you_already_vote_for_this_image">Вы уже голосовали за это изображение.</string>
-    <string name="server_error">Проблемы с сервером.</string>
+    <string name="server_error">Проблемы с сервером</string>
 
     <string name="action_new_image">Add new image</string>
 
@@ -111,4 +111,5 @@
     <string name="choose_image">Выберите изображение</string>
     <string name="save">Сохранить</string>
     <string name="image_saved">Изображение сохранено</string>
+    <string name="bad_file">Плохой файл</string>
 </resources>

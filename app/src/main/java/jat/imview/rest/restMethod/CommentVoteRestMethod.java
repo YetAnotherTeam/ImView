@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+import jat.imview.rest.HTTPUtil;
 import jat.imview.rest.http.HTTPMethod;
 import jat.imview.rest.http.Request;
 import jat.imview.rest.resource.CommentVoteResource;
@@ -30,7 +31,7 @@ public class CommentVoteRestMethod extends AbstractRestMethod<CommentVoteResourc
         Map<String, String> params = new HashMap<>();
         params.put("comment_id", String.valueOf(commentId));
         params.put("is_upvote", String.valueOf(isUpVote ? 1 : -1));
-        return new Request(httpMethod, COMMENT_VOTE_URL, params);
+        return new Request(httpMethod, COMMENT_VOTE_URL, HTTPUtil.getPostDataString(params));
     }
 
     @Override

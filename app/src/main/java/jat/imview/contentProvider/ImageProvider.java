@@ -15,6 +15,7 @@ import java.sql.SQLException;
 
 import jat.imview.contentProvider.db.DBHelper;
 import jat.imview.contentProvider.db.table.AbyssTable;
+import jat.imview.contentProvider.db.table.CommentTable;
 import jat.imview.contentProvider.db.table.FeaturedTable;
 import jat.imview.contentProvider.db.table.ImageTable;
 
@@ -88,6 +89,9 @@ public class ImageProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         db = dbHelper.getReadableDatabase();
         Cursor cursor;
+        if (sortOrder == null) {
+            sortOrder = ImageTable.PUBLISH_DATE + " DESC";
+        }
         switch (uriMatcher.match(uri)) {
             case URI_FEATURED_IMAGES:
                 cursor = db.rawQuery(DBHelper.getImageListSqlQuery(FeaturedTable.TABLE_NAME), null);

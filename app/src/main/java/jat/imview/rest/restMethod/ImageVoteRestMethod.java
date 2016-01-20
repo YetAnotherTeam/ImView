@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+import jat.imview.rest.HTTPUtil;
 import jat.imview.rest.http.HTTPMethod;
 import jat.imview.rest.http.Request;
 import jat.imview.rest.resource.ImageVoteResource;
@@ -30,7 +31,7 @@ public class ImageVoteRestMethod extends AbstractRestMethod<ImageVoteResource> {
         Map<String, String> params = new HashMap<>();
         params.put("image_id", String.valueOf(imageId));
         params.put("is_upvote", String.valueOf(isUpVote ? 1 : -1));
-        return new Request(httpMethod, IMAGE_VOTE_URL, params);
+        return new Request(httpMethod, IMAGE_VOTE_URL, HTTPUtil.getPostDataString(params));
     }
 
     @Override

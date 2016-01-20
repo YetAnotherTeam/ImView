@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+import jat.imview.rest.HTTPUtil;
 import jat.imview.rest.http.HTTPMethod;
 import jat.imview.rest.http.Request;
 import jat.imview.rest.resource.LoginResource;
@@ -30,7 +31,7 @@ public class LoginRestMethod extends AbstractRestMethod<LoginResource> {
         Map<String, String> params = new HashMap<>();
         params.put("username", username);
         params.put("password", password);
-        return new Request(httpMethod, LOGIN_URL, params);
+        return new Request(httpMethod, LOGIN_URL, HTTPUtil.getPostDataString(params));
     }
 
     @Override

@@ -7,8 +7,8 @@ import java.util.Map;
 /**
  * Created by bulat on 12.01.16.
  */
-public class Utils {
-    public static String getPostDataString(Map<String, String> params) throws UnsupportedEncodingException {
+public class HTTPUtil {
+    public static String getPostDataString(Map<String, String> params) {
         StringBuilder result = new StringBuilder();
         boolean first = true;
         for(Map.Entry<String, String> entry : params.entrySet()){
@@ -17,9 +17,13 @@ public class Utils {
             } else {
                 result.append("&");
             }
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+            try {
+                result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
 
         return result.toString();

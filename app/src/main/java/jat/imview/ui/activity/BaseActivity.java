@@ -50,6 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     break;
                 case -1:
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_unreachable), Toast.LENGTH_SHORT).show();
+                    break;
                 default:
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.unhandled_error) + ": " + resultCode, Toast.LENGTH_SHORT).show();
                     break;

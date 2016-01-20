@@ -10,6 +10,7 @@ import jat.imview.processor.CommentListProcessor;
 import jat.imview.processor.CommentProcessor;
 import jat.imview.processor.CommentVoteProcessor;
 import jat.imview.processor.ImageListProcessor;
+import jat.imview.processor.ImageProcessor;
 import jat.imview.processor.ImageVoteProcessor;
 import jat.imview.processor.LoginProcessor;
 import jat.imview.processor.ProcessorCallback;
@@ -31,7 +32,7 @@ public class SendService extends IntentService {
     public static final String SIGNUP_USERNAME_EXTRA = "jat.imview.service.SIGNUP_USERNAME_EXTRA";
     public static final String SIGNUP_PASSWORD_EXTRA = "jat.imview.service.SIGNUP_PASSWORD_EXTRA";
 
-    public static final String IMAGE_NEW_FILEPATH_EXTRA = "jat.imview.service.IMAGE_NEW_FILEPATH_EXTRA";
+    public static final String IMAGE_NEW_IMAGE_BYTE_ARRAY_EXTRA = "jat.imview.service.IMAGE_NEW_IMAGE_BYTE_ARRAY_EXTRA";
     public static final String IMAGE_GET_IMAGE_ID_EXTRA = "jat.imview.service.IMAGE_GET_IMAGE_ID_EXTRA";
     public static final String IMAGE_LIST_IS_FEATURED_EXTRA = "jat.imview.service.IMAGE_LIST_IS_FEATURED_EXTRA";
     public static final String IMAGE_VOTE_IMAGE_ID_EXTRA = "jat.imview.service.IMAGE_VOTE_IMAGE_ID_EXTRA";
@@ -87,14 +88,10 @@ public class SendService extends IntentService {
                 break;
             case IMAGE_NEW:
                 if (httpMethod.equals(HTTPMethod.POST)) {
-
-                } else {
-                    sendInvalidRequestCode();
-                }
-                break;
-            case IMAGE_GET:
-                if (httpMethod.equals(HTTPMethod.GET)) {
-
+                    Log.d(LOG_TAG, "Image new");
+                    byte[] byteArray = mOriginalRequestIntent.getByteArrayExtra(IMAGE_NEW_IMAGE_BYTE_ARRAY_EXTRA);
+                    ImageProcessor imageProcessor = new ImageProcessor(getApplicationContext(), byteArray);
+                    imageProcessor.postImageNew(makeProcessorCallback());
                 } else {
                     sendInvalidRequestCode();
                 }
